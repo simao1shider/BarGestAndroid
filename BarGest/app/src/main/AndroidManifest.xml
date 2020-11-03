@@ -9,15 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Views.LoginActivity"></activity>
-        <activity android:name=".Views.SpashActivity">
+        <activity android:name=".Views.LoginActivity"
+            android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Views.MainActivity" />
+        <activity android:name=".Views.SplashActivity"
+            android:theme="@style/NoActionBar">
+        </activity>
+        <activity android:name=".Views.MainActivity"
+            android:theme="@style/NoActionBar">
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
