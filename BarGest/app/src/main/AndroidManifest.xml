@@ -10,17 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Views.LoginActivity"
-            android:theme="@style/NoActionBar">
+            android:theme="@style/NoActionBarFullScreen"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".Views.SplashActivity"
+            android:theme="@style/NoActionBarFullScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Views.SplashActivity"
-            android:theme="@style/NoActionBar">
-        </activity>
         <activity android:name=".Views.MainActivity"
-            android:theme="@style/NoActionBar">
+            android:theme="@style/NoActionBarFullScreen"
+            android:screenOrientation="portrait">
         </activity>
 
         <meta-data
