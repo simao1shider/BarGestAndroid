@@ -98,7 +98,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/custom_button"
                 android:onClick="ValidateLogin"
-                android:text="Button"
+                android:text="Login"
                 android:textColor="#F6F6F6"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
