@@ -5,6 +5,9 @@
       <config />
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="a61f13da-f660-48b4-bb4c-7ef3f21cdee0" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,7 +15,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_27" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="9WV4C18824023011" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -21,7 +24,12 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <projects_view />
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
       </state>
     </system>
   </component>
@@ -29,6 +37,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="resourceFile" />
       </list>
     </option>
   </component>
@@ -45,6 +54,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
@@ -54,8 +64,14 @@
     <key name="android.template.1506393353">
       <recent name="com.example.bargest.Views" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ysik3\Documents\IPL\PROJ2021\BarGest\BarGestAndroid\BarGest\app\src\main\res\drawable-xxxhdpi" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ysik3\Documents\IPL\PROJ2021\BarGest\BarGestAndroid\BarGest\app\src\main\res\drawable" />
+    </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Android App.app">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -63,7 +79,7 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="app" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
@@ -109,11 +125,34 @@
         <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
       </Profilers>
       <option name="DEEP_LINK" value="" />
-      <option name="ACTIVITY_CLASS" value="" />
+      <option name="ACTIVITY_CLASS" value="com.example.bargest.Views.SplashActivity" />
       <method v="2">
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="BarGest [dependencies]" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="dependencies" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Android App.app" />
+      <item itemvalue="Gradle.BarGest [dependencies]" />
+    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -129,14 +168,90 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="765" y="309" key="FileChooserDialogImpl" timestamp="1603738939602">
+    <state x="292" y="151" key="#Inspections" timestamp="1604168371313">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="765" y="309" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1603738939602" />
-    <state x="681" y="377" key="com.intellij.ide.util.TipDialog" timestamp="1603915830390">
+    <state x="292" y="151" key="#Inspections/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604168371313" />
+    <state x="154" y="147" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604180094354">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="681" y="377" key="com.intellij.ide.util.TipDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1603915830390" />
-    <state x="681" y="377" key="com.intellij.ide.util.TipDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1603794850050" />
+    <state x="154" y="147" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604180094354" />
+    <state x="429" y="276" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1604178012888">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="429" y="276" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604178012888" />
+    <state x="690" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1604023415991">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="690" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604023415991" />
+    <state x="690" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1603998531340" />
+    <state x="2460" y="295" key="AndroidCreateResourceDirectoryDialog" timestamp="1604093711223">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="540" y="295" key="AndroidCreateResourceDirectoryDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604083988212" />
+    <state x="2460" y="295" key="AndroidCreateResourceDirectoryDialog/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604093711223" />
+    <state x="2331" y="253" key="AndroidCreateResourceFileDialog" timestamp="1604093733476">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="411" y="253" key="AndroidCreateResourceFileDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604015393251" />
+    <state x="2331" y="253" key="AndroidCreateResourceFileDialog/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604093733476" />
+    <state x="411" y="253" key="AndroidCreateResourceFileDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1604079035981" />
+    <state x="690" y="329" key="AndroidCreateXmlResourceDialog" timestamp="1603983286681">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="690" y="329" key="AndroidCreateXmlResourceDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1603983286681" />
+    <state x="640" y="295" key="Downloadable.Font.Dialog.Size" timestamp="1604000416603">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="640" y="295" key="Downloadable.Font.Dialog.Size/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604000416603" />
+    <state x="2685" y="309" key="FileChooserDialogImpl" timestamp="1604179964141">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="765" y="309" key="FileChooserDialogImpl/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604178948462" />
+    <state x="2685" y="309" key="FileChooserDialogImpl/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604179964141" />
+    <state x="765" y="309" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1603998658426" />
+    <state width="669" height="76" key="GridCell.Tab.0.bottom" timestamp="1604168326319">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="669" height="76" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604168326319" />
+    <state width="1340" height="126" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604158926136" />
+    <state width="938" height="295" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1604080574899" />
+    <state width="669" height="76" key="GridCell.Tab.0.center" timestamp="1604168326319">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="669" height="76" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604168326319" />
+    <state width="1340" height="126" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604158926136" />
+    <state width="938" height="295" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1604080574899" />
+    <state width="669" height="76" key="GridCell.Tab.0.left" timestamp="1604168326318">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="669" height="76" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604168326318" />
+    <state width="1340" height="126" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604158926136" />
+    <state width="938" height="295" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1604080574899" />
+    <state width="669" height="76" key="GridCell.Tab.0.right" timestamp="1604168326319">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="669" height="76" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604168326319" />
+    <state width="1340" height="126" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604158926136" />
+    <state width="938" height="295" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1604080574899" />
+    <state x="647" y="276" key="chooseDestDirectoryDialog" timestamp="1604078216591">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="647" y="276" key="chooseDestDirectoryDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604015004132" />
+    <state x="647" y="276" key="chooseDestDirectoryDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1604078216591" />
+    <state x="681" y="377" key="com.intellij.ide.util.TipDialog" timestamp="1604178314632">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="681" y="377" key="com.intellij.ide.util.TipDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604178314632" />
+    <state x="2601" y="377" key="com.intellij.ide.util.TipDialog/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604158929960" />
+    <state x="681" y="377" key="com.intellij.ide.util.TipDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1604079687236" />
+    <state x="2536" y="250" key="run.anything.popup" timestamp="1604179199155">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2536" y="250" key="run.anything.popup/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604179199155" />
+    <state x="623" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1604055606440">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="623" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1604055606440" />
   </component>
 </project>
