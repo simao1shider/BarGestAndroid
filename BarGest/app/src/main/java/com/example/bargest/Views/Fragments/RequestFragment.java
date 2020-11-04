@@ -19,6 +19,8 @@ import com.example.bargest.Adaptars.RequestsAdaptars;
 import com.example.bargest.Models.Requests;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -34,13 +36,14 @@ public class RequestFragment extends Fragment {
 
     private RequestsAdaptars adapters;
     private ArrayList<Requests> requests;
+    private  RecyclerView listRequest;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_request, container, false);
-        final RecyclerView listRequest = view.findViewById(R.id.ListRequests);
+        listRequest = view.findViewById(R.id.ListRequests);
 
         listRequest.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -56,6 +59,7 @@ public class RequestFragment extends Fragment {
         listRequest.setAdapter(adapters);
         return view;
     }
+    Requests deletedResqust;
 
     ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
         @Override
@@ -65,15 +69,22 @@ public class RequestFragment extends Fragment {
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            int position = viewHolder.getAdapterPosition();
+            final int position = viewHolder.getAdapterPosition();
             switch (direction){
                 case ItemTouchHelper.RIGHT:
-                    requests.remove(position);
-                    adapters.notifyDataSetChanged();
+                    //Todo: Colocar Fragmeto para editar o pedido
                     break;
                 case ItemTouchHelper.LEFT:
+                    deletedResqust = requests.get(position);
                     requests.remove(position);
-                    adapters.notifyItemRemoved(position);
+                    adapters.notifyDataSetChanged();
+                    Snackbar.make(listRequest,"Mesa " + deletedResqust.getTable(), Snackbar.LENGTH_LONG).setAction("Cancelar", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            requests.add(position,deletedResqust);
+                            adapters.notifyDataSetChanged();
+                        }
+                    }).show();
                     break;
             }
         }
@@ -83,8 +94,8 @@ public class RequestFragment extends Fragment {
             new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                     .addSwipeLeftBackgroundColor(ContextCompat.getColor(getContext(), R.color.swipe_delete_color))
                     .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
-                    .addSwipeRightBackgroundColor(ContextCompat.getColor(getContext(), R.color.swipe_delete_color))
-                    .addSwipeRightActionIcon(R.drawable.ic_baseline_delete_24)
+                    .addSwipeRightBackgroundColor(ContextCompat.getColor(getContext(), R.color.swipe_edit_color))
+                    .addSwipeRightActionIcon(R.drawable.ic_baseline_edit_24)
                     .create()
                     .decorate();
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);

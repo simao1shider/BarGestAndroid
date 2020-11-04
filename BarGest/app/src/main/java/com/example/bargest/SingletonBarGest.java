@@ -2,6 +2,9 @@ package com.example.bargest;
 
 import android.content.Context;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.Tables;
 
@@ -10,6 +13,8 @@ import java.util.ArrayList;
 public class SingletonBarGest {
 
     private static SingletonBarGest INSTANCE = null;
+
+
 
     public static synchronized SingletonBarGest getInstance(Context context) {
         if(INSTANCE == null)
@@ -73,4 +78,6 @@ public class SingletonBarGest {
 
         return arrayList;
     }
+
+
 }

@@ -1,8 +1,10 @@
 package com.example.bargest.Views;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -25,40 +27,32 @@ public class MainActivity extends AppCompatActivity {
 
 
         BottomNavigationView navBar = findViewById(R.id.bottom_bar);
+
+        setFragment(new HomeFragment(),null);
         navBar.setSelectedItemId(R.id.nav_home);
         navBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_table:
-                        setFragment(new TablesFragment());
+                        setFragment(new TablesFragment(),"Tables");
                         return true;
                     case R.id.nav_home:
-                        setFragment(new HomeFragment());
+                        setFragment(new HomeFragment(),"Home");
                         return true;
                     case R.id.nav_receipt:
-                        setFragment(new RequestFragment());
+                        setFragment(new RequestFragment(),"Receipt");
                         return true;
                 }
 
                 return false;
             }
         });
-        setFragment(new HomeFragment());
-
-
     }
 
-
-
-
-    public void setHome(View view){
-        setFragment(new HomeFragment());
-    }
-
-
-    private void setFragment(Fragment fragment){
+    private void setFragment(Fragment fragment,@Nullable String backStack){
         getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
     }
+
 
 }
