@@ -2,6 +2,7 @@ package com.example.bargest;
 
 import android.content.Context;
 
+import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.Tables;
 
 import java.lang.reflect.Array;
@@ -34,6 +35,23 @@ public class SingletonBarGest {
         arrayList.add(new Tables(5,false,0));
         arrayList.add(new Tables(6,false,0));
         arrayList.add(new Tables(7,true,0));
+
+        return arrayList;
+    }
+    public ArrayList<Requests> genereteFakeRequestList(){
+        ArrayList<Requests> arrayList = new ArrayList<>();
+
+        arrayList.add(new Requests(1,0));
+        arrayList.add(new Requests(1,1));
+        arrayList.add(new Requests(1,2));
+        arrayList.add(new Requests(1,1));
+        arrayList.add(new Requests(1,0));
+        arrayList.add(new Requests(1,2));
+        arrayList.add(new Requests(1,2));
+        arrayList.add(new Requests(1,0));
+        arrayList.add(new Requests(1,0));
+        arrayList.add(new Requests(1,0));
+
 
         return arrayList;
     }
