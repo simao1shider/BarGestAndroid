@@ -38,8 +38,7 @@ public class RequestsAdaptars extends RecyclerView.Adapter<RequestsAdaptars.MyVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Toast.makeText(context,String.valueOf(position),Toast.LENGTH_SHORT).show();
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         holder.Tablenumber.setText("Mesa "+ String.valueOf( data.get(position).getTable()));
         switch (data.get(position).getStatus()){
             case 0:
@@ -55,6 +54,13 @@ public class RequestsAdaptars extends RecyclerView.Adapter<RequestsAdaptars.MyVi
                 holder.card.setBackgroundColor(Color.parseColor("#FC7B7B"));
                 break;
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, data.get(holder.getAdapterPosition()).getTable(),Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
