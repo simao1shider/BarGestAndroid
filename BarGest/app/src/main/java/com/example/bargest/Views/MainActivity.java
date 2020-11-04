@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.bargest.R;
 import com.example.bargest.Views.Fragments.HomeFragment;
+import com.example.bargest.Views.Fragments.RequestFragment;
 import com.example.bargest.Views.Fragments.TablesFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -34,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.nav_home:
                         setFragment(new HomeFragment());
-
+                        return true;
                     case R.id.nav_receipt:
-                        //setFragment();
+                        setFragment(new RequestFragment());
                         return true;
                 }
 

@@ -5,7 +5,6 @@ import android.content.Context;
 import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.Tables;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SingletonBarGest {
@@ -35,6 +34,25 @@ public class SingletonBarGest {
         arrayList.add(new Tables(5,false,0));
         arrayList.add(new Tables(6,false,0));
         arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
+        arrayList.add(new Tables(7,true,0));
 
         return arrayList;
     }
@@ -42,15 +60,15 @@ public class SingletonBarGest {
         ArrayList<Requests> arrayList = new ArrayList<>();
 
         arrayList.add(new Requests(1,0));
-        arrayList.add(new Requests(1,1));
-        arrayList.add(new Requests(1,2));
-        arrayList.add(new Requests(1,1));
-        arrayList.add(new Requests(1,0));
-        arrayList.add(new Requests(1,2));
-        arrayList.add(new Requests(1,2));
-        arrayList.add(new Requests(1,0));
-        arrayList.add(new Requests(1,0));
-        arrayList.add(new Requests(1,0));
+        arrayList.add(new Requests(2,1));
+        arrayList.add(new Requests(3,2));
+        arrayList.add(new Requests(4,1));
+        arrayList.add(new Requests(5,0));
+        arrayList.add(new Requests(6,2));
+        arrayList.add(new Requests(7,2));
+        arrayList.add(new Requests(8,0));
+        arrayList.add(new Requests(9,0));
+        arrayList.add(new Requests(10,0));
 
 
         return arrayList;

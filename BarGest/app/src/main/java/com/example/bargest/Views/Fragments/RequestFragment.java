@@ -1,19 +1,17 @@
 package com.example.bargest.Views.Fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bargest.Adaptars.RequestsAdaptars;
-import com.example.bargest.Adaptars.TablesAdapters;
 import com.example.bargest.Models.Requests;
-import com.example.bargest.Models.Tables;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 
@@ -35,9 +33,13 @@ public class RequestFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_request, container, false);
         RecyclerView listRequest = view.findViewById(R.id.ListRequests);
 
-        ArrayList<Requests>  requests = SingletonBarGest.getInstance(getContext()).genereteFakeRequestList();
+        listRequest.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        ArrayList<Requests>  requests = SingletonBarGest.getInstance(getContext()).genereteFakeRequestList();
+        Log.d("Request",String.valueOf(requests));
         final RequestsAdaptars adapters = new RequestsAdaptars(getContext(),requests);
+
+
 
         listRequest.setAdapter(adapters);
         return view;
