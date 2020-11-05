@@ -3,7 +3,6 @@ package com.example.bargest.Views.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,14 +39,12 @@ public class TablesFragment extends Fragment {
         ArrayList<Tables> tables = SingletonBarGest.getInstance(getContext()).genereteFakeTableList();
 
         final TablesAdapters adapters = new TablesAdapters(getContext(),R.layout.item_list_tables,tables);
-        ;
-        final SingletonBarGest singletonBarGest = SingletonBarGest.getInstance(getContext());
         listTables.setAdapter(adapters);
 
         listTables.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                getFragmentManager().beginTransaction().replace(R.id.container,new TableDetailsFragment()).addToBackStack("TablesDetails").commit();
+                getFragmentManager().beginTransaction().replace(R.id.container,new BillsDetailsFragment()).addToBackStack("TablesDetails").commit();
             }
         });
 
