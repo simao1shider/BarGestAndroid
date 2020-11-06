@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.bargest.Models.Bills;
+import com.example.bargest.Models.Categories;
+import com.example.bargest.Models.Products;
 import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.Tables;
 
@@ -79,7 +81,6 @@ public class SingletonBarGest {
 
         return arrayList;
     }
-
     public ArrayList<Bills> generateFakeDetailsBills(){
         bills = new ArrayList<>();
 
@@ -100,7 +101,6 @@ public class SingletonBarGest {
         return bills;
 
     }
-
     public float getTotalBills(){
         float total = 0;
         for (Bills bill:bills) {
@@ -108,6 +108,19 @@ public class SingletonBarGest {
         }
 
         return total;
+    }
+
+    public ArrayList<Categories> genereteFakeCategoriesList(){
+        ArrayList<Categories> categories = new ArrayList<>();
+        categories.add(new Categories("GINS"));
+        categories.add(new Categories("Vinhos"));
+        categories.add(new Categories("Sandes"));
+        categories.add(new Categories("Pratos"));
+        categories.add(new Categories("Sumos"));
+        categories.add(new Categories("Entradas"));
+
+
+        return categories;
     }
 
 }

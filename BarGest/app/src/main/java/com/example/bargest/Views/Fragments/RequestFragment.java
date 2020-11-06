@@ -48,7 +48,6 @@ public class RequestFragment extends Fragment {
         listRequest.setLayoutManager(new LinearLayoutManager(getContext()));
 
         requests = SingletonBarGest.getInstance(getContext()).genereteFakeRequestList();
-        Log.d("Request",String.valueOf(requests));
         adapters = new RequestsAdaptars(getContext(),requests);
 
 

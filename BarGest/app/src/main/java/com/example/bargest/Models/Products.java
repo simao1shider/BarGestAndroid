@@ -4,8 +4,9 @@ public class Products  {
 
     String Name;
     float price;
+    int quantidade;
 
-    public Products(String name, float price) {
+    public Products(String name, float price,int quantidade) {
         Name = name;
         this.price = price;
     }
@@ -24,5 +25,13 @@ public class Products  {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 }

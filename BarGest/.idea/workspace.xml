@@ -63,11 +63,8 @@
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyClassDialog.RECENTS_KEY">
+    <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="com.example.bargest.Adaptars" />
-      <recent name="com.example.bargest.Models" />
-      <recent name="com.example.bargest" />
-      <recent name="com.example.bargest.Views.Fragments" />
     </key>
     <key name="android.template.-1050903990">
       <recent name="com.example.bargest.Views" />
@@ -82,6 +79,12 @@
       <recent name="C:\Users\ysik3\Desktop\BarGest\app\src\main\res\layout" />
       <recent name="C:\Users\ysik3\Desktop\BarGest\app\src\main\res\drawable" />
       <recent name="C:\Users\ysik3\Documents\IPL\PROJ2021\BarGest\BarGestAndroid\BarGest\app\src\main\res\drawable" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.bargest.Adaptars" />
+      <recent name="com.example.bargest.Models" />
+      <recent name="com.example.bargest" />
+      <recent name="com.example.bargest.Views.Fragments" />
     </key>
   </component>
   <component name="RunManager" selected="Android App.app">
@@ -195,32 +198,33 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="154" y="147" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604178191541" />
-    <state x="765" y="246" key="#com.intellij.ide.util.MemberChooser" timestamp="1604580377925">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="2685" y="246" key="#com.intellij.ide.util.MemberChooser" timestamp="1604699861053">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="765" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604440358843" />
-    <state x="2685" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604523197945" />
+    <state x="765" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604617510968" />
+    <state x="2685" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604699861053" />
     <state x="765" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1604580377925" />
     <state x="429" y="276" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1604178012888">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="429" y="276" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604178012888" />
-    <state x="2610" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1604530333507">
+    <state x="2610" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1604628925810">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="690" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604023415991" />
-    <state x="2610" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604530333507" />
+    <state x="2610" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604628925810" />
     <state x="690" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1603998531340" />
-    <state x="540" y="295" key="AndroidCreateResourceDirectoryDialog" timestamp="1604368493348">
+    <state x="540" y="295" key="AndroidCreateResourceDirectoryDialog" timestamp="1604605176000">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="540" y="295" key="AndroidCreateResourceDirectoryDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604368493348" />
     <state x="2460" y="295" key="AndroidCreateResourceDirectoryDialog/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604093711223" />
-    <state x="411" y="253" key="AndroidCreateResourceFileDialog" timestamp="1604579715675">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="540" y="295" key="AndroidCreateResourceDirectoryDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1604605176000" />
+    <state x="2331" y="253" key="AndroidCreateResourceFileDialog" timestamp="1604699806487">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="411" y="253" key="AndroidCreateResourceFileDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604369015278" />
-    <state x="2331" y="253" key="AndroidCreateResourceFileDialog/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604520685958" />
+    <state x="411" y="253" key="AndroidCreateResourceFileDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604615867489" />
+    <state x="2331" y="253" key="AndroidCreateResourceFileDialog/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604699806487" />
     <state x="411" y="253" key="AndroidCreateResourceFileDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1604579715675" />
     <state x="690" y="329" key="AndroidCreateXmlResourceDialog" timestamp="1603983286681">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -236,45 +240,49 @@
     <state x="765" y="309" key="FileChooserDialogImpl/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604440548258" />
     <state x="2685" y="309" key="FileChooserDialogImpl/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604180065318" />
     <state x="765" y="309" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1604491856905" />
-    <state width="1877" height="363" key="GridCell.Tab.0.bottom" timestamp="1604528874110">
+    <state width="1877" height="140" key="GridCell.Tab.0.bottom" timestamp="1604699719554">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="140" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604371682331" />
-    <state width="1877" height="363" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604528874110" />
+    <state width="1877" height="363" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604618706381" />
+    <state width="1877" height="140" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604699719554" />
     <state width="1877" height="294" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1604506666280" />
-    <state width="1877" height="363" key="GridCell.Tab.0.center" timestamp="1604528874110">
+    <state width="1877" height="140" key="GridCell.Tab.0.center" timestamp="1604699719554">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="140" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604371682330" />
-    <state width="1877" height="363" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604528874110" />
+    <state width="1877" height="363" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604618706381" />
+    <state width="1877" height="140" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604699719554" />
     <state width="1877" height="294" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1604506666280" />
-    <state width="1877" height="363" key="GridCell.Tab.0.left" timestamp="1604528874110">
+    <state width="1877" height="140" key="GridCell.Tab.0.left" timestamp="1604699719550">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="140" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604371682330" />
-    <state width="1877" height="363" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604528874110" />
+    <state width="1877" height="363" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604618706381" />
+    <state width="1877" height="140" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604699719550" />
     <state width="1877" height="294" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1604506666280" />
-    <state width="1877" height="363" key="GridCell.Tab.0.right" timestamp="1604528874110">
+    <state width="1877" height="140" key="GridCell.Tab.0.right" timestamp="1604699719554">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="140" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604371682330" />
-    <state width="1877" height="363" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604528874110" />
+    <state width="1877" height="363" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604618706381" />
+    <state width="1877" height="140" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604699719554" />
     <state width="1877" height="294" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1604506666280" />
-    <state width="1877" height="363" key="GridCell.Tab.1.bottom" timestamp="1604528874110">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state width="1877" height="363" key="GridCell.Tab.1.bottom" timestamp="1604618706381">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state width="1877" height="363" key="GridCell.Tab.1.bottom/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604618706381" />
     <state width="1877" height="363" key="GridCell.Tab.1.bottom/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604528874110" />
-    <state width="1877" height="363" key="GridCell.Tab.1.center" timestamp="1604528874110">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state width="1877" height="363" key="GridCell.Tab.1.center" timestamp="1604618706381">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state width="1877" height="363" key="GridCell.Tab.1.center/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604618706381" />
     <state width="1877" height="363" key="GridCell.Tab.1.center/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604528874110" />
-    <state width="1877" height="363" key="GridCell.Tab.1.left" timestamp="1604528874110">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state width="1877" height="363" key="GridCell.Tab.1.left" timestamp="1604618706381">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state width="1877" height="363" key="GridCell.Tab.1.left/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604618706381" />
     <state width="1877" height="363" key="GridCell.Tab.1.left/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604528874110" />
-    <state width="1877" height="363" key="GridCell.Tab.1.right" timestamp="1604528874110">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state width="1877" height="363" key="GridCell.Tab.1.right" timestamp="1604618706381">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
+    <state width="1877" height="363" key="GridCell.Tab.1.right/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604618706381" />
     <state width="1877" height="363" key="GridCell.Tab.1.right/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604528874110" />
     <state x="461" y="185" key="SettingsEditor" timestamp="1604437066002">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -291,24 +299,61 @@
     <state x="681" y="377" key="com.intellij.ide.util.TipDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604178314632" />
     <state x="2601" y="377" key="com.intellij.ide.util.TipDialog/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604158929960" />
     <state x="681" y="377" key="com.intellij.ide.util.TipDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1604079687236" />
-    <state x="2165" y="-10" width="1660" height="1066" maximized="true" key="dock-window-1" timestamp="1604346635765">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="117" y="-18" width="1717" height="856" maximized="true" key="dock-window-1" timestamp="1604697961605">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="2165" y="-10" width="1660" height="1066" maximized="true" key="dock-window-1/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604346635765" />
+    <state x="2021" y="-18" width="1547" height="779" maximized="true" key="dock-window-1/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604619528115" />
+    <state x="117" y="-18" width="1717" height="856" maximized="true" key="dock-window-1/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604697961605" />
     <state x="2013" y="-12" width="1660" height="1066" maximized="true" key="dock-window-2" timestamp="1604349002726">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2013" y="-12" width="1660" height="1066" maximized="true" key="dock-window-2/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604349002726" />
-    <state x="616" y="250" key="run.anything.popup" timestamp="1604438053088">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="2536" y="250" key="run.anything.popup" timestamp="1604627776293">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="616" y="250" key="run.anything.popup/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604438053088" />
-    <state x="2536" y="250" key="run.anything.popup/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604179199155" />
+    <state x="2536" y="250" key="run.anything.popup/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604627776293" />
     <state x="616" y="250" key="run.anything.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1604430900129" />
     <state x="623" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1604371467563">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="623" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604371467563" />
     <state x="623" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1604055606440" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/bargest/Views/Fragments/NewRequestFragment.java</url>
+          <line>50</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/bargest/Views/Fragments/NewRequestFragment.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/bargest/Views/Fragments/NewRequestFragment.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/bargest/Adaptars/NewRequestAdaptar.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/bargest/Adaptars/NewRequestAdaptar.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/bargest/Adaptars/NewRequestAdaptar.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

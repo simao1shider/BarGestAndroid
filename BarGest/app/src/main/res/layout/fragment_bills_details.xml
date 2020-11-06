@@ -7,7 +7,7 @@
     tools:context=".Views.Fragments.BillsDetailsFragment">
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/includeToolbar"
         layout="@layout/custom_toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +25,7 @@
         app:layout_constraintEnd_toEndOf="@+id/include"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/include">
+        app:layout_constraintTop_toTopOf="@id/includeToolbar">
 
     </ListView>
 
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/include"
+        app:layout_constraintBottom_toBottomOf="@+id/includeToolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 

@@ -33,6 +33,7 @@ public class BillsDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bills_details, container, false);
         ImageView backfragment = view.findViewById(R.id.IMGBackFragment);
+        ImageView addRequest = view.findViewById(R.id.BtnToolbarAdd);
         ListView listbillDetailsView = view.findViewById(R.id.ListBillDetails);
         TextView totalView = view.findViewById(R.id.TVTotalBills);
 
@@ -43,6 +44,13 @@ public class BillsDetailsFragment extends Fragment {
                 getFragmentManager().popBackStack();
             }
         });
+        addRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().replace(R.id.container,new NewRequestFragment()).addToBackStack("BillsDetails").commit();
+            }
+        });
+
         ArrayList<Bills> bills = SingletonBarGest.getInstance(getContext()).generateFakeDetailsBills();
         float totalBills= singletonBarGest.getTotalBills();
 
