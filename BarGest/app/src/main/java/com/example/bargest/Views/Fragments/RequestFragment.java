@@ -72,6 +72,7 @@ public class RequestFragment extends Fragment {
             switch (direction){
                 case ItemTouchHelper.RIGHT:
                     //Todo: Colocar Fragmeto para editar o pedido
+                    getFragmentManager().beginTransaction().replace(R.id.container,new EditRequestFragment()).addToBackStack("Requests").commit();
                     break;
                 case ItemTouchHelper.LEFT:
                     deletedResqust = requests.get(position);
