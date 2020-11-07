@@ -1,5 +1,8 @@
 package com.example.bargest.Views.Fragments;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -23,6 +28,7 @@ import java.util.ArrayList;
 
 public class BillsDetailsFragment extends Fragment {
 
+    Dialog dialog;
 
     public BillsDetailsFragment() {
         // Required empty public constructor
@@ -34,6 +40,8 @@ public class BillsDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_bills_details, container, false);
         ImageView backfragment = view.findViewById(R.id.IMGBackFragment);
         ImageView addRequest = view.findViewById(R.id.BtnToolbarAdd);
+        ImageButton divideFragment = view.findViewById(R.id.BtnDivideBill);
+        ImageButton BtnPay = view.findViewById(R.id.BtnPay);
         ListView listbillDetailsView = view.findViewById(R.id.ListBillDetails);
         TextView totalView = view.findViewById(R.id.TVTotalBills);
 
@@ -48,6 +56,18 @@ public class BillsDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction().replace(R.id.container,new NewRequestFragment()).addToBackStack("BillsDetails").commit();
+            }
+        });
+        divideFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().replace(R.id.container,new DivideBillFragment()).addToBackStack("BillsDetails").commit();
+            }
+        });
+        BtnPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
             }
         });
 
@@ -65,4 +85,29 @@ public class BillsDetailsFragment extends Fragment {
 
         return view;
     }
+
+    private void openDialog() {
+        dialog.setContentView(R.layout.dialog_pay);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        ImageView close = dialog.findViewById(R.id.BtnClosePayDialog);
+        Button addNif = dialog.findViewById(R.id.BtnAddNif);
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        addNif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
 }

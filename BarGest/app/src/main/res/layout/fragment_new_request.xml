@@ -18,19 +18,11 @@
     </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listProductsNewRequest"
+        android:id="@+id/list_new_request"
         android:layout_width="match_parent"
         android:layout_height="218dp">
 
     </androidx.recyclerview.widget.RecyclerView>
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="wrap_content"
-        android:layout_height="3dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="#000" />
 
     <FrameLayout
         android:id="@+id/conteinerAddProduct"

@@ -13,15 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
-import com.example.bargest.Adaptars.CategoriesAdaptar;
 import com.example.bargest.Adaptars.NewRequestAdaptar;
-import com.example.bargest.Adaptars.RequestsAdaptars;
 import com.example.bargest.Models.Bills;
-import com.example.bargest.Models.Categories;
-import com.example.bargest.Models.Products;
-import com.example.bargest.Models.Requests;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 import com.google.android.material.snackbar.Snackbar;
@@ -51,7 +45,7 @@ public class NewRequestFragment extends Fragment {
          getFragmentManager().beginTransaction().replace(R.id.toolbarNewRequest,new BtnSearchFragment()).commit();
          getFragmentManager().beginTransaction().replace(R.id.conteinerAddProduct,new CategoriesFragment()).commit();
 
-         listProductsNewRequest = view.findViewById(R.id.listProductsNewRequest);
+         listProductsNewRequest = view.findViewById(R.id.list_new_request);
 
         listProductsNewRequest.setLayoutManager(new LinearLayoutManager(getContext()));
 
