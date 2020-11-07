@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.bargest.Adaptars.NewRequestAdaptar;
 import com.example.bargest.Models.Bills;
@@ -41,6 +42,8 @@ public class EditRequestFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_request, container, false);
         listProductsEditRequest = view.findViewById(R.id.listProductsEditRequest);
+        ImageView backfragment = view.findViewById(R.id.IMGBackFragment);
+        ImageView addRequest = view.findViewById(R.id.BtnToolbarAdd);
 
         listProductsEditRequest.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -48,6 +51,20 @@ public class EditRequestFragment extends Fragment {
 
 
         adapters = new NewRequestAdaptar(getContext(),products);
+
+
+        backfragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStack();
+            }
+        });
+        addRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().replace(R.id.container,new NewRequestFragment()).addToBackStack("EditRequest").commit();
+            }
+        });
 
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);

@@ -44,7 +44,7 @@ public class TablesFragment extends Fragment {
         listTables.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                getFragmentManager().beginTransaction().replace(R.id.container,new BillsDetailsFragment()).addToBackStack("TablesDetails").commit();
+                getFragmentManager().beginTransaction().replace(R.id.container,new BillsFragment()).addToBackStack("Tables").commit();
             }
         });
 
