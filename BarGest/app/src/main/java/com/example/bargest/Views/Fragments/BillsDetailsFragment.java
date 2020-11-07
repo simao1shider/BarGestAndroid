@@ -44,7 +44,7 @@ public class BillsDetailsFragment extends Fragment {
         ImageButton BtnPay = view.findViewById(R.id.BtnPay);
         ListView listbillDetailsView = view.findViewById(R.id.ListBillDetails);
         TextView totalView = view.findViewById(R.id.TVTotalBills);
-
+        dialog = new Dialog(getContext());
         final SingletonBarGest singletonBarGest = SingletonBarGest.getInstance(getContext());
         backfragment.setOnClickListener(new View.OnClickListener() {
             @Override
