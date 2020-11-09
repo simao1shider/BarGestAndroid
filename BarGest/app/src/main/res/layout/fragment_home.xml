@@ -22,7 +22,7 @@
         android:id="@+id/gridLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="20dp"
         android:padding="10dp"
         app:alignmentMode="alignMargins"
         app:columnCount="2"
@@ -34,7 +34,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="89dp"
-            android:layout_height="132dp"
+            android:layout_height="110dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
@@ -51,9 +51,9 @@
                 <ImageView
                     android:id="@+id/imageView2"
                     android:layout_width="match_parent"
-                    android:layout_height="116dp"
-                    android:src="@drawable/ic_baseline_transfere_24"
-                    tools:srcCompat="@drawable/ic_baseline_transfere_24" />
+                    android:layout_height="90dp"
+                    android:src="@drawable/datatransfereicon"
+                    tools:srcCompat="@drawable/datatransfereicon" />
 
                 <TextView
                     android:id="@+id/textView2"
@@ -85,9 +85,9 @@
                 <ImageView
                     android:id="@+id/imageView3"
                     android:layout_width="match_parent"
-                    android:layout_height="116dp"
-                    android:src="@drawable/ic_baseline_transfere_24"
-                    tools:srcCompat="@drawable/ic_baseline_transfere_24" />
+                    android:layout_height="90dp"
+                    android:src="@drawable/printicon"
+                    tools:srcCompat="@drawable/printicon" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -118,9 +118,9 @@
                 <ImageView
                     android:id="@+id/imageView4"
                     android:layout_width="match_parent"
-                    android:layout_height="116dp"
-                    android:src="@drawable/ic_baseline_transfere_24"
-                    tools:srcCompat="@drawable/ic_baseline_transfere_24" />
+                    android:layout_height="90dp"
+                    android:src="@drawable/spliticon"
+                    tools:srcCompat="@drawable/spliticon" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -152,9 +152,9 @@
                 <ImageView
                     android:id="@+id/imageView7"
                     android:layout_width="match_parent"
-                    android:layout_height="116dp"
-                    android:src="@drawable/ic_baseline_transfere_24"
-                    tools:srcCompat="@drawable/ic_baseline_transfere_24" />
+                    android:layout_height="90dp"
+                    android:src="@drawable/receiveicon"
+                    tools:srcCompat="@drawable/receiveicon" />
 
                 <TextView
                     android:id="@+id/textView7"
@@ -189,10 +189,10 @@
             <ImageView
                 android:id="@+id/imageView5"
                 android:layout_width="80dp"
-                android:layout_height="match_parent"
+                android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_baseline_seat_24" />
+                android:src="@drawable/tableicon" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -238,10 +238,10 @@
             <ImageView
                 android:id="@+id/imageView6"
                 android:layout_width="80dp"
-                android:layout_height="match_parent"
+                android:layout_height="44dp"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_baseline_receipt_24" />
+                android:src="@drawable/listicon" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -268,21 +268,22 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="10dp"
-        android:padding="20dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_baseline_power_24" />
     </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="31dp"
+        android:layout_height="30dp"
+        android:src="@drawable/exiticon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
