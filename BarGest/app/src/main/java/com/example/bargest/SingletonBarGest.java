@@ -1,6 +1,8 @@
 package com.example.bargest;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -19,17 +21,26 @@ public class SingletonBarGest {
 
     ArrayList<Bills> bills;
 
+    private final Database database;
+    private final SQLiteDatabase db;
+
     public static synchronized SingletonBarGest getInstance(Context context) {
         if(INSTANCE == null)
         {
             INSTANCE = new SingletonBarGest(context);
         }
-
-
         return INSTANCE;
     }
 
     private SingletonBarGest(Context context) {
+        database = new Database(context);
+        db = database.getWritableDatabase();
+    }
+
+    public long insertRequest(Requests request){
+        ContentValues values = new ContentValues();
+        values.put("status", request.getStatus());
+        return db.insert("request",null,values);
     }
 
     public ArrayList<Tables> genereteFakeTableList(){
