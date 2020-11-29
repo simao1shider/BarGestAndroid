@@ -7,12 +7,12 @@ import java.text.DecimalFormat;
 
 public class Tables {
     int number;
-    boolean occupied;
+    int status;
     float money;
 
-    public Tables(int number, boolean occupied, float money) {
+    public Tables(int number, int status, float money) {
         this.number = number;
-        this.occupied = occupied;
+        this.status = status;
         this.money = money;
     }
 
@@ -20,23 +20,25 @@ public class Tables {
         return number;
     }
 
-    public boolean isStatus() {
-        return occupied;
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public float getMoney() {
         return money;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public void setStatus(boolean occupied) {
-        this.occupied = occupied;
-    }
-
     public void setMoney(float money) {
         this.money = money;
     }
+
+
 }

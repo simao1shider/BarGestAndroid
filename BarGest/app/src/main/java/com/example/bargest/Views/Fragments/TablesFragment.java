@@ -36,7 +36,7 @@ public class TablesFragment extends Fragment {
         ListView listTables = view.findViewById(R.id.list_tables);
         SearchView searchTables = view.findViewById(R.id.searchTables);
 
-        ArrayList<Tables> tables = SingletonBarGest.getInstance(getContext()).genereteFakeTableList();
+        ArrayList<Tables> tables = SingletonBarGest.getInstance(getContext()).genereteFakeTableList(getContext());
 
         final TablesAdapters adapters = new TablesAdapters(getContext(),R.layout.item_list_tables,tables);
         listTables.setAdapter(adapters);

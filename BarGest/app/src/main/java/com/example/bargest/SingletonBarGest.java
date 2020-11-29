@@ -1,27 +1,36 @@
 package com.example.bargest;
 
 import android.content.Context;
+import android.util.Log;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Categories;
-import com.example.bargest.Models.Products;
 import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.Tables;
+import com.example.bargest.Utils.parserJsonTables;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
 public class SingletonBarGest {
 
     private static SingletonBarGest INSTANCE = null;
+    private static RequestQueue volleyQueue = null;
+    public ArrayList<Tables> arrayListTables;
 
     ArrayList<Bills> bills;
 
     public static synchronized SingletonBarGest getInstance(Context context) {
         if(INSTANCE == null)
         {
+            volleyQueue= Volley.newRequestQueue(context);
             INSTANCE = new SingletonBarGest(context);
         }
 
@@ -32,37 +41,25 @@ public class SingletonBarGest {
     private SingletonBarGest(Context context) {
     }
 
-    public ArrayList<Tables> genereteFakeTableList(){
-        ArrayList<Tables> arrayList = new ArrayList<>();
+    public ArrayList<Tables> genereteFakeTableList(Context context){
+        arrayListTables = new ArrayList<>();
+        String url = "http://192.168.1.204/BarGestWeb/api/web/v1/table/";
 
-        arrayList.add(new Tables(1,false,0));
-        arrayList.add(new Tables(2,false,0));
-        arrayList.add(new Tables(3,false,0));
-        arrayList.add(new Tables(4,true,0));
-        arrayList.add(new Tables(5,false,0));
-        arrayList.add(new Tables(6,false,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+              @Override
+              public void onResponse(JSONArray response) {
+                  Log.i("-->API", response.toString());
+                  arrayListTables = parserJsonTables.parserJsonTables(response);
+              }
+              }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                    }
+                });
 
-        return arrayList;
+        volleyQueue.add(jsonArrayRequest);
+        return arrayListTables;
     }
     public ArrayList<Requests> genereteFakeRequestList(){
         ArrayList<Requests> arrayList = new ArrayList<>();
