@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/BarGest.iml" filepath="$PROJECT_DIR$/.idea/modules/BarGest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BarGest.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BarGest.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BarGestAndroid.BarGest.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BarGestAndroid.BarGest.app.iml" />
     </modules>
   </component>

@@ -43,21 +43,22 @@ public class SingletonBarGest {
 
     public ArrayList<Tables> genereteFakeTableList(Context context){
         arrayListTables = new ArrayList<>();
-        String url = "http://192.168.1.204/BarGestWeb/api/web/v1/table/";
+        String url = "http://192.168.1.179/BarGestWeb/api/web/v1/table";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
               @Override
               public void onResponse(JSONArray response) {
-                  Log.i("-->API", response.toString());
+                  Log.i("API", response.toString());
                   arrayListTables = parserJsonTables.parserJsonTables(response);
               }
               }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
+                        Log.e("API",error.toString());
                     }
                 });
-
+        Log.i("API","teste");
         volleyQueue.add(jsonArrayRequest);
         return arrayListTables;
     }
