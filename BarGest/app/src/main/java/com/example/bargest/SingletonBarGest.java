@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.bargest.Listeners.TableListener;
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Categories;
 import com.example.bargest.Models.Requests;
@@ -23,9 +24,12 @@ public class SingletonBarGest {
 
     private static SingletonBarGest INSTANCE = null;
     private static RequestQueue volleyQueue = null;
-    public ArrayList<Tables> arrayListTables;
-
+    private TableListener tableListener;
     ArrayList<Bills> bills;
+
+    public void setTableListener(TableListener tableListener){
+        this.tableListener=tableListener;
+    }
 
     public static synchronized SingletonBarGest getInstance(Context context) {
         if(INSTANCE == null)
@@ -41,15 +45,14 @@ public class SingletonBarGest {
     private SingletonBarGest(Context context) {
     }
 
-    public ArrayList<Tables> genereteFakeTableList(Context context){
-        arrayListTables = new ArrayList<>();
+    public void genereteFakeTableList(Context context){
         String url = "http://192.168.1.179/BarGestWeb/api/web/v1/table";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
               @Override
               public void onResponse(JSONArray response) {
                   Log.i("API", response.toString());
-                  arrayListTables = parserJsonTables.parserJsonTables(response);
+                  tableListener.onRefreshListTables(parserJsonTables.parserJsonTables(response));
               }
               }, new Response.ErrorListener() {
                     @Override
@@ -60,7 +63,7 @@ public class SingletonBarGest {
                 });
         Log.i("API","teste");
         volleyQueue.add(jsonArrayRequest);
-        return arrayListTables;
+
     }
     public ArrayList<Requests> genereteFakeRequestList(){
         ArrayList<Requests> arrayList = new ArrayList<>();
