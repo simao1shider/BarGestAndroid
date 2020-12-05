@@ -4,14 +4,15 @@ import java.util.ArrayList;
 
 public class Bills {
     String productName;
-    float price;
-    int quantidade;
+    int id;
+    float total;
 
-    public Bills(String productName, float price, int quantidade) {
+    public Bills(String productName, float total, int id) {
         this.productName = productName;
-        this.price = price;
-        this.quantidade = quantidade;
+        this.id = id;
+        this.total = total;
     }
+
 
     public String getProductName() {
         return productName;
@@ -21,21 +22,19 @@ public class Bills {
         this.productName = productName;
     }
 
-    public float getPrice() {
-        return price;
+    public int getId() {
+        return id;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public float getTotal() {
+        return total;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void setTotal(float total) {
+        this.total = total;
     }
-
-
 }

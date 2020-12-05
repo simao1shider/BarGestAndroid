@@ -6,14 +6,22 @@ import androidx.annotation.Nullable;
 import java.text.DecimalFormat;
 
 public class Tables {
+    int id;
     int number;
     int status;
-    float money;
 
-    public Tables(int number, int status, float money) {
+    public Tables(int id, int number, int status) {
         this.number = number;
         this.status = status;
-        this.money = money;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getNumber() {
@@ -32,13 +40,6 @@ public class Tables {
         this.status = status;
     }
 
-    public float getMoney() {
-        return money;
-    }
-
-    public void setMoney(float money) {
-        this.money = money;
-    }
 
 
 }

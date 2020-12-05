@@ -99,8 +99,8 @@ public class DivideBillFragment extends Fragment {
             NewProducts.add(deletedOriginBills);
             adaptersOrigin.notifyDataSetChanged();
             adaptersNew.notifyDataSetChanged();
-            Total += deletedOriginBills.getPrice()*deletedOriginBills.getQuantidade();
-            TVTotal.setText(String.valueOf(Total)+" €");
+           // Total += deletedOriginBills.getPrice()*deletedOriginBills.getQuantidade();
+            TVTotal.setText(String.valueOf(0)+"????");
             //TODO:Dialog for Quantity
 
         }
@@ -129,8 +129,8 @@ public class DivideBillFragment extends Fragment {
             Originproducts.add(deletedNewBills);
             adaptersOrigin.notifyDataSetChanged();
             adaptersNew.notifyDataSetChanged();
-            Total -= deletedNewBills.getPrice()*deletedNewBills.getQuantidade();
-            TVTotal.setText(String.valueOf(Total)+" €");
+            //Total -= deletedNewBills.getPrice()*deletedNewBills.getQuantidade();
+            TVTotal.setText(String.valueOf(0)+" ????€");
             //TODO:Dialog for Quantity
 
         }

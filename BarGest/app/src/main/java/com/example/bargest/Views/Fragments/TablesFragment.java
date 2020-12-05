@@ -13,6 +13,7 @@ import android.widget.SearchView;
 
 import com.example.bargest.Adaptars.TablesAdapters;
 import com.example.bargest.Listeners.TableListener;
+import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Tables;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
@@ -61,7 +62,7 @@ public class TablesFragment extends Fragment implements TableListener {
     }
 
     @Override
-    public void onRefreshListTables(ArrayList<Tables> tables) {
+    public void onRefreshListTables(final ArrayList<Tables> tables) {
         this.tables=tables;
         TablesAdapters adapters = new TablesAdapters(getContext(),R.layout.item_list_tables,tables);
         listTables.setAdapter(adapters);
@@ -69,7 +70,12 @@ public class TablesFragment extends Fragment implements TableListener {
         listTables.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                getFragmentManager().beginTransaction().replace(R.id.container,new BillsFragment()).addToBackStack("Tables").commit();
+                Bundle bundle=new Bundle();
+                bundle.putString("table_id",String.valueOf(tables.get(position).getId()));
+                BillsFragment billsFragment = new BillsFragment();
+                billsFragment.setArguments(bundle);
+
+                getFragmentManager().beginTransaction().replace(R.id.container,billsFragment).addToBackStack("Tables").commit();
             }
         });
 

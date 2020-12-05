@@ -72,7 +72,7 @@ public class BillsDetailsFragment extends Fragment {
         });
 
         ArrayList<Bills> bills = SingletonBarGest.getInstance(getContext()).generateFakeDetailsBills();
-        float totalBills= singletonBarGest.getTotalBills();
+        float totalBills= 0;
 
         totalView.setText(String.valueOf(totalBills) + " €");
 

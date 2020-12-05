@@ -9,11 +9,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.bargest.Listeners.BillListener;
 import com.example.bargest.Listeners.TableListener;
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Categories;
 import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.Tables;
+import com.example.bargest.Utils.parserJsonBills;
 import com.example.bargest.Utils.parserJsonTables;
 
 import org.json.JSONArray;
@@ -25,10 +27,15 @@ public class SingletonBarGest {
     private static SingletonBarGest INSTANCE = null;
     private static RequestQueue volleyQueue = null;
     private TableListener tableListener;
+    private BillListener billListener;
     ArrayList<Bills> bills;
+    String url ="http://192.168.1.179/BarGestWeb/api/web/v1/";
 
     public void setTableListener(TableListener tableListener){
         this.tableListener=tableListener;
+    }
+    public void setBillsListener(BillListener billsListener){
+        this.billListener=billsListener;
     }
 
     public static synchronized SingletonBarGest getInstance(Context context) {
@@ -46,9 +53,7 @@ public class SingletonBarGest {
     }
 
     public void getAPITableList(Context context){
-        String url = "http://192.168.1.179/BarGestWeb/api/web/v1/table";
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"table", null, new Response.Listener<JSONArray>() {
               @Override
               public void onResponse(JSONArray response) {
                   Log.i("API", response.toString());
@@ -63,7 +68,24 @@ public class SingletonBarGest {
                 });
         Log.i("API","teste");
         volleyQueue.add(jsonArrayRequest);
+    }
+    public void getAPITableAccountsList(Context context,String table_id){
 
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"table/accounts/"+table_id, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.i("API", response.toString());
+                billListener.onRefreshListTables(parserJsonBills.parserJsonBilla(response));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+            }
+        });
+        Log.i("API","teste");
+        volleyQueue.add(jsonArrayRequest);
     }
     public ArrayList<Requests> genereteFakeRequestList(){
         ArrayList<Requests> arrayList = new ArrayList<>();
@@ -102,14 +124,7 @@ public class SingletonBarGest {
         return bills;
 
     }
-    public float getTotalBills(){
-        float total = 0;
-        for (Bills bill:bills) {
-            total+=bill.getPrice()*bill.getQuantidade();
-        }
 
-        return total;
-    }
 
     public ArrayList<Categories> genereteFakeCategoriesList(){
         ArrayList<Categories> categories = new ArrayList<>();

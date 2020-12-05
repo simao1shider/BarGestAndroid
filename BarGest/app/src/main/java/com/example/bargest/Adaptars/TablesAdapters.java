@@ -57,7 +57,7 @@ public class TablesAdapters  extends ArrayAdapter<Tables> implements Filterable 
         }
 
         numberText.setText(String.valueOf(getItem(position).getNumber()));
-        cost.setText(String.valueOf(getItem(position).getMoney()));
+        cost.setText("???€");
 
 
         return convertView;
