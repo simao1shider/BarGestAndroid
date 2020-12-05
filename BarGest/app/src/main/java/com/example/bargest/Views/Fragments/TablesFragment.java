@@ -39,7 +39,7 @@ public class TablesFragment extends Fragment implements TableListener {
         listTables = view.findViewById(R.id.list_tables);
         SearchView searchTables = view.findViewById(R.id.searchTables);
 
-        SingletonBarGest.getInstance(getContext()).genereteFakeTableList(getContext());
+        SingletonBarGest.getInstance(getContext()).getAPITableList(getContext());
         SingletonBarGest.getInstance(getContext()).setTableListener(this);
 
 

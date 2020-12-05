@@ -45,7 +45,7 @@ public class SingletonBarGest {
     private SingletonBarGest(Context context) {
     }
 
-    public void genereteFakeTableList(Context context){
+    public void getAPITableList(Context context){
         String url = "http://192.168.1.179/BarGestWeb/api/web/v1/table";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
