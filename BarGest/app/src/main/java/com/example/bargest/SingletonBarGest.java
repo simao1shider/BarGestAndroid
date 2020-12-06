@@ -2,24 +2,50 @@ package com.example.bargest;
 
 import android.content.ContentValues;
 import android.content.Context;
+<<<<<<< HEAD
 import android.database.sqlite.SQLiteDatabase;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+=======
+import android.util.Log;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.bargest.Listeners.BillListener;
+import com.example.bargest.Listeners.TableListener;
+>>>>>>> PROJ2021-164-gerir-mesas
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Categories;
-import com.example.bargest.Models.Products;
 import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.Tables;
+import com.example.bargest.Utils.parserJsonBills;
+import com.example.bargest.Utils.parserJsonTables;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
 public class SingletonBarGest {
 
     private static SingletonBarGest INSTANCE = null;
-
+    private static RequestQueue volleyQueue = null;
+    private TableListener tableListener;
+    private BillListener billListener;
     ArrayList<Bills> bills;
+    String url ="http://192.168.1.179/BarGestWeb/api/web/v1/";
+
+    public void setTableListener(TableListener tableListener){
+        this.tableListener=tableListener;
+    }
+    public void setBillsListener(BillListener billsListener){
+        this.billListener=billsListener;
+    }
 
     private final Database database;
     private final SQLiteDatabase db;
@@ -27,6 +53,7 @@ public class SingletonBarGest {
     public static synchronized SingletonBarGest getInstance(Context context) {
         if(INSTANCE == null)
         {
+            volleyQueue= Volley.newRequestQueue(context);
             INSTANCE = new SingletonBarGest(context);
         }
         return INSTANCE;
@@ -43,37 +70,40 @@ public class SingletonBarGest {
         return db.insert("request",null,values);
     }
 
-    public ArrayList<Tables> genereteFakeTableList(){
-        ArrayList<Tables> arrayList = new ArrayList<>();
+    public void getAPITableList(Context context){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"table", null, new Response.Listener<JSONArray>() {
+              @Override
+              public void onResponse(JSONArray response) {
+                  Log.i("API", response.toString());
+                  tableListener.onRefreshListTables(parserJsonTables.parserJsonTables(response));
+              }
+              }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("API",error.toString());
+                    }
+                });
+        Log.i("API","teste");
+        volleyQueue.add(jsonArrayRequest);
+    }
+    public void getAPITableAccountsList(Context context,String table_id){
 
-        arrayList.add(new Tables(1,false,0));
-        arrayList.add(new Tables(2,false,0));
-        arrayList.add(new Tables(3,false,0));
-        arrayList.add(new Tables(4,true,0));
-        arrayList.add(new Tables(5,false,0));
-        arrayList.add(new Tables(6,false,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-        arrayList.add(new Tables(7,true,0));
-
-        return arrayList;
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"table/accounts/"+table_id, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.i("API", response.toString());
+                billListener.onRefreshListTables(parserJsonBills.parserJsonBilla(response));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+            }
+        });
+        Log.i("API","teste");
+        volleyQueue.add(jsonArrayRequest);
     }
     public ArrayList<Requests> genereteFakeRequestList(){
         ArrayList<Requests> arrayList = new ArrayList<>();
@@ -112,14 +142,7 @@ public class SingletonBarGest {
         return bills;
 
     }
-    public float getTotalBills(){
-        float total = 0;
-        for (Bills bill:bills) {
-            total+=bill.getPrice()*bill.getQuantidade();
-        }
 
-        return total;
-    }
 
     public ArrayList<Categories> genereteFakeCategoriesList(){
         ArrayList<Categories> categories = new ArrayList<>();

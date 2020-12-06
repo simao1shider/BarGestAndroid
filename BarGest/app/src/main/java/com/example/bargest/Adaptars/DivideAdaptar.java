@@ -37,8 +37,8 @@ public class DivideAdaptar extends RecyclerView.Adapter<DivideAdaptar.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull final DivideAdaptar.MyViewHolder holder, final int position) {
         holder.productName.setText(data.get(position).getProductName());
-        holder.productQuantity.setText(String.valueOf(data.get(position).getQuantidade()));
-        holder.Price.setText(String.valueOf(data.get(position).getPrice()));
+        holder.productQuantity.setText("???");
+        holder.Price.setText("???");
     }
 
     @Override

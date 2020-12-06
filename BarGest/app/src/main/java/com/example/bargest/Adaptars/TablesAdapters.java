@@ -47,7 +47,7 @@ public class TablesAdapters  extends ArrayAdapter<Tables> implements Filterable 
 
         CardView card = convertView.findViewById(R.id.CardListTables);
 
-        if(getItem(position).isStatus()){
+        if(getItem(position).getStatus() == 1){
             //Table ocupped
             card.setBackgroundColor(Color.parseColor("#EDF8B3"));
         }
@@ -57,7 +57,7 @@ public class TablesAdapters  extends ArrayAdapter<Tables> implements Filterable 
         }
 
         numberText.setText(String.valueOf(getItem(position).getNumber()));
-        cost.setText(String.valueOf(getItem(position).getMoney()));
+        cost.setText("???€");
 
 
         return convertView;

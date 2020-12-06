@@ -6,37 +6,40 @@ import androidx.annotation.Nullable;
 import java.text.DecimalFormat;
 
 public class Tables {
+    int id;
     int number;
-    boolean occupied;
-    float money;
+    int status;
 
-    public Tables(int number, boolean occupied, float money) {
+    public Tables(int id, int number, int status) {
         this.number = number;
-        this.occupied = occupied;
-        this.money = money;
+        this.status = status;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getNumber() {
         return number;
     }
 
-    public boolean isStatus() {
-        return occupied;
-    }
-
-    public float getMoney() {
-        return money;
-    }
-
     public void setNumber(int number) {
         this.number = number;
     }
 
-    public void setStatus(boolean occupied) {
-        this.occupied = occupied;
+    public int getStatus() {
+        return status;
     }
 
-    public void setMoney(float money) {
-        this.money = money;
+    public void setStatus(int status) {
+        this.status = status;
     }
+
+
+
 }

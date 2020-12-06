@@ -48,8 +48,8 @@ public class BillsDetailsAdaptar extends ArrayAdapter<Bills> {
 
 
         nameProductView.setText(getItem(position).getProductName());
-        productPriceView.setText(String.valueOf(getItem(position).getPrice()));
-        productQuatityView.setText(String.valueOf(getItem(position).getQuantidade()));
+        productPriceView.setText("comming soon");
+        productQuatityView.setText("comming soon");
 
         return convertView;
     }

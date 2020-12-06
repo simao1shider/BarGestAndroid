@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.bargest.Adaptars.BillsAdaptar;
 import com.example.bargest.Adaptars.CategoriesAdaptar;
+import com.example.bargest.Listeners.BillListener;
 import com.example.bargest.Models.Bills;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
@@ -19,9 +21,9 @@ import com.example.bargest.SingletonBarGest;
 import java.util.ArrayList;
 
 
-public class BillsFragment extends Fragment {
+public class BillsFragment extends Fragment implements BillListener {
 
-
+    GridView billsView;
     public BillsFragment() {
         // Required empty public constructor
     }
@@ -30,12 +32,14 @@ public class BillsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        String table_id = getArguments().getString("table_id").trim();
+
         View view = inflater.inflate(R.layout.fragment_bills, container, false);
-        GridView billsView = view.findViewById(R.id.GVBills);
+        billsView = view.findViewById(R.id.GVBills);
         ImageView backfragment = view.findViewById(R.id.IMGBackFragment);
         ImageView addRequest = view.findViewById(R.id.BtnToolbarAdd);
-        ArrayList<Bills> bills = SingletonBarGest.getInstance(getContext()).generateFakeDetailsBills();
-        BillsAdaptar adaptar = new BillsAdaptar(getContext(),bills,getFragmentManager().beginTransaction());
+        SingletonBarGest.getInstance(getContext()).getAPITableAccountsList(getContext(),table_id);
+        SingletonBarGest.getInstance(getContext()).setBillsListener(this);
         backfragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +53,18 @@ public class BillsFragment extends Fragment {
             }
         });
 
-        billsView.setAdapter(adaptar);
+
         return view;
+    }
+
+    @Override
+    public void onRefreshListTables(ArrayList<Bills> bills) {
+        BillsAdaptar adaptar = new BillsAdaptar(getContext(),bills,getFragmentManager().beginTransaction());
+        billsView.setAdapter(adaptar);
+    }
+
+    @Override
+    public void onUpdateListTables(ArrayList<Bills> bills) {
+
     }
 }

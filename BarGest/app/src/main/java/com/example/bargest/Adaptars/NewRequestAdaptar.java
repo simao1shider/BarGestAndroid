@@ -38,15 +38,16 @@ public class NewRequestAdaptar  extends RecyclerView.Adapter<NewRequestAdaptar.M
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         holder.productName.setText(data.get(position).getProductName());
-        holder.productQuantity.setText(String.valueOf(data.get(position).getQuantidade()));
+        holder.productQuantity.setText(String.valueOf("???"));
         holder.btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int quantidade = data.get(position).getQuantidade();
+                //TODO:Remove quantity
+               /* int quantidade = data.get(position).getQuantidade();
                 if(quantidade>0){
                     data.get(position).setQuantidade(quantidade-1);
                     holder.productQuantity.setText(String.valueOf(data.get(position).getQuantidade()));
-                }
+                }*/
 
             }
         });
@@ -54,8 +55,8 @@ public class NewRequestAdaptar  extends RecyclerView.Adapter<NewRequestAdaptar.M
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.get(position).setQuantidade(data.get(position).getQuantidade()+1);
-                holder.productQuantity.setText(String.valueOf(data.get(position).getQuantidade()));
+                /*data.get(position).setQuantidade(data.get(position).getQuantidade()+1);
+                holder.productQuantity.setText(String.valueOf(data.get(position).getQuantidade()));*/
             }
         });
     }
