@@ -13,18 +13,19 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bargest.Models.Requests;
+import com.example.bargest.Models.views.ListRequests;
 import com.example.bargest.R;
 
 import java.util.ArrayList;
 
 public class RequestsAdaptars extends RecyclerView.Adapter<RequestsAdaptars.MyViewHolder> {
 
-    private Context context;
-    private ArrayList<Requests> data;
+    private static Context context;
+    private static ArrayList<ListRequests> data;
 
-    public RequestsAdaptars(Context context, ArrayList<Requests> objetcs){
-        this.context=context;
-        this.data=objetcs;
+    public RequestsAdaptars(Context rcontext, ArrayList<ListRequests> objetcs){
+        context=rcontext;
+        data=objetcs;
     }
 
 
@@ -39,28 +40,22 @@ public class RequestsAdaptars extends RecyclerView.Adapter<RequestsAdaptars.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
-        holder.Tablenumber.setText("Mesa "+ String.valueOf( data.get(position).getTable()));
+        holder.Tablenumber.setText("Mesa "+ String.valueOf(data.get(position).getTable_number()));
         switch (data.get(position).getStatus()){
+
             case 0:
-                //Recipt request
-                holder.card.setBackgroundColor(Color.parseColor("#5AD985"));
+                //Requested
+                holder.card.setBackgroundColor(Color.parseColor("#FC7B7B"));
                 break;
             case 1:
-                //Recipt request
+                //Cooking
                 holder.card.setBackgroundColor(Color.parseColor("#DEF273"));
                 break;
             case 2:
-                //Recipt request
-                holder.card.setBackgroundColor(Color.parseColor("#FC7B7B"));
+                //Ready
+                holder.card.setBackgroundColor(Color.parseColor("#5AD985"));
                 break;
         }
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, data.get(holder.getAdapterPosition()).getTable(),Toast.LENGTH_SHORT).show();
-            }
-        });
 
     }
 

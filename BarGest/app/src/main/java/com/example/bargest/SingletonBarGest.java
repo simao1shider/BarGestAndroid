@@ -9,7 +9,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 =======
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.bargest.Listeners.BillListener;
+import com.example.bargest.Listeners.ListRequestsListener;
 import com.example.bargest.Listeners.TableListener;
 >>>>>>> PROJ2021-164-gerir-mesas
 import com.example.bargest.Models.Bills;
@@ -25,6 +29,7 @@ import com.example.bargest.Models.Categories;
 import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.Tables;
 import com.example.bargest.Utils.parserJsonBills;
+import com.example.bargest.Utils.parserJsonRequest;
 import com.example.bargest.Utils.parserJsonTables;
 
 import org.json.JSONArray;
@@ -35,8 +40,10 @@ public class SingletonBarGest {
 
     private static SingletonBarGest INSTANCE = null;
     private static RequestQueue volleyQueue = null;
+    //Listeners
     private TableListener tableListener;
     private BillListener billListener;
+    private ListRequestsListener listRequestsListener;
     ArrayList<Bills> bills;
     String url ="http://192.168.1.179/BarGestWeb/api/web/v1/";
 
@@ -49,6 +56,10 @@ public class SingletonBarGest {
 
     private final Database database;
     private final SQLiteDatabase db;
+
+    public void setListRequestListener(ListRequestsListener listRequestsListener){
+        this.listRequestsListener=listRequestsListener;
+    }
 
     public static synchronized SingletonBarGest getInstance(Context context) {
         if(INSTANCE == null)
@@ -105,6 +116,27 @@ public class SingletonBarGest {
         Log.i("API","teste");
         volleyQueue.add(jsonArrayRequest);
     }
+
+    public void getAPIListRequests(Context context){
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"request/current", null, new Response.Listener<JSONArray>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.i("API", response.toString());
+                listRequestsListener.onRefreshListTables(parserJsonRequest.parserJsonListRequest(response));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+            }
+        });
+        Log.i("API","teste");
+        volleyQueue.add(jsonArrayRequest);
+    }
+
     public ArrayList<Requests> genereteFakeRequestList(){
         ArrayList<Requests> arrayList = new ArrayList<>();
 

@@ -5,8 +5,11 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/BarGest.iml" filepath="$PROJECT_DIR$/.idea/modules/BarGest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BarGest.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BarGest.app.iml" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BarGestAndroid.BarGest.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BarGestAndroid.BarGest.app.iml" />
+>>>>>>> PROJ2021-164-gerir-mesas
+=======
 >>>>>>> PROJ2021-164-gerir-mesas
     </modules>
   </component>

@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bargest.Adaptars.RequestsAdaptars;
+import com.example.bargest.Listeners.ListRequestsListener;
 import com.example.bargest.Models.Requests;
+import com.example.bargest.Models.views.ListRequests;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 
-public class RequestFragment extends Fragment {
+public class RequestFragment extends Fragment implements ListRequestsListener {
 
 
     public RequestFragment() {
@@ -35,7 +37,7 @@ public class RequestFragment extends Fragment {
     }
 
     private RequestsAdaptars adapters;
-    private ArrayList<Requests> requests;
+    private ArrayList<ListRequests> requests;
     private  RecyclerView listRequest;
 
     @Override
@@ -44,21 +46,17 @@ public class RequestFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_request, container, false);
         listRequest = view.findViewById(R.id.ListRequests);
-
         listRequest.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        requests = SingletonBarGest.getInstance(getContext()).genereteFakeRequestList();
-        adapters = new RequestsAdaptars(getContext(),requests);
-
-
+        SingletonBarGest.getInstance(getContext()).getAPIListRequests(getContext());
+        SingletonBarGest.getInstance(getContext()).setListRequestListener(this);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(listRequest);
 
-        listRequest.setAdapter(adapters);
         return view;
     }
-    Requests deletedResqust;
+    ListRequests deletedResqust;
 
     ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
         @Override
@@ -78,7 +76,7 @@ public class RequestFragment extends Fragment {
                     deletedResqust = requests.get(position);
                     requests.remove(position);
                     adapters.notifyDataSetChanged();
-                    Snackbar.make(listRequest,"Mesa " + deletedResqust.getTable(), Snackbar.LENGTH_LONG).setAction("Cancelar", new View.OnClickListener() {
+                    Snackbar.make(listRequest,"Mesa " + deletedResqust.getTable_number(), Snackbar.LENGTH_LONG).setAction("Cancelar", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             requests.add(position,deletedResqust);
@@ -102,4 +100,10 @@ public class RequestFragment extends Fragment {
         }
     };
 
+    @Override
+    public void onRefreshListTables(ArrayList<ListRequests> requests) {
+        adapters = new RequestsAdaptars(getContext(),requests);
+        listRequest.setAdapter(adapters);
+        this.requests=requests;
+    }
 }
