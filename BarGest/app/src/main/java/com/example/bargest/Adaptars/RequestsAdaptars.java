@@ -41,6 +41,7 @@ public class RequestsAdaptars extends RecyclerView.Adapter<RequestsAdaptars.MyVi
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         holder.Tablenumber.setText("Mesa "+ String.valueOf(data.get(position).getTable_number()));
+        holder.RequestNumber.setText("#"+String.valueOf(data.get(position).getId()));
         switch (data.get(position).getStatus()){
 
             case 0:
@@ -66,11 +67,13 @@ public class RequestsAdaptars extends RecyclerView.Adapter<RequestsAdaptars.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView Tablenumber;
+        TextView RequestNumber;
         CardView card;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             Tablenumber = itemView.findViewById(R.id.TVListRequestTableNumber);
             card = itemView.findViewById(R.id.CardViewImteRequest);
+            RequestNumber = itemView.findViewById(R.id.TVRequestNumber);
 
         }
     }

@@ -64,7 +64,7 @@ public class TablesFragment extends Fragment implements TableListener {
     @Override
     public void onRefreshListTables(final ArrayList<Tables> tables) {
         this.tables=tables;
-        TablesAdapters adapters = new TablesAdapters(getContext(),R.layout.item_list_tables,tables);
+        adapters = new TablesAdapters(getContext(),R.layout.item_list_tables,tables);
         listTables.setAdapter(adapters);
 
         listTables.setOnItemClickListener(new AdapterView.OnItemClickListener() {

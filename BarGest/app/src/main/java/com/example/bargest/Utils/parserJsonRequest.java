@@ -4,7 +4,6 @@ package com.example.bargest.Utils;
 
 import android.os.Build;
 //For parse string to dateTime
-import androidx.annotation.RequiresApi;
 
 import com.example.bargest.Models.views.ListRequests;
 
@@ -17,7 +16,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class parserJsonRequest {
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public static ArrayList<ListRequests> parserJsonListRequest(JSONArray json){
         ArrayList<ListRequests> requests = new ArrayList<>();
         try {

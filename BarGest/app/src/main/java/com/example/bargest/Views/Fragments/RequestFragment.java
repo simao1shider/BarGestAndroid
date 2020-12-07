@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -39,14 +40,18 @@ public class RequestFragment extends Fragment implements ListRequestsListener {
     private RequestsAdaptars adapters;
     private ArrayList<ListRequests> requests;
     private  RecyclerView listRequest;
+    private TextView infoRequest;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_request, container, false);
+        infoRequest = view.findViewById(R.id.TVInfoExistRequest);
+
         listRequest = view.findViewById(R.id.ListRequests);
         listRequest.setLayoutManager(new LinearLayoutManager(getContext()));
+
 
         SingletonBarGest.getInstance(getContext()).getAPIListRequests(getContext());
         SingletonBarGest.getInstance(getContext()).setListRequestListener(this);
@@ -56,7 +61,6 @@ public class RequestFragment extends Fragment implements ListRequestsListener {
 
         return view;
     }
-    ListRequests deletedResqust;
 
     ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
         @Override
@@ -69,20 +73,18 @@ public class RequestFragment extends Fragment implements ListRequestsListener {
             final int position = viewHolder.getAdapterPosition();
             switch (direction){
                 case ItemTouchHelper.RIGHT:
-                    //Todo: Colocar Fragmeto para editar o pedido
                     getFragmentManager().beginTransaction().replace(R.id.container,new EditRequestFragment()).addToBackStack("Requests").commit();
                     break;
                 case ItemTouchHelper.LEFT:
-                    deletedResqust = requests.get(position);
-                    requests.remove(position);
-                    adapters.notifyDataSetChanged();
-                    Snackbar.make(listRequest,"Mesa " + deletedResqust.getTable_number(), Snackbar.LENGTH_LONG).setAction("Cancelar", new View.OnClickListener() {
+                    Snackbar.make(listRequest,"Pedido: " +  requests.get(position).getId(), Snackbar.LENGTH_LONG).setAction("Confirmar", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            requests.add(position,deletedResqust);
+                            SingletonBarGest.getInstance(getContext()).deleteRequest(getContext(),requests.get(position).getId());
+                            requests.remove(position);
                             adapters.notifyDataSetChanged();
                         }
                     }).show();
+                    adapters.notifyDataSetChanged();
                     break;
             }
         }
@@ -102,8 +104,13 @@ public class RequestFragment extends Fragment implements ListRequestsListener {
 
     @Override
     public void onRefreshListTables(ArrayList<ListRequests> requests) {
-        adapters = new RequestsAdaptars(getContext(),requests);
-        listRequest.setAdapter(adapters);
-        this.requests=requests;
+        if(requests.size()!=0){
+            adapters = new RequestsAdaptars(getContext(),requests);
+            listRequest.setAdapter(adapters);
+            this.requests=requests;
+        }
+        else{
+            infoRequest.setVisibility(View.VISIBLE);
+        }
     }
 }

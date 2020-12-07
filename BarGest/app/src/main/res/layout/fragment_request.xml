@@ -9,9 +9,20 @@
     android:orientation="vertical"
     tools:context=".Views.Fragments.RequestFragment">
 
+    <TextView
+        android:id="@+id/TVInfoExistRequest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Não existem pedidos"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ListRequests"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="60dp" />
+
 </LinearLayout>

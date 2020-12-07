@@ -2,28 +2,26 @@ package com.example.bargest;
 
 import android.content.ContentValues;
 import android.content.Context;
-<<<<<<< HEAD
 import android.database.sqlite.SQLiteDatabase;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-=======
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.bargest.Listeners.BillListener;
 import com.example.bargest.Listeners.ListRequestsListener;
 import com.example.bargest.Listeners.TableListener;
->>>>>>> PROJ2021-164-gerir-mesas
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Categories;
 import com.example.bargest.Models.Requests;
@@ -33,6 +31,7 @@ import com.example.bargest.Utils.parserJsonRequest;
 import com.example.bargest.Utils.parserJsonTables;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -54,8 +53,6 @@ public class SingletonBarGest {
         this.billListener=billsListener;
     }
 
-    private final Database database;
-    private final SQLiteDatabase db;
 
     public void setListRequestListener(ListRequestsListener listRequestsListener){
         this.listRequestsListener=listRequestsListener;
@@ -71,14 +68,6 @@ public class SingletonBarGest {
     }
 
     private SingletonBarGest(Context context) {
-        database = new Database(context);
-        db = database.getWritableDatabase();
-    }
-
-    public long insertRequest(Requests request){
-        ContentValues values = new ContentValues();
-        values.put("status", request.getStatus());
-        return db.insert("request",null,values);
     }
 
     public void getAPITableList(Context context){
@@ -116,11 +105,10 @@ public class SingletonBarGest {
         Log.i("API","teste");
         volleyQueue.add(jsonArrayRequest);
     }
-
+    //---------------REQUESTS---------------
     public void getAPIListRequests(Context context){
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"request/current", null, new Response.Listener<JSONArray>() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(JSONArray response) {
                 Log.i("API", response.toString());
@@ -136,6 +124,31 @@ public class SingletonBarGest {
         Log.i("API","teste");
         volleyQueue.add(jsonArrayRequest);
     }
+
+    public void deleteRequest(final Context context, int requestId){
+        StringRequest stringRequest = new StringRequest (Request.Method.DELETE, url+"request/delete/"+requestId, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(context,response,Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+                Toast.makeText(context,"Erro ao eliminar",Toast.LENGTH_LONG).show();
+                getAPIListRequests(context);
+            }
+        });
+        Log.i("API","teste");
+        volleyQueue.add(stringRequest);
+    }
+
+
+
+
+
+
 
     public ArrayList<Requests> genereteFakeRequestList(){
         ArrayList<Requests> arrayList = new ArrayList<>();
