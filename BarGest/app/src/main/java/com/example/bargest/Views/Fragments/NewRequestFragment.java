@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.example.bargest.Adaptars.NewRequestAdaptar;
 import com.example.bargest.Models.Bills;
+import com.example.bargest.Models.Categories;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 import com.google.android.material.snackbar.Snackbar;
@@ -49,8 +50,7 @@ public class NewRequestFragment extends Fragment {
 
         listProductsNewRequest.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        products = SingletonBarGest.getInstance(getContext()).generateFakeDetailsBills();
-
+        products=SingletonBarGest.getInstance(getContext()).generateFakeDetailsBills();
 
         adapters = new NewRequestAdaptar(getContext(),products);
 
@@ -96,4 +96,6 @@ public class NewRequestFragment extends Fragment {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
+
+
 }

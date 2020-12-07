@@ -1,13 +1,7 @@
 package com.example.bargest;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -20,18 +14,17 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.bargest.Listeners.BillListener;
+import com.example.bargest.Listeners.CategoriesListener;
 import com.example.bargest.Listeners.ListRequestsListener;
 import com.example.bargest.Listeners.TableListener;
 import com.example.bargest.Models.Bills;
-import com.example.bargest.Models.Categories;
 import com.example.bargest.Models.Requests;
-import com.example.bargest.Models.Tables;
 import com.example.bargest.Utils.parserJsonBills;
+import com.example.bargest.Utils.parserJsonCategories;
 import com.example.bargest.Utils.parserJsonRequest;
 import com.example.bargest.Utils.parserJsonTables;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -43,14 +36,18 @@ public class SingletonBarGest {
     private TableListener tableListener;
     private BillListener billListener;
     private ListRequestsListener listRequestsListener;
+    private CategoriesListener categoriesListener;
     ArrayList<Bills> bills;
-    String url ="http://192.168.1.179/BarGestWeb/api/web/v1/";
+    String url ="http://192.168.1.180/BarGestWeb/api/web/v1/";
 
     public void setTableListener(TableListener tableListener){
         this.tableListener=tableListener;
     }
     public void setBillsListener(BillListener billsListener){
         this.billListener=billsListener;
+    }
+    public void setCategoriesListener(CategoriesListener categoriesListener){
+        this.categoriesListener=categoriesListener;
     }
 
 
@@ -69,7 +66,7 @@ public class SingletonBarGest {
 
     private SingletonBarGest(Context context) {
     }
-
+    //---------------TABLES---------------
     public void getAPITableList(Context context){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"table", null, new Response.Listener<JSONArray>() {
               @Override
@@ -144,9 +141,25 @@ public class SingletonBarGest {
         volleyQueue.add(stringRequest);
     }
 
+    //---------------CATEGORY---------------
 
-
-
+    public void getAllCategories(final Context context){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"category/all", null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.i("API", response.toString());
+                categoriesListener.onRefreshCategories(parserJsonCategories.parserJsonCategories(response));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+            }
+        });
+        Log.i("API","teste");
+        volleyQueue.add(jsonArrayRequest);
+    }
 
 
 
@@ -189,17 +202,5 @@ public class SingletonBarGest {
     }
 
 
-    public ArrayList<Categories> genereteFakeCategoriesList(){
-        ArrayList<Categories> categories = new ArrayList<>();
-        categories.add(new Categories("GINS"));
-        categories.add(new Categories("Vinhos"));
-        categories.add(new Categories("Sandes"));
-        categories.add(new Categories("Pratos"));
-        categories.add(new Categories("Sumos"));
-        categories.add(new Categories("Entradas"));
-
-
-        return categories;
-    }
 
 }

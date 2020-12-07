@@ -10,16 +10,16 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.example.bargest.Adaptars.CategoriesAdaptar;
+import com.example.bargest.Listeners.CategoriesListener;
 import com.example.bargest.Models.Categories;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 
 import java.util.ArrayList;
 
-public class CategoriesFragment extends Fragment {
+public class CategoriesFragment extends Fragment implements CategoriesListener {
 
     GridView GVCategories;
-    private ArrayList<Categories> categories;
     private CategoriesAdaptar adaptarCategories;
 
     public CategoriesFragment() {
@@ -32,9 +32,14 @@ public class CategoriesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
         GVCategories = view.findViewById(R.id.containerCategory);
-        categories = SingletonBarGest.getInstance(getContext()).genereteFakeCategoriesList();
+        SingletonBarGest.getInstance(getContext()).getAllCategories(getContext());
+        SingletonBarGest.getInstance(getContext()).setCategoriesListener(this);
+        return view;
+    }
+
+    @Override
+    public void onRefreshCategories(ArrayList<Categories> categories) {
         adaptarCategories = new CategoriesAdaptar(getContext(),categories,getFragmentManager().beginTransaction());
         GVCategories.setAdapter(adaptarCategories);
-        return view;
     }
 }
