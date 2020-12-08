@@ -1,14 +1,22 @@
 package com.example.bargest.Models;
 
 public class Products  {
-
+    int id;
     String Name;
     float price;
-    int quantidade;
 
-    public Products(String name, float price,int quantidade) {
+    public Products(int id,String name, float price) {
+        this.id=id;
         Name = name;
         this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -27,11 +35,4 @@ public class Products  {
         this.price = price;
     }
 
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
 }

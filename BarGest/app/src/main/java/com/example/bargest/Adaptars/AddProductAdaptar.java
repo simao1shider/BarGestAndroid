@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView;
 
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Categories;
+import com.example.bargest.Models.Products;
 import com.example.bargest.R;
 import com.example.bargest.Views.Fragments.AddProductFragment;
 
@@ -19,15 +20,15 @@ import java.util.ArrayList;
 public class AddProductAdaptar extends BaseAdapter {
 
     Context context;
-    ArrayList<Bills> bills;
-    public AddProductAdaptar(Context context, ArrayList<Bills> bills) {
+    ArrayList<Products> products;
+    public AddProductAdaptar(Context context, ArrayList<Products> products) {
         this.context = context;
-        this.bills= bills;
+        this.products= products;
     }
 
     @Override
     public int getCount() {
-        return bills.size();
+        return products.size();
     }
 
     @Override
@@ -47,7 +48,7 @@ public class AddProductAdaptar extends BaseAdapter {
 
         TextView CategorieName = view.findViewById(R.id.TVCategorieName);
         CardView CardCategorieName = view.findViewById(R.id.CVCategorie);
-        CategorieName.setText(bills.get(position).getProductName());
+        CategorieName.setText(products.get(position).getName());
 
         CardCategorieName.setOnClickListener(new View.OnClickListener() {
             @Override

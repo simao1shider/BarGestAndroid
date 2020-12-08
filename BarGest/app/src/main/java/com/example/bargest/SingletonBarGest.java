@@ -16,11 +16,13 @@ import com.android.volley.toolbox.Volley;
 import com.example.bargest.Listeners.BillListener;
 import com.example.bargest.Listeners.CategoriesListener;
 import com.example.bargest.Listeners.ListRequestsListener;
+import com.example.bargest.Listeners.ProductsListener;
 import com.example.bargest.Listeners.TableListener;
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Requests;
 import com.example.bargest.Utils.parserJsonBills;
 import com.example.bargest.Utils.parserJsonCategories;
+import com.example.bargest.Utils.parserJsonProducts;
 import com.example.bargest.Utils.parserJsonRequest;
 import com.example.bargest.Utils.parserJsonTables;
 
@@ -37,8 +39,9 @@ public class SingletonBarGest {
     private BillListener billListener;
     private ListRequestsListener listRequestsListener;
     private CategoriesListener categoriesListener;
+    private ProductsListener productsListener;
     ArrayList<Bills> bills;
-    String url ="http://192.168.1.180/BarGestWeb/api/web/v1/";
+    String url ="http://192.168.1.179/BarGestWeb/api/web/v1/";
 
     public void setTableListener(TableListener tableListener){
         this.tableListener=tableListener;
@@ -48,6 +51,9 @@ public class SingletonBarGest {
     }
     public void setCategoriesListener(CategoriesListener categoriesListener){
         this.categoriesListener=categoriesListener;
+    }
+    public void setProductListener(ProductsListener productListener){
+        this.productsListener = productListener;
     }
 
 
@@ -161,6 +167,24 @@ public class SingletonBarGest {
         volleyQueue.add(jsonArrayRequest);
     }
 
+    //---------------Products---------------
+    public void getProductsByCategory(final Context context,int categoryId){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"product/category/"+categoryId, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.i("API", response.toString());
+                productsListener.onRefreshListProducts(parserJsonProducts.parserProducts(response));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+            }
+        });
+        Log.i("API","teste");
+        volleyQueue.add(jsonArrayRequest);
+    }
 
 
     public ArrayList<Requests> genereteFakeRequestList(){
