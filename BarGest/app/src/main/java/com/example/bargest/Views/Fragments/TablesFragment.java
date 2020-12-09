@@ -53,6 +53,7 @@ public class TablesFragment extends Fragment implements TableListener {
             @Override
             public boolean onQueryTextChange(String newText) {
                 adapters.getFilter().filter(newText);
+                //TODO:Make filter work
                 return false;
             }
         });

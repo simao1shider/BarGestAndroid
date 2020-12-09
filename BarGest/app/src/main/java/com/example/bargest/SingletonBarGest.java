@@ -162,6 +162,24 @@ public class SingletonBarGest {
         volleyQueue.add(jsonArrayRequest);
     }
 
+    public void getRequestInfo(Context context, int request_id){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"request/info/"+request_id, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.i("API", response.toString());
+                productsListener.onRefreshListProducts(parserJsonProducts.parserAccountProducts(response));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+            }
+        });
+        Log.i("API","teste");
+        volleyQueue.add(jsonArrayRequest);
+    }
+
     public void deleteRequest(final Context context, int requestId){
         StringRequest stringRequest = new StringRequest (Request.Method.DELETE, url+"request/delete/"+requestId, new Response.Listener<String>() {
             @Override
@@ -241,6 +259,34 @@ public class SingletonBarGest {
         volleyQueue.add(stringRequest);
     }
 
+    public void editRequest(final Context context, int request_id,final ArrayList<Products> products){
+        StringRequest stringRequest = new StringRequest (Request.Method.PUT, url+"request/edit/"+request_id, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("API",response);
+                Toast.makeText(context,"Editado com sucesso",Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+                Toast.makeText(context,"Erro ao inserir dados",Toast.LENGTH_LONG).show();
+                getAPIListRequests(context);
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                String sproducts = new Gson().toJson(products);
+                params.put("products", sproducts);
+                return params;
+            }
+        };
+        Log.i("API","teste");
+        volleyQueue.add(stringRequest);
+    }
     //---------------CATEGORY---------------
 
     public void getAllCategories(final Context context){

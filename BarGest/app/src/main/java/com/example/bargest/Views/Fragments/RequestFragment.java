@@ -73,7 +73,11 @@ public class RequestFragment extends Fragment implements ListRequestsListener {
             final int position = viewHolder.getAdapterPosition();
             switch (direction){
                 case ItemTouchHelper.RIGHT:
-                    getFragmentManager().beginTransaction().replace(R.id.container,new EditRequestFragment()).addToBackStack("Requests").commit();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("request_id",requests.get(position).getId());
+                    EditRequestFragment editRequestFragment = new EditRequestFragment();
+                    editRequestFragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction().replace(R.id.container,editRequestFragment).addToBackStack("Requests").commit();
                     break;
                 case ItemTouchHelper.LEFT:
                     Snackbar.make(listRequest,"Pedido: " +  requests.get(position).getId(), Snackbar.LENGTH_LONG).setAction("Confirmar", new View.OnClickListener() {

@@ -63,7 +63,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/exemploProjetoto/AndroidStudio/BeatBunny" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
@@ -198,14 +198,18 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="292" y="151" key="#Inspections/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604168371313" />
+    <state x="552" y="198" width="816" height="729" key="#Intentions" timestamp="1607551652109">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="552" y="198" width="816" height="729" key="#Intentions/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1607551652109" />
     <state x="154" y="147" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604178191541">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="154" y="147" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604178191541" />
-    <state x="2685" y="246" key="#com.intellij.ide.util.MemberChooser" timestamp="1607467035188">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="765" y="246" key="#com.intellij.ide.util.MemberChooser" timestamp="1607547786770">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="765" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1607432008527" />
+    <state x="765" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1607547786770" />
     <state x="2685" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1607467035188" />
     <state x="765" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1607354596894" />
     <state x="429" y="276" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1604178012888">
