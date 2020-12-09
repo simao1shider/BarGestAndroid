@@ -1,11 +1,15 @@
 package com.example.bargest.Views.Fragments;
 
+import android.app.Dialog;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,9 +17,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.bargest.Adaptars.NewRequestAdaptar;
+import com.example.bargest.Listeners.NewRequestListner;
 import com.example.bargest.Models.Bills;
+import com.example.bargest.Models.Products;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 import com.google.android.material.snackbar.Snackbar;
@@ -25,7 +35,7 @@ import java.util.ArrayList;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 
-public class NewRequestFragment extends Fragment {
+public class NewRequestFragment extends Fragment implements NewRequestListner {
 
 
     public NewRequestFragment() {
@@ -33,32 +43,63 @@ public class NewRequestFragment extends Fragment {
     }
     RecyclerView listProductsNewRequest;
     private NewRequestAdaptar adapters;
-    private ArrayList<Bills> products;
-
+    private ArrayList<Products> products;
+    Dialog dialog;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-         View view = inflater.inflate(R.layout.fragment_new_request, container, false);
-         getFragmentManager().beginTransaction().replace(R.id.toolbarNewRequest,new BtnSearchFragment()).commit();
+
+        View view = inflater.inflate(R.layout.fragment_new_request, container, false);
+        dialog = new Dialog(getContext());
+
+        Bundle bundle = new Bundle();
+        BtnSearchFragment btnSearchFragment = new BtnSearchFragment();
+        if(getArguments().containsKey("table_id"))
+        {
+            bundle.putInt("table_id",getArguments().getInt("table_id"));
+            bundle.putInt("table_number",getArguments().getInt("table_number"));
+            btnSearchFragment.setArguments(bundle);
+        }
+        if(getArguments().containsKey("account_id"))
+        {
+            bundle.putInt("account_id",getArguments().getInt("account_id"));
+            bundle.putString("account_name",getArguments().getString("account_name"));
+            btnSearchFragment.setArguments(bundle);
+        }
+
+         getFragmentManager().beginTransaction().replace(R.id.toolbarNewRequest,btnSearchFragment).commit();
          getFragmentManager().beginTransaction().replace(R.id.conteinerAddProduct,new CategoriesFragment()).commit();
 
          listProductsNewRequest = view.findViewById(R.id.list_new_request);
 
+         SingletonBarGest.getInstance(getContext()).startNewRequest();
+        SingletonBarGest.getInstance(getContext()).setNewrequestsListener(this);
+
         listProductsNewRequest.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        products = SingletonBarGest.getInstance(getContext()).generateFakeDetailsBills();
-
-
-        adapters = new NewRequestAdaptar(getContext(),products);
 
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(listProductsNewRequest);
 
-        listProductsNewRequest.setAdapter(adapters);
+
+        Button create = view.findViewById(R.id.BTNCraeteRequest);
+
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getArguments().containsKey("account_id"))
+                {
+                    SingletonBarGest.getInstance(getContext()).createRequestAccount(getContext(),getArguments().getInt("account_id"),products, getFragmentManager());
+                }
+                if(getArguments().containsKey("table_id")){
+                    openDialog();
+                }
+
+            }
+        });
+
 
         return view;
     }
@@ -75,13 +116,13 @@ public class NewRequestFragment extends Fragment {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             final int position = viewHolder.getAdapterPosition();
-            deletedResqust = products.get(position);
-            products.remove(position);
+            //deletedResqust = products.get(position);
+            //products.remove(position);
             adapters.notifyDataSetChanged();
             Snackbar.make(listProductsNewRequest,deletedResqust.getProductName(), Snackbar.LENGTH_LONG).setAction("Cancelar", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    products.add(position,deletedResqust);
+                    //products.add(position,deletedResqust);
                     adapters.notifyDataSetChanged(); }
             }).show();
 
@@ -96,4 +137,33 @@ public class NewRequestFragment extends Fragment {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
+
+
+    @Override
+    public void onRefreshListProducts(ArrayList<Products> products) {
+        adapters = new NewRequestAdaptar(getContext(),products);
+        listProductsNewRequest.setAdapter(adapters);
+        this.products=products;
+    }
+
+
+
+    private void openDialog() {
+        dialog.setContentView(R.layout.dialog_account);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+
+        Button createRequest = dialog.findViewById(R.id.BTNAddAccount);
+
+        createRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText editText = dialog.findViewById(R.id.EdTAccountName);
+                String accountName = editText.getText().toString();
+                SingletonBarGest.getInstance(getContext()).createRequestTable(getContext(),getArguments().getInt("table_id"),accountName,products, getFragmentManager());
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
 }

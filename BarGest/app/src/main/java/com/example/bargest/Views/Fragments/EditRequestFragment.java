@@ -14,11 +14,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.bargest.Adaptars.NewRequestAdaptar;
+import com.example.bargest.Listeners.ProductsListener;
 import com.example.bargest.Models.Bills;
+import com.example.bargest.Models.Products;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -26,7 +30,7 @@ import java.util.ArrayList;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 
-public class EditRequestFragment extends Fragment {
+public class EditRequestFragment extends Fragment implements ProductsListener {
 
 
     public EditRequestFragment() {
@@ -35,7 +39,7 @@ public class EditRequestFragment extends Fragment {
 
     RecyclerView listProductsEditRequest;
     private NewRequestAdaptar adapters;
-    private ArrayList<Bills> products;
+    private ArrayList<Products> products;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,14 +48,15 @@ public class EditRequestFragment extends Fragment {
         listProductsEditRequest = view.findViewById(R.id.listProductsEditRequest);
         ImageView backfragment = view.findViewById(R.id.IMGBackFragment);
         ImageView addRequest = view.findViewById(R.id.BtnToolbarAdd);
+        TextView toolbarTitle = view.findViewById(R.id.TVTollbarTitle);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.FBTNsave);
+
+        toolbarTitle.setText("Pedido:"+getArguments().getInt("request_id"));
 
         listProductsEditRequest.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        products = SingletonBarGest.getInstance(getContext()).generateFakeDetailsBills();
-
-
-        adapters = new NewRequestAdaptar(getContext(),products);
-
+        SingletonBarGest.getInstance(getContext()).getRequestInfo(getContext(),getArguments().getInt("request_id"));
+        SingletonBarGest.getInstance(getContext()).setProductListener(this);
 
         backfragment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,10 +64,11 @@ public class EditRequestFragment extends Fragment {
                 getFragmentManager().popBackStack();
             }
         });
-        addRequest.setOnClickListener(new View.OnClickListener() {
+        addRequest.setVisibility(View.GONE);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.container,new NewRequestFragment()).addToBackStack("EditRequest").commit();
+                SingletonBarGest.getInstance(getContext()).editRequest(getContext(),getArguments().getInt("request_id"),products);
             }
         });
 
@@ -70,14 +76,11 @@ public class EditRequestFragment extends Fragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(listProductsEditRequest);
 
-        listProductsEditRequest.setAdapter(adapters);
-
-
         return view;
     }
 
 
-    Bills deletedResqust;
+    Products deletedResqust;
 
     ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
         @Override
@@ -89,15 +92,13 @@ public class EditRequestFragment extends Fragment {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             final int position = viewHolder.getAdapterPosition();
             deletedResqust = products.get(position);
-            products.remove(position);
-            adapters.notifyDataSetChanged();
-            Snackbar.make(listProductsEditRequest,deletedResqust.getProductName(), Snackbar.LENGTH_LONG).setAction("Cancelar", new View.OnClickListener() {
+            Snackbar.make(listProductsEditRequest,deletedResqust.getName(), Snackbar.LENGTH_LONG).setAction("Confirmar", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    products.add(position,deletedResqust);
+                    products.remove(position);
                     adapters.notifyDataSetChanged(); }
             }).show();
-
+            adapters.notifyDataSetChanged();
         }
         @Override
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
@@ -109,6 +110,15 @@ public class EditRequestFragment extends Fragment {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
+
+
+
+    @Override
+    public void onRefreshListProducts(ArrayList<Products> products) {
+        adapters = new NewRequestAdaptar(getContext(),products);
+        listProductsEditRequest.setAdapter(adapters);
+        this.products=products;
+    }
 
 
 }

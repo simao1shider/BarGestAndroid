@@ -1,14 +1,26 @@
 package com.example.bargest.Models;
 
-public class Products  {
+import androidx.annotation.Nullable;
 
+public class Products  {
+    int id;
     String Name;
     float price;
-    int quantidade;
+    int quantity;
 
-    public Products(String name, float price,int quantidade) {
+    public Products(int id,String name, float price, @Nullable int quantity) {
+        this.id=id;
         Name = name;
         this.price = price;
+        this.quantity = quantity;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -27,11 +39,11 @@ public class Products  {
         this.price = price;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

@@ -9,21 +9,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.bargest.Adaptars.AddProductAdaptar;
 import com.example.bargest.Adaptars.CategoriesAdaptar;
+import com.example.bargest.Listeners.ProductsListener;
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Categories;
+import com.example.bargest.Models.Products;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 
 import java.util.ArrayList;
 
 
-public class AddProductFragment extends Fragment {
+public class AddProductFragment extends Fragment implements ProductsListener {
 
     GridView GVAddProduct;
-    private ArrayList<Bills> bills;
     private AddProductAdaptar adaptarCategories;
 
     public AddProductFragment() {
@@ -33,13 +35,18 @@ public class AddProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        int category_id = getArguments().getInt("category_id");
+        String category_name = getArguments().getString("category_name");
         View view = inflater.inflate(R.layout.fragment_add_product, container, false);
+
         GVAddProduct = view.findViewById(R.id.GVAddProduct);
         ImageButton backCategories = view.findViewById(R.id.BtnBackToCategories);
-        bills = SingletonBarGest.getInstance(getContext()).generateFakeDetailsBills();
-        adaptarCategories = new AddProductAdaptar(getContext(),bills);
-        GVAddProduct.setAdapter(adaptarCategories);
+        TextView title = view.findViewById(R.id.TVTitleCategoryName);
+
+        title.setText(category_name);
+        SingletonBarGest.getInstance(getContext()).getProductsByCategory(getContext(),category_id);
+        SingletonBarGest.getInstance(getContext()).setProductListener(this);
+
 
         backCategories.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,4 +58,9 @@ public class AddProductFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onRefreshListProducts(ArrayList<Products> products) {
+        adaptarCategories = new AddProductAdaptar(getContext(),products);
+        GVAddProduct.setAdapter(adaptarCategories);
+    }
 }

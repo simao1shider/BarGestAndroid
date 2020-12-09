@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,17 +20,20 @@ import android.widget.TextView;
 
 import com.example.bargest.Adaptars.BillsDetailsAdaptar;
 import com.example.bargest.Adaptars.TablesAdapters;
+import com.example.bargest.Listeners.ProductsListener;
 import com.example.bargest.Models.Bills;
+import com.example.bargest.Models.Products;
 import com.example.bargest.Models.Tables;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 
 import java.util.ArrayList;
 
-public class BillsDetailsFragment extends Fragment {
+public class BillsDetailsFragment extends Fragment implements ProductsListener {
 
     Dialog dialog;
-
+    ListView listbillDetailsView;
+    TextView totalView;
     public BillsDetailsFragment() {
         // Required empty public constructor
     }
@@ -38,14 +42,18 @@ public class BillsDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bills_details, container, false);
+
         ImageView backfragment = view.findViewById(R.id.IMGBackFragment);
         ImageView addRequest = view.findViewById(R.id.BtnToolbarAdd);
         ImageButton divideFragment = view.findViewById(R.id.BtnDivideBill);
         ImageButton BtnPay = view.findViewById(R.id.BtnPay);
-        ListView listbillDetailsView = view.findViewById(R.id.ListBillDetails);
-        TextView totalView = view.findViewById(R.id.TVTotalBills);
+        listbillDetailsView = view.findViewById(R.id.ListBillDetails);
+        totalView = view.findViewById(R.id.TVTotalBills);
+        TextView toolbarTitle = view.findViewById(R.id.TVTollbarTitle);
+
+        toolbarTitle.setText(getArguments().getString("account_name"));
+
         dialog = new Dialog(getContext());
-        final SingletonBarGest singletonBarGest = SingletonBarGest.getInstance(getContext());
         backfragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +63,12 @@ public class BillsDetailsFragment extends Fragment {
         addRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.container,new NewRequestFragment()).addToBackStack("BillsDetails").commit();
+                Bundle bundle = new Bundle();
+                bundle.putInt("account_id",getArguments().getInt("account_id"));
+                bundle.putString("account_name",getArguments().getString("account_name"));
+                NewRequestFragment newRequestFragment = new NewRequestFragment();
+                newRequestFragment.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.container,newRequestFragment).addToBackStack("BillsDetails").commit();
             }
         });
         divideFragment.setOnClickListener(new View.OnClickListener() {
@@ -71,17 +84,8 @@ public class BillsDetailsFragment extends Fragment {
             }
         });
 
-        ArrayList<Bills> bills = SingletonBarGest.getInstance(getContext()).generateFakeDetailsBills();
-        float totalBills= 0;
-
-        totalView.setText(String.valueOf(totalBills) + " €");
-
-
-
-        final BillsDetailsAdaptar adapters = new BillsDetailsAdaptar(getContext(),R.layout.item_list_bill_details,bills);
-        listbillDetailsView.setAdapter(adapters);
-
-
+        SingletonBarGest.getInstance(getContext()).getAccountProducts(getContext(),getArguments().getInt("account_id"));
+        SingletonBarGest.getInstance(getContext()).setProductListener(this);
 
         return view;
     }
@@ -110,4 +114,15 @@ public class BillsDetailsFragment extends Fragment {
         dialog.show();
     }
 
+    @Override
+    public void onRefreshListProducts(ArrayList<Products> products) {
+        final BillsDetailsAdaptar adapters = new BillsDetailsAdaptar(getContext(),R.layout.item_list_bill_details,products);
+        listbillDetailsView.setAdapter(adapters);
+        float totalBills= 0;
+        for (Products product: products
+             ) {
+            totalBills+=product.getQuantity()*product.getPrice();
+        }
+        totalView.setText(String.valueOf(totalBills) + " €");
+    }
 }

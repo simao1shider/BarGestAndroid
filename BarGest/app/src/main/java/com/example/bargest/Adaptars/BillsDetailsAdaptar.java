@@ -14,18 +14,19 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
 import com.example.bargest.Models.Bills;
+import com.example.bargest.Models.Products;
 import com.example.bargest.Models.Tables;
 import com.example.bargest.R;
 
 import java.util.ArrayList;
 
-public class BillsDetailsAdaptar extends ArrayAdapter<Bills> {
+public class BillsDetailsAdaptar extends ArrayAdapter<Products> {
 
     private Context context;
     private  int resource;
-    private ArrayList<Bills> originalData;
+    private ArrayList<Products> originalData;
 
-    public BillsDetailsAdaptar(@NonNull Context context, int resource, @NonNull ArrayList<Bills> objects) {
+    public BillsDetailsAdaptar(@NonNull Context context, int resource, @NonNull ArrayList<Products> objects) {
         super(context, resource, objects);
 
         this.context = context;
@@ -47,9 +48,9 @@ public class BillsDetailsAdaptar extends ArrayAdapter<Bills> {
         TextView productQuatityView = convertView.findViewById(R.id.TVTBillsQuantity);
 
 
-        nameProductView.setText(getItem(position).getProductName());
-        productPriceView.setText("comming soon");
-        productQuatityView.setText("comming soon");
+        nameProductView.setText(getItem(position).getName());
+        productPriceView.setText(getItem(position).getPrice()+"€");
+        productQuatityView.setText(String.valueOf(getItem(position).getQuantity()));
 
         return convertView;
     }

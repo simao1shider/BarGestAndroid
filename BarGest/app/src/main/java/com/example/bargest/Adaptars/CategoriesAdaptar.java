@@ -2,6 +2,7 @@ package com.example.bargest.Adaptars;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,7 @@ public class CategoriesAdaptar extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View view=inflater.inflate(R.layout.item_categorie,null,false);
 
@@ -58,7 +59,12 @@ public class CategoriesAdaptar extends BaseAdapter {
         CardCategorieName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               transaction.replace(R.id.conteinerAddProduct,new AddProductFragment()).commit();
+                Bundle bundle=new Bundle();
+                bundle.putInt("category_id",categories.get(position).getId());
+                bundle.putString("category_name",String.valueOf(categories.get(position).getName()));
+                AddProductFragment addProductFragment = new AddProductFragment();
+                addProductFragment.setArguments(bundle);
+               transaction.replace(R.id.conteinerAddProduct,addProductFragment).commit();
             }
         });
 

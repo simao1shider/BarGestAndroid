@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.bargest.R;
 
@@ -25,7 +26,13 @@ public class BtnSearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_btn_search, container, false);
-
+        TextView toolbarTitle = view.findViewById(R.id.TVTollbarTitleSearch);
+        if(getArguments().containsKey("table_id")){
+            toolbarTitle.setText("Mesa "+getArguments().getInt("table_number"));
+        }
+        if(getArguments().containsKey("account_id")){
+            toolbarTitle.setText(getArguments().getString("account_name"));
+        }
         ImageView btnSearch = view.findViewById(R.id.btnSearch);
         ImageButton back = view.findViewById(R.id.IMGBackFragmentBtnSearch);
         btnSearch.setOnClickListener(new View.OnClickListener() {
