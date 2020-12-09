@@ -6,6 +6,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,19 +19,24 @@ import com.android.volley.toolbox.Volley;
 import com.example.bargest.Listeners.BillListener;
 import com.example.bargest.Listeners.CategoriesListener;
 import com.example.bargest.Listeners.ListRequestsListener;
+import com.example.bargest.Listeners.NewRequestListner;
 import com.example.bargest.Listeners.ProductsListener;
 import com.example.bargest.Listeners.TableListener;
 import com.example.bargest.Models.Bills;
+import com.example.bargest.Models.Products;
 import com.example.bargest.Models.Requests;
 import com.example.bargest.Utils.parserJsonBills;
 import com.example.bargest.Utils.parserJsonCategories;
 import com.example.bargest.Utils.parserJsonProducts;
 import com.example.bargest.Utils.parserJsonRequest;
 import com.example.bargest.Utils.parserJsonTables;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SingletonBarGest {
 
@@ -40,7 +48,9 @@ public class SingletonBarGest {
     private ListRequestsListener listRequestsListener;
     private CategoriesListener categoriesListener;
     private ProductsListener productsListener;
+    private NewRequestListner newRequestListner;
     ArrayList<Bills> bills;
+    ArrayList<Products> newrequests;
     String url ="http://192.168.1.179/BarGestWeb/api/web/v1/";
 
     public void setTableListener(TableListener tableListener){
@@ -54,6 +64,9 @@ public class SingletonBarGest {
     }
     public void setProductListener(ProductsListener productListener){
         this.productsListener = productListener;
+    }
+    public void setNewrequestsListener(NewRequestListner newRequestListner){
+        this.newRequestListner = newRequestListner;
     }
 
 
@@ -72,6 +85,27 @@ public class SingletonBarGest {
 
     private SingletonBarGest(Context context) {
     }
+
+    public void startNewRequest(){
+        newrequests = new ArrayList<>();
+    }
+
+    public void addNewRequest(Products product){
+        int index=0;
+        for (Products oldproduct: newrequests) {
+            if(oldproduct.getId()==product.getId()){
+                product.setQuantity(oldproduct.getQuantity()+1);
+                newrequests.set(index,product);
+                newRequestListner.onRefreshListProducts(newrequests);
+                return;
+            }
+            index+=1;
+        }
+        product.setQuantity(1);
+        newrequests.add(product);
+        newRequestListner.onRefreshListProducts(newrequests);
+    }
+
     //---------------TABLES---------------
     public void getAPITableList(Context context){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"table", null, new Response.Listener<JSONArray>() {
@@ -147,6 +181,66 @@ public class SingletonBarGest {
         volleyQueue.add(stringRequest);
     }
 
+    public void createRequestAccount(final Context context, int accountId, final ArrayList<Products> products, final FragmentManager fragment){
+        StringRequest stringRequest = new StringRequest (Request.Method.POST, url+"request/create/account/"+accountId, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("API",response);
+                Toast.makeText(context,"Pedido criado com successo",Toast.LENGTH_LONG).show();
+                fragment.popBackStack();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+                Toast.makeText(context,"Erro ao inserir dados",Toast.LENGTH_LONG).show();
+                getAPIListRequests(context);
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                String sproducts = new Gson().toJson(products);
+                params.put("products", sproducts);
+                return params;
+            }
+        };
+        Log.i("API","teste");
+        volleyQueue.add(stringRequest);
+    }
+    public void createRequestTable(final Context context, int tableId,final String accountName ,final ArrayList<Products> products, final FragmentManager fragment){
+        StringRequest stringRequest = new StringRequest (Request.Method.POST, url+"request/create/table/"+tableId, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("API",response);
+                Toast.makeText(context,"Pedido criado com successo",Toast.LENGTH_LONG).show();
+                fragment.popBackStack();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+                Toast.makeText(context,"Erro ao inserir dados",Toast.LENGTH_LONG).show();
+                getAPIListRequests(context);
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                String sproducts = new Gson().toJson(products);
+                params.put("products", sproducts);
+                params.put("account_name", accountName);
+                return params;
+            }
+        };
+        Log.i("API","teste");
+        volleyQueue.add(stringRequest);
+    }
+
     //---------------CATEGORY---------------
 
     public void getAllCategories(final Context context){
@@ -186,24 +280,25 @@ public class SingletonBarGest {
         volleyQueue.add(jsonArrayRequest);
     }
 
-
-    public ArrayList<Requests> genereteFakeRequestList(){
-        ArrayList<Requests> arrayList = new ArrayList<>();
-
-        arrayList.add(new Requests(1,0));
-        arrayList.add(new Requests(2,1));
-        arrayList.add(new Requests(3,2));
-        arrayList.add(new Requests(4,1));
-        arrayList.add(new Requests(5,0));
-        arrayList.add(new Requests(6,2));
-        arrayList.add(new Requests(7,2));
-        arrayList.add(new Requests(8,0));
-        arrayList.add(new Requests(9,0));
-        arrayList.add(new Requests(10,0));
-
-
-        return arrayList;
+    //---------------ACCOUNTS---------------
+    public void getAccountProducts(Context context,int accountId){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"account/info/"+accountId, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.i("API", response.toString());
+                productsListener.onRefreshListProducts(parserJsonProducts.parserAccountProducts(response));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+            }
+        });
+        Log.i("API","teste");
+        volleyQueue.add(jsonArrayRequest);
     }
+
     public ArrayList<Bills> generateFakeDetailsBills(){
         bills = new ArrayList<>();
 

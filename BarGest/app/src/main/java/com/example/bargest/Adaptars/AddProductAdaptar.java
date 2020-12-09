@@ -12,7 +12,9 @@ import androidx.cardview.widget.CardView;
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Categories;
 import com.example.bargest.Models.Products;
+import com.example.bargest.Models.Requests;
 import com.example.bargest.R;
+import com.example.bargest.SingletonBarGest;
 import com.example.bargest.Views.Fragments.AddProductFragment;
 
 import java.util.ArrayList;
@@ -42,7 +44,7 @@ public class AddProductAdaptar extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View view=inflater.inflate(R.layout.item_categorie,null,false);
 
@@ -53,7 +55,7 @@ public class AddProductAdaptar extends BaseAdapter {
         CardCategorieName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SingletonBarGest.getInstance(context).addNewRequest(products.get(position));
             }
         });
 

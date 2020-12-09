@@ -50,7 +50,7 @@ public class EditRequestFragment extends Fragment {
         products = SingletonBarGest.getInstance(getContext()).generateFakeDetailsBills();
 
 
-        adapters = new NewRequestAdaptar(getContext(),products);
+        //adapters = new NewRequestAdaptar(getContext(),products);
 
 
         backfragment.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +70,7 @@ public class EditRequestFragment extends Fragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(listProductsEditRequest);
 
-        listProductsEditRequest.setAdapter(adapters);
+        //listProductsEditRequest.setAdapter(adapters);
 
 
         return view;

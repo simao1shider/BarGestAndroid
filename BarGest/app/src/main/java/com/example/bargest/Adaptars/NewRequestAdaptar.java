@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bargest.Models.Bills;
+import com.example.bargest.Models.Products;
 import com.example.bargest.R;
 
 import java.util.ArrayList;
@@ -18,8 +19,8 @@ import java.util.ArrayList;
 public class NewRequestAdaptar  extends RecyclerView.Adapter<NewRequestAdaptar.MyViewHolder>{
 
     private Context context;
-    private ArrayList<Bills> data;
-    public NewRequestAdaptar(Context context, ArrayList<Bills> objetcs) {
+    private ArrayList<Products> data;
+    public NewRequestAdaptar(Context context, ArrayList<Products> objetcs) {
         //TODO:Create class Product and change de last parameter
         this.context=context;
         this.data=objetcs;
@@ -37,8 +38,8 @@ public class NewRequestAdaptar  extends RecyclerView.Adapter<NewRequestAdaptar.M
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
-        holder.productName.setText(data.get(position).getProductName());
-        holder.productQuantity.setText(String.valueOf("???"));
+        holder.productName.setText(data.get(position).getName());
+        holder.productQuantity.setText(String.valueOf(data.get(position).getQuantity()));
         holder.btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

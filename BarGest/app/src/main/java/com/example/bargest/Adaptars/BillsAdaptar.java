@@ -1,6 +1,7 @@
 package com.example.bargest.Adaptars;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ public class BillsAdaptar extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View view=inflater.inflate(R.layout.item_categorie,null,false);
 
@@ -58,7 +59,12 @@ public class BillsAdaptar extends BaseAdapter {
         CardCategorieName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                transaction.replace(R.id.container,new BillsDetailsFragment()).addToBackStack("Bills").commit();
+                Bundle bundle = new Bundle();
+                bundle.putInt("account_id",bills.get(position).getId());
+                bundle.putString("account_name",bills.get(position).getProductName());
+                BillsDetailsFragment billsDetailsFragment = new BillsDetailsFragment();
+                billsDetailsFragment.setArguments(bundle);
+                transaction.replace(R.id.container,billsDetailsFragment).addToBackStack("Bills").commit();
             }
         });
         return view;

@@ -1,38 +1,55 @@
 package com.example.bargest.Models;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 
 public class Requests {
-     int table;
-     int status;
-     ArrayList<Products> products;
 
-    public Requests(int table, int status) {
-        this.table = table;
-        this.status = status;
+    int id;
+    float price;
+    String name;
+    int quantity;
+
+
+    public Requests(@Nullable int id, float price, String name, int quantity) {
+        this.id = id;
+
+        this.price = price;
+        this.name = name;
+        this.quantity = quantity;
     }
 
-    public int getTable() {
-        return table;
+    public int getId() {
+        return id;
     }
 
-    public void setTable(int table) {
-        this.table = table;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getStatus() {
-        return status;
+
+    public float getPrice() {
+        return price;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setPrice(float price) {
+        this.price = price;
     }
 
-    public ArrayList<Products> getProducts() {
-        return products;
+    public String getName() {
+        return name;
     }
 
-    public void setProducts(ArrayList<Products> products) {
-        this.products = products;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

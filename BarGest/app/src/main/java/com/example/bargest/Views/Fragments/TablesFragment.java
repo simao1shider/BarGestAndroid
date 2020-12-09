@@ -72,6 +72,7 @@ public class TablesFragment extends Fragment implements TableListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle=new Bundle();
                 bundle.putString("table_id",String.valueOf(tables.get(position).getId()));
+                bundle.putInt("table_number",tables.get(position).getNumber());
                 BillsFragment billsFragment = new BillsFragment();
                 billsFragment.setArguments(bundle);
 
