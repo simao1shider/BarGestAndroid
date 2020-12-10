@@ -44,4 +44,9 @@ public class ListProductsByCategoryFragment extends Fragment implements Products
         productAdapter = new AddProductAdaptar(getContext(), products);
         GVProducts.setAdapter(productAdapter);
     }
+
+    @Override
+    public void onRefreshArrayProducts(ArrayList<Products> products) {
+
+    }
 }
