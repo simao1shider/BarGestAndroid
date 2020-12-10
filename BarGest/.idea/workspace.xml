@@ -206,11 +206,11 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="154" y="147" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604178191541" />
-    <state x="765" y="246" key="#com.intellij.ide.util.MemberChooser" timestamp="1607547786770">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="2685" y="246" key="#com.intellij.ide.util.MemberChooser" timestamp="1607634085482">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="765" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1607547786770" />
-    <state x="2685" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1607467035188" />
+    <state x="2685" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1607634085482" />
     <state x="765" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1607354596894" />
     <state x="429" y="276" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1604178012888">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -347,7 +347,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/example/bargest/Views/Fragments/NewRequestFragment.java</url>
-          <line>160</line>
+          <line>150</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>

@@ -125,4 +125,9 @@ public class BillsDetailsFragment extends Fragment implements ProductsListener {
         }
         totalView.setText(String.valueOf(totalBills) + " €");
     }
+
+    @Override
+    public void onRefreshArrayProducts(ArrayList<Products> products) {
+
+    }
 }

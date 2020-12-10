@@ -308,6 +308,24 @@ public class SingletonBarGest {
     }
 
     //---------------Products---------------
+    public void getAllProducs(){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"product/all", null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.i("API", response.toString());
+                productsListener.onRefreshArrayProducts(parserJsonProducts.parserProducts(response));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+            }
+        });
+        Log.i("API","teste");
+        volleyQueue.add(jsonArrayRequest);
+    }
+
     public void getProductsByCategory(final Context context,int categoryId){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"product/category/"+categoryId, null, new Response.Listener<JSONArray>() {
             @Override

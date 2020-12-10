@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -119,6 +120,13 @@ public class EditRequestFragment extends Fragment implements ProductsListener {
         listProductsEditRequest.setAdapter(adapters);
         this.products=products;
     }
+
+    @Override
+    public void onRefreshArrayProducts(ArrayList<Products> products) {
+
+    }
+
+
 
 
 }

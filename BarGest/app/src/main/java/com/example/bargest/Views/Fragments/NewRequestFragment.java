@@ -43,7 +43,7 @@ public class NewRequestFragment extends Fragment implements NewRequestListner {
     }
     RecyclerView listProductsNewRequest;
     private NewRequestAdaptar adapters;
-    private ArrayList<Products> products;
+    public ArrayList<Products> products;
     Dialog dialog;
 
 
@@ -105,8 +105,6 @@ public class NewRequestFragment extends Fragment implements NewRequestListner {
     }
 
 
-    Bills deletedResqust;
-
     ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -115,17 +113,9 @@ public class NewRequestFragment extends Fragment implements NewRequestListner {
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            final int position = viewHolder.getAdapterPosition();
-            //deletedResqust = products.get(position);
-            //products.remove(position);
+            int position = viewHolder.getAdapterPosition();
+            products.remove(position);
             adapters.notifyDataSetChanged();
-            Snackbar.make(listProductsNewRequest,deletedResqust.getProductName(), Snackbar.LENGTH_LONG).setAction("Cancelar", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //products.add(position,deletedResqust);
-                    adapters.notifyDataSetChanged(); }
-            }).show();
-
         }
         @Override
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {

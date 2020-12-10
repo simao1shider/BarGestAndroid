@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -62,5 +63,10 @@ public class AddProductFragment extends Fragment implements ProductsListener {
     public void onRefreshListProducts(ArrayList<Products> products) {
         adaptarCategories = new AddProductAdaptar(getContext(),products);
         GVAddProduct.setAdapter(adaptarCategories);
+    }
+
+    @Override
+    public void onRefreshArrayProducts(ArrayList<Products> products) {
+
     }
 }
