@@ -13,13 +13,26 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a61f13da-f660-48b4-bb4c-7ef3f21cdee0" name="Default Changelist" comment="" />
+    <list default="true" id="a61f13da-f660-48b4-bb4c-7ef3f21cdee0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/bebida.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/cafe.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/gins.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/gins1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/tablecinza.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/vinho.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_list_request.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_list_request.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_list_tables.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_list_tables.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[9WV4C18824023011]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Nexus_5X_API_29]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -63,7 +76,8 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/drawable-v24" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
@@ -77,9 +91,12 @@
       <recent name="com.example.bargest.Views" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\BarGestAndroid\BarGest\app\src\main\res\drawable-v24" />
       <recent name="C:\Users\ysik3\Documents\IPL\PROJ2021\BarGest\BarGestAndroid\BarGest\app\src\main\res\drawable-xxxhdpi" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\BarGestAndroid\BarGest\app\src\main\res\drawable-v24" />
+      <recent name="C:\wamp64\www\BarGestAndroid\BarGest\app\src\main\res\drawable-v24\Icons\Color\" />
       <recent name="C:\Users\ysik3\Desktop\BarGest\app\src\main\res\layout" />
       <recent name="C:\Users\ysik3\Desktop\BarGest\app\src\main\res\drawable" />
       <recent name="C:\Users\ysik3\Documents\IPL\PROJ2021\BarGest\BarGestAndroid\BarGest\app\src\main\res\drawable" />
@@ -206,22 +223,37 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="154" y="147" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604178191541" />
+<<<<<<< HEAD
     <state x="2685" y="246" key="#com.intellij.ide.util.MemberChooser" timestamp="1607634085482">
       <screen x="1920" y="0" width="1920" height="1080" />
+=======
+    <state x="769" y="-843" key="#com.intellij.ide.util.MemberChooser" timestamp="1607618829068">
+      <screen x="4" y="-1080" width="1920" height="1040" />
+>>>>>>> develop
     </state>
     <state x="765" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1607547786770" />
     <state x="2685" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1607634085482" />
     <state x="765" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1607354596894" />
+    <state x="769" y="-843" key="#com.intellij.ide.util.MemberChooser/4.-1080.1920.1040/0.0.1920.1040@4.-1080.1920.1040" timestamp="1607618829068" />
     <state x="429" y="276" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1604178012888">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="429" y="276" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604178012888" />
-    <state x="690" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1607380044434">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="694" y="-804" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1607617532391">
+      <screen x="4" y="-1080" width="1920" height="1040" />
     </state>
     <state x="690" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1607380044434" />
     <state x="2610" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604628925810" />
     <state x="690" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1603998531340" />
+    <state x="694" y="-804" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/4.-1080.1920.1040/0.0.1920.1040@4.-1080.1920.1040" timestamp="1607617532391" />
+    <state x="700" y="-726" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1607613177547">
+      <screen x="4" y="-1080" width="1920" height="1040" />
+    </state>
+    <state x="700" y="-726" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/4.-1080.1920.1040/0.0.1920.1040@4.-1080.1920.1040" timestamp="1607613177547" />
+    <state x="96" y="-988" width="1736" height="856" key="AVDManager" timestamp="1607612875677">
+      <screen x="4" y="-1080" width="1920" height="1040" />
+    </state>
+    <state x="96" y="-988" width="1736" height="856" key="AVDManager/4.-1080.1920.1040/0.0.1920.1040@4.-1080.1920.1040" timestamp="1607612875677" />
     <state x="540" y="295" key="AndroidCreateResourceDirectoryDialog" timestamp="1604605176000">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -248,30 +280,34 @@
     <state x="765" y="309" key="FileChooserDialogImpl/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604440548258" />
     <state x="2685" y="309" key="FileChooserDialogImpl/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1607467695611" />
     <state x="765" y="309" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1604491856905" />
-    <state width="1921" height="371" key="GridCell.Tab.0.bottom" timestamp="1607468761222">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state width="1877" height="159" key="GridCell.Tab.0.bottom" timestamp="1607555992514">
+      <screen x="4" y="-1080" width="1920" height="1040" />
     </state>
     <state width="1921" height="371" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1607443002961" />
     <state width="1921" height="371" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1607468761222" />
     <state width="1921" height="371" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1607340686502" />
-    <state width="1921" height="371" key="GridCell.Tab.0.center" timestamp="1607468761222">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state width="1877" height="159" key="GridCell.Tab.0.bottom/4.-1080.1920.1040/0.0.1920.1040@4.-1080.1920.1040" timestamp="1607555992514" />
+    <state width="1877" height="159" key="GridCell.Tab.0.center" timestamp="1607555992513">
+      <screen x="4" y="-1080" width="1920" height="1040" />
     </state>
     <state width="1921" height="371" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1607443002961" />
     <state width="1921" height="371" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1607468761222" />
     <state width="1921" height="371" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1607340686502" />
-    <state width="1921" height="371" key="GridCell.Tab.0.left" timestamp="1607468761222">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state width="1877" height="159" key="GridCell.Tab.0.center/4.-1080.1920.1040/0.0.1920.1040@4.-1080.1920.1040" timestamp="1607555992513" />
+    <state width="1877" height="159" key="GridCell.Tab.0.left" timestamp="1607555992513">
+      <screen x="4" y="-1080" width="1920" height="1040" />
     </state>
     <state width="1921" height="371" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1607443002961" />
     <state width="1921" height="371" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1607468761222" />
     <state width="1921" height="371" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1607340686502" />
-    <state width="1921" height="371" key="GridCell.Tab.0.right" timestamp="1607468761222">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state width="1877" height="159" key="GridCell.Tab.0.left/4.-1080.1920.1040/0.0.1920.1040@4.-1080.1920.1040" timestamp="1607555992513" />
+    <state width="1877" height="159" key="GridCell.Tab.0.right" timestamp="1607555992514">
+      <screen x="4" y="-1080" width="1920" height="1040" />
     </state>
     <state width="1921" height="371" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1607443002961" />
     <state width="1921" height="371" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1607468761222" />
     <state width="1921" height="371" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1607340686502" />
+    <state width="1877" height="159" key="GridCell.Tab.0.right/4.-1080.1920.1040/0.0.1920.1040@4.-1080.1920.1040" timestamp="1607555992514" />
     <state width="1921" height="371" key="GridCell.Tab.1.bottom" timestamp="1607468761222">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
@@ -296,6 +332,10 @@
     <state width="1921" height="371" key="GridCell.Tab.1.right/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1607443002961" />
     <state width="1921" height="371" key="GridCell.Tab.1.right/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1607468761222" />
     <state width="1921" height="371" key="GridCell.Tab.1.right/0.0.1920.1080@0.0.1920.1080" timestamp="1607340686504" />
+    <state x="479" y="-818" key="IDE.errors.dialog" timestamp="1607612969306">
+      <screen x="4" y="-1080" width="1920" height="1040" />
+    </state>
+    <state x="479" y="-818" key="IDE.errors.dialog/4.-1080.1920.1040/0.0.1920.1040@4.-1080.1920.1040" timestamp="1607612969306" />
     <state x="461" y="185" key="SettingsEditor" timestamp="1604437066002">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -315,11 +355,12 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2689" y="454" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604763058943" />
-    <state x="-8" y="-8" width="1546" height="856" key="dock-window-1" timestamp="1604766427887">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="317" y="-996" width="1564" height="999" maximized="true" key="dock-window-1" timestamp="1607619750314">
+      <screen x="4" y="-1080" width="1920" height="1040" />
     </state>
     <state x="2055" y="-18" width="1546" height="856" maximized="true" key="dock-window-1/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604753152452" />
     <state x="-8" y="-8" width="1546" height="856" key="dock-window-1/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604766427887" />
+    <state x="317" y="-996" width="1564" height="999" maximized="true" key="dock-window-1/4.-1080.1920.1040/0.0.1920.1040@4.-1080.1920.1040" timestamp="1607619750314" />
     <state x="2013" y="-12" width="1660" height="1066" maximized="true" key="dock-window-2" timestamp="1604349002726">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
@@ -330,21 +371,17 @@
     <state x="616" y="250" key="run.anything.popup/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604438053088" />
     <state x="2536" y="250" key="run.anything.popup/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604707420781" />
     <state x="616" y="250" key="run.anything.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1607339957929" />
-    <state x="2543" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1604764434334">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="627" y="-854" width="672" height="653" key="search.everywhere.popup" timestamp="1607615221110">
+      <screen x="4" y="-1080" width="1920" height="1040" />
     </state>
     <state x="623" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1604371467563" />
     <state x="2543" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604764434334" />
     <state x="623" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1604055606440" />
+    <state x="627" y="-854" width="672" height="653" key="search.everywhere.popup/4.-1080.1920.1040/0.0.1920.1040@4.-1080.1920.1040" timestamp="1607615221110" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/bargest/Views/Fragments/CategoriesFragment.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/example/bargest/Views/Fragments/NewRequestFragment.java</url>
           <line>150</line>

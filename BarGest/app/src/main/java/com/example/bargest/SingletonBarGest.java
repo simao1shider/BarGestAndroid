@@ -51,7 +51,7 @@ public class SingletonBarGest {
     private NewRequestListner newRequestListner;
     ArrayList<Bills> bills;
     ArrayList<Products> newrequests;
-    String url ="http://192.168.1.179/BarGestWeb/api/web/v1/";
+    String url ="http://192.168.1.205/BarGestWeb/api/web/v1/";
 
     public void setTableListener(TableListener tableListener){
         this.tableListener=tableListener;
