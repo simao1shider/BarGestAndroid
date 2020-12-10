@@ -39,7 +39,7 @@ public class CategoriesFragment extends Fragment implements CategoriesListener {
 
     @Override
     public void onRefreshCategories(ArrayList<Categories> categories) {
-        adaptarCategories = new CategoriesAdaptar(getContext(),categories,getFragmentManager().beginTransaction());
+        adaptarCategories = new CategoriesAdaptar(getContext(),categories,getFragmentManager().beginTransaction(), R.id.conteinerAddProduct);
         GVCategories.setAdapter(adaptarCategories);
     }
 }

@@ -40,7 +40,7 @@ public class ListCategoriesFragment extends Fragment implements CategoriesListen
 
     @Override
     public void onRefreshCategories(ArrayList<Categories> categories) {
-        adaptarCategories = new CategoriesAdaptar(getContext(), categories, getFragmentManager().beginTransaction());
+        adaptarCategories = new CategoriesAdaptar(getContext(), categories, getFragmentManager().beginTransaction(), R.id.container);
         GVCategories.setAdapter(adaptarCategories);
     }
 }

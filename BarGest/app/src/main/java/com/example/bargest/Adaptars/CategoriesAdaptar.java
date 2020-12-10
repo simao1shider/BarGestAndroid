@@ -19,6 +19,7 @@ import com.example.bargest.Models.Categories;
 import com.example.bargest.R;
 import com.example.bargest.Views.Fragments.AddProductFragment;
 import com.example.bargest.Views.Fragments.BillsDetailsFragment;
+import com.example.bargest.Views.Fragments.ListProductsByCategoryFragment;
 
 import java.util.ArrayList;
 
@@ -26,10 +27,13 @@ public class CategoriesAdaptar extends BaseAdapter {
     Context context;
     ArrayList<Categories> categories;
     FragmentTransaction transaction;
-    public CategoriesAdaptar(Context context, ArrayList<Categories> categories, FragmentTransaction transaction) {
+    int container;
+
+    public CategoriesAdaptar(Context context, ArrayList<Categories> categories, FragmentTransaction transaction, int container) {
         this.context = context;
-        this.categories= categories;
-        this.transaction=transaction;
+        this.categories = categories;
+        this.transaction = transaction;
+        this.container = container;
     }
 
     @Override
@@ -62,9 +66,18 @@ public class CategoriesAdaptar extends BaseAdapter {
                 Bundle bundle=new Bundle();
                 bundle.putInt("category_id",categories.get(position).getId());
                 bundle.putString("category_name",String.valueOf(categories.get(position).getName()));
-                AddProductFragment addProductFragment = new AddProductFragment();
-                addProductFragment.setArguments(bundle);
-               transaction.replace(R.id.conteinerAddProduct,addProductFragment).commit();
+
+                if(container == R.id.container){
+                    ListProductsByCategoryFragment listProductsByCategoryFragment = new ListProductsByCategoryFragment();
+                    listProductsByCategoryFragment.setArguments(bundle);
+                    transaction.replace(container,listProductsByCategoryFragment).commit();
+                }
+                else{
+                    AddProductFragment addProductFragment = new AddProductFragment();
+                    addProductFragment.setArguments(bundle);
+                    transaction.replace(container,addProductFragment).commit();
+                }
+
             }
         });
 
