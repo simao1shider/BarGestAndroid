@@ -6,24 +6,20 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.bargest.Adaptars.BillsDetailsAdaptar;
-import com.example.bargest.Adaptars.TablesAdapters;
 import com.example.bargest.Listeners.ProductsListener;
-import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Products;
-import com.example.bargest.Models.Tables;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 
@@ -80,7 +76,7 @@ public class BillsDetailsFragment extends Fragment implements ProductsListener {
         BtnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog();
+                openDialog(getArguments().getInt("account_id"));
             }
         });
 
@@ -90,7 +86,7 @@ public class BillsDetailsFragment extends Fragment implements ProductsListener {
         return view;
     }
 
-    private void openDialog() {
+    private void openDialog(final int account_id) {
         dialog.setContentView(R.layout.dialog_pay);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -107,6 +103,8 @@ public class BillsDetailsFragment extends Fragment implements ProductsListener {
         addNif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EditText nif = dialog.findViewById(R.id.nif);
+                SingletonBarGest.getInstance(getContext()).pay(getContext(), account_id, Integer.parseInt(nif.getText().toString()), getFragmentManager());
                 dialog.dismiss();
             }
         });
