@@ -49,11 +49,11 @@ public class TablesAdapters  extends ArrayAdapter<Tables> implements Filterable 
 
         if(getItem(position).getStatus() == 1){
             //Table ocupped
-            card.setBackgroundColor(Color.parseColor("#EDF8B3"));
+            card.setBackgroundColor(Color.parseColor("#FFEEBA"));
         }
         else{
             //Table free
-            card.setBackgroundColor(Color.parseColor("#A4EABC"));
+            card.setBackgroundColor(Color.parseColor("#C3E6CB"));
         }
 
         numberText.setText(String.valueOf(getItem(position).getNumber()));

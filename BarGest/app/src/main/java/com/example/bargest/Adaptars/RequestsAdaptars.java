@@ -46,15 +46,15 @@ public class RequestsAdaptars extends RecyclerView.Adapter<RequestsAdaptars.MyVi
 
             case 0:
                 //Requested
-                holder.card.setBackgroundColor(Color.parseColor("#FC7B7B"));
+                holder.card.setBackgroundColor(Color.parseColor("#F5C6CB"));
                 break;
             case 1:
                 //Cooking
-                holder.card.setBackgroundColor(Color.parseColor("#DEF273"));
+                holder.card.setBackgroundColor(Color.parseColor("#FFEEBA"));
                 break;
             case 2:
                 //Ready
-                holder.card.setBackgroundColor(Color.parseColor("#5AD985"));
+                holder.card.setBackgroundColor(Color.parseColor("#C3E6CB"));
                 break;
         }
 

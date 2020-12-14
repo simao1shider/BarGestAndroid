@@ -2,6 +2,7 @@ package com.example.bargest;
 
 import android.content.Context;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -30,6 +31,9 @@ import com.example.bargest.Utils.parserJsonCategories;
 import com.example.bargest.Utils.parserJsonProducts;
 import com.example.bargest.Utils.parserJsonRequest;
 import com.example.bargest.Utils.parserJsonTables;
+import com.example.bargest.Views.Fragments.BillsFragment;
+import com.example.bargest.Views.Fragments.NewRequestFragment;
+import com.example.bargest.Views.Fragments.TablesFragment;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -362,6 +366,36 @@ public class SingletonBarGest {
         Log.i("API","teste");
         volleyQueue.add(jsonArrayRequest);
     }
+
+    public void pay(final Context context, int account_id, final int nif, final FragmentManager fragmentManager){
+        StringRequest stringRequest = new StringRequest (Request.Method.PUT, url + "account/pay/"+account_id, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("API",response);
+                Toast.makeText(context,"Pagamento efetuado com sucesso!",Toast.LENGTH_LONG).show();
+                fragmentManager.beginTransaction().replace(R.id.container, new TablesFragment()).commit();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+                Toast.makeText(context,"Erro no pagamento!",Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("nif", String.valueOf(nif));
+                return params;
+            }
+        };
+        Log.i("API","teste");
+        volleyQueue.add(stringRequest);
+    }
+
+
 
     public ArrayList<Bills> generateFakeDetailsBills(){
         bills = new ArrayList<>();
