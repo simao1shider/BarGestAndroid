@@ -70,7 +70,12 @@ public class BillsDetailsFragment extends Fragment implements ProductsListener {
         divideFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.container,new DivideBillFragment()).addToBackStack("BillsDetails").commit();
+                Bundle bundle = new Bundle();
+                bundle.putInt("account_id",getArguments().getInt("account_id"));
+                bundle.putString("account_name",getArguments().getString("account_name"));
+                DivideBillFragment divideBillFragment = new DivideBillFragment();
+                divideBillFragment.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.container, divideBillFragment).addToBackStack("BillsDetails").commit();
             }
         });
         BtnPay.setOnClickListener(new View.OnClickListener() {

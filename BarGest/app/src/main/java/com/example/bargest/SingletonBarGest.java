@@ -19,6 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.bargest.Listeners.BillListener;
 import com.example.bargest.Listeners.CategoriesListener;
+import com.example.bargest.Listeners.DivideBillListener;
 import com.example.bargest.Listeners.ListRequestsListener;
 import com.example.bargest.Listeners.NewRequestListner;
 import com.example.bargest.Listeners.ProductsListener;
@@ -53,9 +54,10 @@ public class SingletonBarGest {
     private CategoriesListener categoriesListener;
     private ProductsListener productsListener;
     private NewRequestListner newRequestListner;
+    private DivideBillListener divideBillListener;
     ArrayList<Bills> bills;
     ArrayList<Products> newrequests;
-    String url ="http://192.168.1.205/BarGestWeb/api/web/v1/";
+    String url ="http://192.168.1.103/BarGestWeb/api/web/v1/";
 
     public void setTableListener(TableListener tableListener){
         this.tableListener=tableListener;
@@ -72,10 +74,11 @@ public class SingletonBarGest {
     public void setNewrequestsListener(NewRequestListner newRequestListner){
         this.newRequestListner = newRequestListner;
     }
-
-
     public void setListRequestListener(ListRequestsListener listRequestsListener){
         this.listRequestsListener=listRequestsListener;
+    }
+    public void setDivideBillListener(DivideBillListener divideBillListener){
+        this.divideBillListener = divideBillListener;
     }
 
     public static synchronized SingletonBarGest getInstance(Context context) {
@@ -394,30 +397,6 @@ public class SingletonBarGest {
         Log.i("API","teste");
         volleyQueue.add(stringRequest);
     }
-
-
-
-    public ArrayList<Bills> generateFakeDetailsBills(){
-        bills = new ArrayList<>();
-
-        bills.add(new Bills("Asd",(float) 3.5,2));
-        bills.add(new Bills("dd",(float) 2.5,2));
-        bills.add(new Bills("oo",(float) 1.2,4));
-        bills.add(new Bills("Asd",(float) 10,2));
-        bills.add(new Bills("asdf",(float) 3.5,7));
-        bills.add(new Bills("fdfff",(float) 3.5,8));
-        bills.add(new Bills("vv",(float) 3.5,1));
-        bills.add(new Bills("ser",(float) 3.5,2));
-        bills.add(new Bills("dffv",(float) 3.5,6));
-        bills.add(new Bills("ssa",(float) 3.5,5));
-        bills.add(new Bills("ssd",(float) 3.5,9));
-        bills.add(new Bills("ddd",(float) 3.5,3));
-        bills.add(new Bills("Assasd",(float) 3.5,2));
-
-        return bills;
-
-    }
-
 
 
 }
