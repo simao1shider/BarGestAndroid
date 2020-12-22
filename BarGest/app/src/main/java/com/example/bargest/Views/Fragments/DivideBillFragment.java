@@ -13,37 +13,36 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.bargest.Adaptars.CategoriesAdaptar;
 import com.example.bargest.Adaptars.DivideAdaptar;
-import com.example.bargest.Adaptars.NewRequestAdaptar;
-import com.example.bargest.Listeners.DivideBillListener;
+import com.example.bargest.Listeners.ProductsListener;
 import com.example.bargest.Models.Bills;
-import com.example.bargest.Models.Tables;
+import com.example.bargest.Models.Products;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
-public class DivideBillFragment extends Fragment implements DivideBillListener {
+public class DivideBillFragment extends Fragment implements ProductsListener {
 
     RecyclerView listOriginBill;
     RecyclerView listNewBill;
     TextView TVTotal;
     private DivideAdaptar adaptersOrigin;
     private DivideAdaptar adaptersNew;
-    private ArrayList<Bills> Originproducts;
-    private ArrayList<Bills> NewProducts;
+    private ArrayList<Products> Originproducts;
+    private ArrayList<Products> NewProducts;
+    Products deletedOriginBills;
+    Products deletedNewBills;
+    float Total;
 
     public DivideBillFragment() {
         // Required empty public constructor
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,16 +58,11 @@ public class DivideBillFragment extends Fragment implements DivideBillListener {
         listNewBill.setLayoutManager(new LinearLayoutManager(getContext()));
 
         SingletonBarGest.getInstance(getContext()).getAccountProducts(getContext(), getArguments().getInt("account_id"));
-        SingletonBarGest.getInstance(getContext()).setDivideBillListener(this);
+        SingletonBarGest.getInstance(getContext()).setProductListener(this);
         NewProducts = new ArrayList<>();
 
-        adaptersOrigin = new DivideAdaptar(getContext(), Originproducts);
-        adaptersNew = new DivideAdaptar(getContext(), NewProducts);
-
-
-        ItemTouchHelper itemTouchHelperOriginBill = new ItemTouchHelper(callbackOrigin);
         ItemTouchHelper itemTouchHelperNewBill = new ItemTouchHelper(callbackNew);
-        itemTouchHelperOriginBill.attachToRecyclerView(listOriginBill);
+
         itemTouchHelperNewBill.attachToRecyclerView(listNewBill);
         view.findViewById(R.id.BtnConfirmationNewBill).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,15 +70,11 @@ public class DivideBillFragment extends Fragment implements DivideBillListener {
                 //getFragmentManager().popBackStack("Bills",0);
             }
         });
-        listOriginBill.setAdapter(adaptersOrigin);
-        listNewBill.setAdapter(adaptersNew);
 
         return view;
     }
 
-    Bills deletedOriginBills;
-    Bills deletedNewBills;
-    float Total;
+
     ItemTouchHelper.SimpleCallback callbackOrigin = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -94,9 +84,9 @@ public class DivideBillFragment extends Fragment implements DivideBillListener {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             final int position = viewHolder.getAdapterPosition();
-            deletedOriginBills = Originproducts.get(position);
+            //deletedOriginBills = Originproducts.get(position);
             Originproducts.remove(position);
-            NewProducts.add(deletedOriginBills);
+            //NewProducts.add(deletedOriginBills);
             adaptersOrigin.notifyDataSetChanged();
             adaptersNew.notifyDataSetChanged();
            // Total += deletedOriginBills.getPrice()*deletedOriginBills.getQuantidade();
@@ -124,9 +114,9 @@ public class DivideBillFragment extends Fragment implements DivideBillListener {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             final int position = viewHolder.getAdapterPosition();
-            deletedNewBills = Originproducts.get(position);
+            //deletedNewBills = Originproducts.get(position);
             NewProducts.remove(position);
-            Originproducts.add(deletedNewBills);
+            //Originproducts.add(deletedNewBills);
             adaptersOrigin.notifyDataSetChanged();
             adaptersNew.notifyDataSetChanged();
             //Total -= deletedNewBills.getPrice()*deletedNewBills.getQuantidade();
@@ -146,9 +136,18 @@ public class DivideBillFragment extends Fragment implements DivideBillListener {
         }
     };
 
+
     @Override
-    public void onRefreshListProducts(ArrayList<Bills> bill) {
-        adaptersOrigin = new DivideAdaptar(getContext(), Originproducts);
+    public void onRefreshListProducts(ArrayList<Products> products) {
+        Originproducts = products;
+        adaptersOrigin = new DivideAdaptar(getContext(), products);
         listOriginBill.setAdapter(adaptersOrigin);
+        ItemTouchHelper itemTouchHelperOriginBill = new ItemTouchHelper(callbackOrigin);
+        itemTouchHelperOriginBill.attachToRecyclerView(listOriginBill);
+    }
+
+    @Override
+    public void onRefreshArrayProducts(ArrayList<Products> products) {
+
     }
 }

@@ -2,12 +2,10 @@ package com.example.bargest;
 
 import android.content.Context;
 
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.Request;
@@ -19,21 +17,17 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.bargest.Listeners.BillListener;
 import com.example.bargest.Listeners.CategoriesListener;
-import com.example.bargest.Listeners.DivideBillListener;
 import com.example.bargest.Listeners.ListRequestsListener;
 import com.example.bargest.Listeners.NewRequestListner;
 import com.example.bargest.Listeners.ProductsListener;
 import com.example.bargest.Listeners.TableListener;
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Products;
-import com.example.bargest.Models.Requests;
 import com.example.bargest.Utils.parserJsonBills;
 import com.example.bargest.Utils.parserJsonCategories;
 import com.example.bargest.Utils.parserJsonProducts;
 import com.example.bargest.Utils.parserJsonRequest;
 import com.example.bargest.Utils.parserJsonTables;
-import com.example.bargest.Views.Fragments.BillsFragment;
-import com.example.bargest.Views.Fragments.NewRequestFragment;
 import com.example.bargest.Views.Fragments.TablesFragment;
 import com.google.gson.Gson;
 
@@ -54,10 +48,9 @@ public class SingletonBarGest {
     private CategoriesListener categoriesListener;
     private ProductsListener productsListener;
     private NewRequestListner newRequestListner;
-    private DivideBillListener divideBillListener;
     ArrayList<Bills> bills;
     ArrayList<Products> newrequests;
-    String url ="http://192.168.1.103/BarGestWeb/api/web/v1/";
+    String url ="http://192.168.1.100/BarGestWeb/api/web/v1/";
 
     public void setTableListener(TableListener tableListener){
         this.tableListener=tableListener;
@@ -76,9 +69,6 @@ public class SingletonBarGest {
     }
     public void setListRequestListener(ListRequestsListener listRequestsListener){
         this.listRequestsListener=listRequestsListener;
-    }
-    public void setDivideBillListener(DivideBillListener divideBillListener){
-        this.divideBillListener = divideBillListener;
     }
 
     public static synchronized SingletonBarGest getInstance(Context context) {
