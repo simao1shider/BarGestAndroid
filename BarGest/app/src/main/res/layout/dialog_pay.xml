@@ -39,7 +39,7 @@
             app:layout_constraintTop_toBottomOf="@+id/BtnClosePayDialog" />
 
         <EditText
-            android:id="@+id/nif"
+            android:id="@+id/quantity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView12"
@@ -60,7 +60,7 @@
             android:id="@+id/BtnAddNif"
             android:layout_width="wrap_content"
             android:layout_height="38dp"
-            android:layout_below="@+id/nif"
+            android:layout_below="@+id/quantity"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
@@ -71,6 +71,6 @@
             android:textSize="16sp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nif" />
+            app:layout_constraintTop_toBottomOf="@+id/quantity" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

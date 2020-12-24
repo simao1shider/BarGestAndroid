@@ -108,7 +108,7 @@ public class BillsDetailsFragment extends Fragment implements ProductsListener {
         addNif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText nif = dialog.findViewById(R.id.nif);
+                EditText nif = dialog.findViewById(R.id.quantity);
                 SingletonBarGest.getInstance(getContext()).pay(getContext(), account_id, Integer.parseInt(nif.getText().toString()), getFragmentManager());
                 dialog.dismiss();
             }
