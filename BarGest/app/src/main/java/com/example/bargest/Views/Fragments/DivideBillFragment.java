@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bargest.Adaptars.DivideAdaptar;
 import com.example.bargest.Listeners.ProductsListener;
@@ -73,7 +74,7 @@ public class DivideBillFragment extends Fragment implements ProductsListener {
         view.findViewById(R.id.BtnConfirmationNewBill).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //getFragmentManager().popBackStack("Bills",0);
+                openDialogPay(getArguments().getInt("account_id"));
             }
         });
 
@@ -91,6 +92,7 @@ public class DivideBillFragment extends Fragment implements ProductsListener {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             openDialog(getArguments().getInt("account_id"), viewHolder, 1);
             adaptersOrigin.notifyDataSetChanged();
+            adaptersNew.notifyDataSetChanged();
         }
         @Override
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
@@ -113,6 +115,7 @@ public class DivideBillFragment extends Fragment implements ProductsListener {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             openDialog(getArguments().getInt("account_id"), viewHolder, 0);
             adaptersNew.notifyDataSetChanged();
+            adaptersOrigin.notifyDataSetChanged();
         }
 
         @Override
@@ -151,22 +154,47 @@ public class DivideBillFragment extends Fragment implements ProductsListener {
                     originProduct = Originproducts.get(position);
 
                     if(originProduct.getQuantity() == quantity) {
+
+                        for(Products prod : NewProducts){
+                            if(prod.getId() == originProduct.getId()){
+                                Originproducts.remove(position);
+
+                                prod.setQuantity(prod.getQuantity()+quantity);
+                                total();
+                                adaptersOrigin.notifyDataSetChanged();
+                                adaptersNew.notifyDataSetChanged();
+                                dismissdialog();
+                                return;
+                            }
+                        }
                         Originproducts.remove(position);
+
                         NewProducts.add(originProduct);
                         total();
-                        TVTotal.setText(""+Total+"€");
-                        dialog.dismiss();
+                        dismissdialog();
                     }
                     else if(originProduct.getQuantity() > quantity){
+
+                        for(Products prod : NewProducts){
+                            if(prod.getId() == originProduct.getId()){
+
+                                originProduct.setQuantity(originProduct.getQuantity() - quantity);
+                                Products pro = new Products(originProduct.getId(), originProduct.getName(), originProduct.getPrice(), quantity);
+                                prod.setQuantity(prod.getQuantity()+quantity);
+                                total();
+                                TVTotal.setText(""+Total+"€");
+                                dismissdialog();
+                                return;
+                            }
+                        }
                         originProduct.setQuantity(originProduct.getQuantity() - quantity);
                         Products pro = new Products(originProduct.getId(), originProduct.getName(), originProduct.getPrice(), quantity);
                         NewProducts.add(pro);
                         total();
-                        TVTotal.setText(""+Total+"€");
-                        dialog.dismiss();
+                        dismissdialog();
                     }
                     else{
-                        error.setText("Erro, insera um numero menor!");
+                        Toast.makeText(getContext(), "Erro! Quantidade inserida maior que a quantidade do produto.", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -177,22 +205,40 @@ public class DivideBillFragment extends Fragment implements ProductsListener {
                     newProduct = NewProducts.get(position);
 
                     if(newProduct.getQuantity() == quantity) {
+
+                        for(Products prod : Originproducts){
+                            if(prod.getId() == newProduct.getId()){
+                                NewProducts.remove(position);
+
+                                prod.setQuantity(prod.getQuantity()+quantity);
+                                total();
+                                dismissdialog();
+                                return;
+                            }
+                        }
                         NewProducts.remove(position);
                         Originproducts.add(newProduct);
                         total();
-                        TVTotal.setText(""+Total+"€");
-                        dialog.dismiss();
+                        dismissdialog();
                     }
                     else if(newProduct.getQuantity() > quantity){
+                        for(Products prod : Originproducts){
+                            if(prod.getId() == newProduct.getId()){
+
+                                prod.setQuantity(prod.getQuantity()+quantity);
+                                total();
+                                dismissdialog();
+                                return;
+                            }
+                        }
                         newProduct.setQuantity(newProduct.getQuantity() - quantity);
                         Products pro = new Products(newProduct.getId(), newProduct.getName(), newProduct.getPrice(), quantity);
                         Originproducts.add(pro);
                         total();
-                        TVTotal.setText(""+Total+"€");
-                        dialog.dismiss();
+                        dismissdialog();
                     }
                     else{
-                        error.setText("Erro, insera um numero menor!");
+                        Toast.makeText(getContext(), "Erro! Quantidade inserida maior que a quantidade do produto.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -201,10 +247,48 @@ public class DivideBillFragment extends Fragment implements ProductsListener {
         dialog.show();
     }
 
+    private void openDialogPay(final int account_id) {
+        if(NewProducts.isEmpty()){
+            Toast.makeText(getContext(), "Não existem produtos na lista de produtos a pagar!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        dialog.setContentView(R.layout.dialog_pay);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        ImageView close = dialog.findViewById(R.id.BtnClosePayDialog);
+        Button addNif = dialog.findViewById(R.id.BtnAddNif);
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        addNif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText nif = dialog.findViewById(R.id.quantity);
+                SingletonBarGest.getInstance(getContext()).paywithsplit(getContext(), account_id, Integer.parseInt(nif.getText().toString()), NewProducts, getFragmentManager());
+                dismissdialog();
+            }
+        });
+
+        dialog.show();
+    }
+
     public void total(){
+        Total = 0;
         for (int i = 0; i < NewProducts.size(); i++){
             Total += NewProducts.get(i).getPrice()*NewProducts.get(i).getQuantity();
         }
+        TVTotal.setText(""+Total+"€");
+    }
+
+    public void dismissdialog(){
+        adaptersOrigin.notifyDataSetChanged();
+        adaptersNew.notifyDataSetChanged();
+        dialog.dismiss();
     }
 
     @Override

@@ -35,6 +35,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SingletonBarGest {
@@ -50,7 +51,7 @@ public class SingletonBarGest {
     private NewRequestListner newRequestListner;
     ArrayList<Bills> bills;
     ArrayList<Products> newrequests;
-    String url ="http://192.168.1.100/BarGestWeb/api/web/v1/";
+    String url ="http://192.168.1.103/BarGestWeb/api/web/v1/";
 
     public void setTableListener(TableListener tableListener){
         this.tableListener=tableListener;
@@ -381,6 +382,37 @@ public class SingletonBarGest {
             {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("nif", String.valueOf(nif));
+                return params;
+            }
+        };
+        Log.i("API","teste");
+        volleyQueue.add(stringRequest);
+    }
+
+    public void paywithsplit(final Context context, int account_id, final int nif, final ArrayList<Products> topay, final FragmentManager fragmentManager){
+        StringRequest stringRequest = new StringRequest (Request.Method.PUT, url + "account/splitpay/"+account_id, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("API",response);
+                //Toast.makeText(context,"Pagamento efetuado com sucesso!",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,response,Toast.LENGTH_LONG).show();
+                fragmentManager.beginTransaction().replace(R.id.container, new TablesFragment()).commit();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+                Toast.makeText(context,"Erro no pagamento!",Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("nif", String.valueOf(nif));
+                String productstopay = new Gson().toJson(topay);
+                params.put("products", productstopay);
                 return params;
             }
         };
