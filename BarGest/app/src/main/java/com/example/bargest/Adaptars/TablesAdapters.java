@@ -50,14 +50,16 @@ public class TablesAdapters  extends ArrayAdapter<Tables> implements Filterable 
         if(getItem(position).getStatus() == 1){
             //Table ocupped
             card.setBackgroundColor(Color.parseColor("#EDF8B3"));
+            cost.setText(String.valueOf(getItem(position).getTotal())+"€");
         }
         else{
             //Table free
             card.setBackgroundColor(Color.parseColor("#A4EABC"));
+            cost.setVisibility(View.GONE);
         }
 
         numberText.setText(String.valueOf(getItem(position).getNumber()));
-        cost.setText("???€");
+
 
 
         return convertView;

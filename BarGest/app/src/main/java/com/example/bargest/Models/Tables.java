@@ -9,11 +9,12 @@ public class Tables {
     int id;
     int number;
     int status;
-
-    public Tables(int id, int number, int status) {
+    double total;
+    public Tables(int id, int number, int status,@Nullable double total) {
         this.number = number;
         this.status = status;
         this.id = id;
+        this.total =total;
     }
 
     public int getId() {
@@ -40,6 +41,11 @@ public class Tables {
         this.status = status;
     }
 
+    public double getTotal() {
+        return total;
+    }
 
-
+    public void setTotal(double total) {
+        this.total = total;
+    }
 }

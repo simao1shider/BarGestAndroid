@@ -51,7 +51,7 @@ public class SingletonBarGest {
     private NewRequestListner newRequestListner;
     ArrayList<Bills> bills;
     ArrayList<Products> newrequests;
-    String url ="http://192.168.1.205/BarGestWeb/api/web/v1/";
+    String url ="http://192.168.1.179/BarGestWeb/api/web/v1/";
 
     public void setTableListener(TableListener tableListener){
         this.tableListener=tableListener;
@@ -108,7 +108,7 @@ public class SingletonBarGest {
 
     //---------------TABLES---------------
     public void getAPITableList(Context context){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"table", null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"table/tables", null, new Response.Listener<JSONArray>() {
               @Override
               public void onResponse(JSONArray response) {
                   Log.i("API", response.toString());

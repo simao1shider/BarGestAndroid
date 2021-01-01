@@ -17,7 +17,8 @@ public class parserJsonTables {
                 int id = table.getInt("id");
                 int number = table.getInt("number");
                 int status = table.getInt("status");
-                listTables.add(new Tables(id, number, status));
+                double total = table.getDouble("total");
+                listTables.add(new Tables(id, number, status,total));
             }
         }catch(JSONException e){
             e.printStackTrace();
