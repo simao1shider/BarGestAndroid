@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bargest.Models.Bills;
+import com.example.bargest.Models.Products;
 import com.example.bargest.R;
 
 import java.util.ArrayList;
@@ -18,9 +19,9 @@ import java.util.ArrayList;
 public class DivideAdaptar extends RecyclerView.Adapter<DivideAdaptar.MyViewHolder>{
 
     private Context context;
-    private ArrayList<Bills> data;
+    private ArrayList<Products> data;
 
-    public DivideAdaptar(Context context, ArrayList<Bills> objetcs) {
+    public DivideAdaptar(Context context, ArrayList<Products> objetcs) {
         this.context=context;
         this.data=objetcs;
     }
@@ -36,9 +37,9 @@ public class DivideAdaptar extends RecyclerView.Adapter<DivideAdaptar.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final DivideAdaptar.MyViewHolder holder, final int position) {
-        holder.productName.setText(data.get(position).getProductName());
-        holder.productQuantity.setText("???");
-        holder.Price.setText("???");
+        holder.productName.setText(data.get(position).getName());
+        holder.productQuantity.setText(String.valueOf(data.get(position).getQuantity()));
+        holder.Price.setText(String.valueOf(data.get(position).getPrice()));
     }
 
     @Override
@@ -53,7 +54,7 @@ public class DivideAdaptar extends RecyclerView.Adapter<DivideAdaptar.MyViewHold
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.TVDivideBillsNameProduct);
-            productQuantity = itemView.findViewById(R.id.TVDivideBillsQuantity)   ;
+            productQuantity = itemView.findViewById(R.id.TVDivideBillsQuantity);
             Price = itemView.findViewById(R.id.TVTDivideBillsProductPrice);
 
         }

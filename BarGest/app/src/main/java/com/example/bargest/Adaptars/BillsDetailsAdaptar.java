@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class BillsDetailsAdaptar extends ArrayAdapter<Products> {
 
     private Context context;
-    private  int resource;
+    private int resource;
     private ArrayList<Products> originalData;
 
     public BillsDetailsAdaptar(@NonNull Context context, int resource, @NonNull ArrayList<Products> objects) {

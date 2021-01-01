@@ -6,7 +6,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.Request;
@@ -24,18 +23,19 @@ import com.example.bargest.Listeners.ProductsListener;
 import com.example.bargest.Listeners.TableListener;
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Products;
-import com.example.bargest.Models.Requests;
 import com.example.bargest.Utils.parserJsonBills;
 import com.example.bargest.Utils.parserJsonCategories;
 import com.example.bargest.Utils.parserJsonProducts;
 import com.example.bargest.Utils.parserJsonRequest;
 import com.example.bargest.Utils.parserJsonTables;
+import com.example.bargest.Views.Fragments.TablesFragment;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SingletonBarGest {
@@ -51,7 +51,7 @@ public class SingletonBarGest {
     private NewRequestListner newRequestListner;
     ArrayList<Bills> bills;
     ArrayList<Products> newrequests;
-    String url ="http://192.168.1.179/BarGestWeb/api/web/v1/";
+    String url ="http://192.168.1.103/BarGestWeb/api/web/v1/";
 
     public void setTableListener(TableListener tableListener){
         this.tableListener=tableListener;
@@ -68,8 +68,6 @@ public class SingletonBarGest {
     public void setNewrequestsListener(NewRequestListner newRequestListner){
         this.newRequestListner = newRequestListner;
     }
-
-
     public void setListRequestListener(ListRequestsListener listRequestsListener){
         this.listRequestsListener=listRequestsListener;
     }
@@ -363,27 +361,64 @@ public class SingletonBarGest {
         volleyQueue.add(jsonArrayRequest);
     }
 
-    public ArrayList<Bills> generateFakeDetailsBills(){
-        bills = new ArrayList<>();
-
-        bills.add(new Bills("Asd",(float) 3.5,2));
-        bills.add(new Bills("dd",(float) 2.5,2));
-        bills.add(new Bills("oo",(float) 1.2,4));
-        bills.add(new Bills("Asd",(float) 10,2));
-        bills.add(new Bills("asdf",(float) 3.5,7));
-        bills.add(new Bills("fdfff",(float) 3.5,8));
-        bills.add(new Bills("vv",(float) 3.5,1));
-        bills.add(new Bills("ser",(float) 3.5,2));
-        bills.add(new Bills("dffv",(float) 3.5,6));
-        bills.add(new Bills("ssa",(float) 3.5,5));
-        bills.add(new Bills("ssd",(float) 3.5,9));
-        bills.add(new Bills("ddd",(float) 3.5,3));
-        bills.add(new Bills("Assasd",(float) 3.5,2));
-
-        return bills;
-
+    public void pay(final Context context, int account_id, final int nif, final FragmentManager fragmentManager){
+        StringRequest stringRequest = new StringRequest (Request.Method.PUT, url + "account/pay/"+account_id, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("API",response);
+                Toast.makeText(context,"Pagamento efetuado com sucesso!",Toast.LENGTH_LONG).show();
+                fragmentManager.beginTransaction().replace(R.id.container, new TablesFragment()).commit();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+                Toast.makeText(context,"Erro no pagamento!",Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("nif", String.valueOf(nif));
+                return params;
+            }
+        };
+        Log.i("API","teste");
+        volleyQueue.add(stringRequest);
     }
 
+    public void paywithsplit(final Context context, int account_id, final int nif, final ArrayList<Products> topay, final FragmentManager fragmentManager){
+        StringRequest stringRequest = new StringRequest (Request.Method.PUT, url + "account/splitpay/"+account_id, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("API",response);
+                //Toast.makeText(context,"Pagamento efetuado com sucesso!",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,response,Toast.LENGTH_LONG).show();
+                fragmentManager.beginTransaction().replace(R.id.container, new TablesFragment()).commit();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API",error.toString());
+                Toast.makeText(context,"Erro no pagamento!",Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("nif", String.valueOf(nif));
+                String productstopay = new Gson().toJson(topay);
+                params.put("products", productstopay);
+                return params;
+            }
+        };
+        Log.i("API","teste");
+        volleyQueue.add(stringRequest);
+    }
 
 
 }
