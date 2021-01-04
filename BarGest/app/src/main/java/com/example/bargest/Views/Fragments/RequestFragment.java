@@ -95,13 +95,38 @@ public class RequestFragment extends Fragment implements ListRequestsListener {
 
         @Override
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(getContext(), R.color.swipe_delete_color))
-                    .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
-                    .addSwipeRightBackgroundColor(ContextCompat.getColor(getContext(), R.color.swipe_edit_color))
-                    .addSwipeRightActionIcon(R.drawable.ic_baseline_edit_24)
-                    .create()
-                    .decorate();
+            final int position = viewHolder.getAdapterPosition();
+            switch (requests.get(position).getStatus())
+            {
+                case 0:
+                    new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addSwipeLeftBackgroundColor(ContextCompat.getColor(getContext(), R.color.swipe_delete_color))
+                        .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
+                        .addSwipeRightBackgroundColor(ContextCompat.getColor(getContext(), R.color.swipe_edit_color))
+                        .addSwipeRightActionIcon(R.drawable.ic_baseline_edit_24)
+                        .create()
+                        .decorate();
+                    break;
+                case 1:
+                    new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                            .addSwipeLeftBackgroundColor(ContextCompat.getColor(getContext(), R.color.swipe_delete_color))
+                            .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
+                            .addSwipeRightBackgroundColor(ContextCompat.getColor(getContext(), R.color.swipe_edit_color))
+                            .addSwipeRightActionIcon(R.drawable.ic_baseline_cokking_24)
+                            .create()
+                            .decorate();
+                    break;
+                 case 2:
+                    new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                            .addSwipeLeftBackgroundColor(ContextCompat.getColor(getContext(), R.color.swipe_delete_color))
+                            .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
+                            .addSwipeRightBackgroundColor(ContextCompat.getColor(getContext(), R.color.swipe_edit_color))
+                            .addSwipeRightActionIcon(R.drawable.ic_baseline_send_24)
+                            .create()
+                            .decorate();
+                    break;
+            }
+
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };

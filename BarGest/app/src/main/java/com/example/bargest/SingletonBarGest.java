@@ -51,7 +51,8 @@ public class SingletonBarGest {
     private NewRequestListner newRequestListner;
     ArrayList<Bills> bills;
     ArrayList<Products> newrequests;
-    String url ="http://192.168.1.103/BarGestWeb/api/web/v1/";
+    String url ="http://192.168.1.179/BarGestWeb/api/web/v1/";
+    String token = "access-token=EO9ZC3uMHu8NtsN8GgL8vq0zZ6jeHiYG";
 
     public void setTableListener(TableListener tableListener){
         this.tableListener=tableListener;
@@ -105,8 +106,8 @@ public class SingletonBarGest {
     }
 
     //---------------TABLES---------------
-    public void getAPITableList(Context context){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"table/tables", null, new Response.Listener<JSONArray>() {
+    public void getAPITableList(final Context context){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"table/tables?"+token, null, new Response.Listener<JSONArray>() {
               @Override
               public void onResponse(JSONArray response) {
                   Log.i("API", response.toString());
@@ -115,6 +116,7 @@ public class SingletonBarGest {
               }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context,error.getMessage(),Toast.LENGTH_LONG).show();
                         // TODO: Handle error
                         Log.e("API",error.toString());
                     }
@@ -124,7 +126,7 @@ public class SingletonBarGest {
     }
     public void getAPITableAccountsList(Context context,String table_id){
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"table/accounts/"+table_id, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"table/accounts/"+table_id+"?"+token, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.i("API", response.toString());
@@ -143,7 +145,7 @@ public class SingletonBarGest {
     //---------------REQUESTS---------------
     public void getAPIListRequests(Context context){
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"request/current", null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"request/current?"+token, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.i("API", response.toString());
@@ -161,7 +163,7 @@ public class SingletonBarGest {
     }
 
     public void getRequestInfo(Context context, int request_id){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"request/info/"+request_id, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url+"request/info/"+request_id+"?"+token, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.i("API", response.toString());
