@@ -7,13 +7,14 @@
     android:orientation="vertical"
     tools:context=".Views.Fragments.TablesFragment">
 
-    <SearchView
-        android:id="@+id/searchTables"
+    <EditText
+        android:id="@+id/tableNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:queryHint="Procurar mesa"
-        android:iconifiedByDefault="false" />
+        android:ems="10"
+        android:hint="Numero da mesa"
+        android:inputType="numberSigned"
+        android:imeOptions="actionDone"/>
 
     <ListView
         android:id="@+id/list_tables"

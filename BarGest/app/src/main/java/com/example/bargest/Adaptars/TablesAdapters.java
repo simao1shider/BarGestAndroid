@@ -2,6 +2,8 @@ package com.example.bargest.Adaptars;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +20,14 @@ import com.example.bargest.Models.Tables;
 import com.example.bargest.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class TablesAdapters  extends ArrayAdapter<Tables> implements Filterable {
+public class TablesAdapters  extends ArrayAdapter<Tables> {
 
     private Context context;
     private  int resource;
-    private ArrayList<Tables> originalData;
+    public ArrayList<Tables> originalData;
+    private ArrayList<Tables> FilteredResult;
 
     public TablesAdapters(@NonNull Context context, int resource, @NonNull ArrayList<Tables> objects) {
         super(context, resource, objects);
@@ -64,48 +68,5 @@ public class TablesAdapters  extends ArrayAdapter<Tables> implements Filterable 
 
         return convertView;
 
-    }
-
-    @NonNull
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();
-
-                //If there's nothing to filter on, return the original data for your list
-                if(constraint == null || constraint.length() == 0)
-                {
-                    results.values = constraint;
-                    results.count = constraint.length();
-                }
-                else
-                {
-                    ArrayList<Tables> filterResultsData = new ArrayList<Tables>();
-
-                    for(Tables data : originalData)
-                    {
-                        //In this loop, you'll filter through originalData and compare each item to charSequence.
-                        //If you find a match, add it to your new ArrayList
-                        //I'm not sure how you're going to do comparison, so you'll need to fill out this conditional
-                        if(String.valueOf(data.getNumber()).contains(constraint))
-                        {
-                            filterResultsData.add(data);
-                        }
-                    }
-
-                    results.values = filterResultsData;
-                    results.count = filterResultsData.size();
-                }
-
-                return results;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-
-            }
-        };
     }
 }

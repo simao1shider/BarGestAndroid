@@ -4,12 +4,20 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bargest.Adaptars.TablesAdapters;
 import com.example.bargest.Listeners.TableListener;
@@ -19,12 +27,15 @@ import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TablesFragment extends Fragment implements TableListener {
 
     ListView listTables;
     TablesAdapters adapters;
+    EditText tableNumber;
     ArrayList<Tables> tables;
+
     public TablesFragment() {
         // Required empty public constructor
     }
@@ -38,29 +49,37 @@ public class TablesFragment extends Fragment implements TableListener {
         View view = inflater.inflate(R.layout.fragment_tables, container, false);
 
         listTables = view.findViewById(R.id.list_tables);
-        SearchView searchTables = view.findViewById(R.id.searchTables);
+        tableNumber = view.findViewById(R.id.tableNumber);
 
         SingletonBarGest.getInstance(getContext()).getAPITableList(getContext());
         SingletonBarGest.getInstance(getContext()).setTableListener(this);
 
-
-        searchTables.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapters.getFilter().filter(newText);
-                //TODO:Make filter work
-                return false;
-            }
-        });
-
+        tableNumber.setOnEditorActionListener(editorListner);
         return view;
 
     }
+
+
+    private TextView.OnEditorActionListener editorListner = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if(actionId == EditorInfo.IME_ACTION_DONE){
+                String number = v.getText().toString();
+                for (Tables table: tables) {
+                    if(table.getNumber() == Integer.parseInt(number)){
+                        Bundle bundle=new Bundle();
+                        bundle.putString("table_id",String.valueOf(table.getId()));
+                        bundle.putInt("table_number",table.getNumber());
+                        BillsFragment billsFragment = new BillsFragment();
+                        billsFragment.setArguments(bundle);
+
+                        getFragmentManager().beginTransaction().replace(R.id.container,billsFragment).addToBackStack("Tables").commit();
+                    }
+                }
+            }
+            return false;
+        }
+    };
 
     @Override
     public void onRefreshListTables(final ArrayList<Tables> tables) {
