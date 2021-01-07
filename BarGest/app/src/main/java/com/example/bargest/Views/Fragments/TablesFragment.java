@@ -50,7 +50,7 @@ public class TablesFragment extends Fragment implements TableListener {
 
         listTables = view.findViewById(R.id.list_tables);
         tableNumber = view.findViewById(R.id.tableNumber);
-
+        tableNumber.setFocusable(false);
         SingletonBarGest.getInstance(getContext()).getAPITableList(getContext());
         SingletonBarGest.getInstance(getContext()).setTableListener(this);
 
@@ -63,10 +63,12 @@ public class TablesFragment extends Fragment implements TableListener {
     private TextView.OnEditorActionListener editorListner = new TextView.OnEditorActionListener() {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            boolean find=false;
             if(actionId == EditorInfo.IME_ACTION_DONE){
                 String number = v.getText().toString();
                 for (Tables table: tables) {
                     if(table.getNumber() == Integer.parseInt(number)){
+                        find=true;
                         Bundle bundle=new Bundle();
                         bundle.putString("table_id",String.valueOf(table.getId()));
                         bundle.putInt("table_number",table.getNumber());
@@ -76,6 +78,9 @@ public class TablesFragment extends Fragment implements TableListener {
                         getFragmentManager().beginTransaction().replace(R.id.container,billsFragment).addToBackStack("Tables").commit();
                     }
                 }
+                if(!find){
+                    Toast.makeText(getContext(),"Mesa não existe", Toast.LENGTH_LONG).show();
+                }
             }
             return false;
         }
@@ -84,6 +89,9 @@ public class TablesFragment extends Fragment implements TableListener {
     @Override
     public void onRefreshListTables(final ArrayList<Tables> tables) {
         this.tables=tables;
+        if(tables.size() != 0 ){
+            tableNumber.setFocusableInTouchMode(true);
+        }
         adapters = new TablesAdapters(getContext(),R.layout.item_list_tables,tables);
         listTables.setAdapter(adapters);
 
