@@ -2,8 +2,10 @@ package com.example.bargest;
 
 import android.content.Context;
 
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.bargest.Listeners.BillListener;
 import com.example.bargest.Listeners.CategoriesListener;
 import com.example.bargest.Listeners.ListRequestsListener;
+import com.example.bargest.Listeners.LoginListener;
 import com.example.bargest.Listeners.NewRequestListner;
 import com.example.bargest.Listeners.ProductsListener;
 import com.example.bargest.Listeners.TableListener;
@@ -39,7 +43,6 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class SingletonBarGest {
@@ -53,10 +56,11 @@ public class SingletonBarGest {
     private CategoriesListener categoriesListener;
     private ProductsListener productsListener;
     private NewRequestListner newRequestListner;
+    private LoginListener tokenListener;
     ArrayList<Bills> bills;
     ArrayList<Products> newrequests;
     String url ="http://192.168.1.179/BarGestWeb/api/web/v1/";
-    String token = "access-token=EO9ZC3uMHu8NtsN8GgL8vq0zZ6jeHiYG";
+    String token;
 
     public void setTableListener(TableListener tableListener){
         this.tableListener=tableListener;
@@ -75,6 +79,9 @@ public class SingletonBarGest {
     }
     public void setListRequestListener(ListRequestsListener listRequestsListener){
         this.listRequestsListener=listRequestsListener;
+    }
+    public void setLoginListener(LoginListener token){
+        this.tokenListener=token;
     }
 
     public static synchronized SingletonBarGest getInstance(Context context) {
@@ -109,6 +116,41 @@ public class SingletonBarGest {
         newRequestListner.onRefreshListProducts(newrequests);
     }
 
+
+    public void loginUserAPI(final String username, final String password, final Context context) {
+        if (!isConnectionInternet(context)) {
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        } else {
+            StringRequest request = new StringRequest(Request.Method.GET, url + "employee/login", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Toast.makeText(context,"Token:"+response,Toast.LENGTH_LONG).show();
+                    tokenListener.onRefreshToken(response);
+                    SharedPreferences.Editor editor = context.getSharedPreferences("Pref",Context.MODE_PRIVATE).edit();
+                    editor.putString("token",response);
+                    editor.apply();
+                    token = "access-token="+ response.replace("\"", "");
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    String credentials = username+":"+password;
+                    String auth = "Basic "
+                            + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                    headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", auth);
+                    return headers;
+                }
+            };
+            volleyQueue.add(request);
+        }
+    }
     //---------------TABLES---------------
     public void getAPITableList(final Context context){
         if(isConnectionInternet(context)) {
@@ -121,7 +163,7 @@ public class SingletonBarGest {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Error:"+error.getMessage(), Toast.LENGTH_LONG).show();
                     // TODO: Handle error
                     Log.e("API", error.toString());
                 }

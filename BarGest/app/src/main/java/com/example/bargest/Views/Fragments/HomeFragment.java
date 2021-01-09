@@ -1,5 +1,7 @@
 package com.example.bargest.Views.Fragments;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.bargest.R;
+import com.example.bargest.Views.LoginActivity;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +68,11 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        SharedPreferences prefs = getActivity().getSharedPreferences("Pref", MODE_PRIVATE);
+        if(prefs.getString("token","")==""){
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
         ImageButton categoriesbutton = view.findViewById(R.id.categoriesButton);
         categoriesbutton.setOnClickListener(new View.OnClickListener() {
             @Override

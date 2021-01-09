@@ -1,6 +1,8 @@
 package com.example.bargest.Views.Fragments;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -27,10 +29,13 @@ import com.example.bargest.Listeners.ProductsListener;
 import com.example.bargest.Models.Products;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
+import com.example.bargest.Views.LoginActivity;
 
 import java.util.ArrayList;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class DivideBillFragment extends Fragment implements ProductsListener {
 
@@ -54,7 +59,11 @@ public class DivideBillFragment extends Fragment implements ProductsListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_divide_bill, container, false);
-
+        SharedPreferences prefs = getActivity().getSharedPreferences("Pref", MODE_PRIVATE);
+        if(prefs.getString("token","")==""){
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
         dialog = new Dialog(getContext());
         listOriginBill = view.findViewById(R.id.listOriginBill);
         listNewBill = view.findViewById(R.id.listNewnBill);

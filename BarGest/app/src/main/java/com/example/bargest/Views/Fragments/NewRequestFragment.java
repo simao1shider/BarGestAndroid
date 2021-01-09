@@ -1,6 +1,8 @@
 package com.example.bargest.Views.Fragments;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -28,11 +30,14 @@ import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Products;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
+import com.example.bargest.Views.LoginActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class NewRequestFragment extends Fragment implements NewRequestListner {
@@ -52,6 +57,11 @@ public class NewRequestFragment extends Fragment implements NewRequestListner {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_new_request, container, false);
+        SharedPreferences prefs = getActivity().getSharedPreferences("Pref", MODE_PRIVATE);
+        if(prefs.getString("token","")==""){
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
         dialog = new Dialog(getContext());
 
         Bundle bundle = new Bundle();

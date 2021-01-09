@@ -1,5 +1,7 @@
 package com.example.bargest.Views.Fragments;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -25,9 +27,12 @@ import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Tables;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
+import com.example.bargest.Views.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class TablesFragment extends Fragment implements TableListener {
 
@@ -47,7 +52,11 @@ public class TablesFragment extends Fragment implements TableListener {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_tables, container, false);
-
+        SharedPreferences prefs = getActivity().getSharedPreferences("Pref", MODE_PRIVATE);
+        if(prefs.getString("token","")==""){
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
         listTables = view.findViewById(R.id.list_tables);
         tableNumber = view.findViewById(R.id.tableNumber);
         tableNumber.setFocusable(false);

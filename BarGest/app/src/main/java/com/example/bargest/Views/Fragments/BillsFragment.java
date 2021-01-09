@@ -1,5 +1,7 @@
 package com.example.bargest.Views.Fragments;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,8 +20,11 @@ import com.example.bargest.Listeners.BillListener;
 import com.example.bargest.Models.Bills;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
+import com.example.bargest.Views.LoginActivity;
 
 import java.util.ArrayList;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class BillsFragment extends Fragment implements BillListener {
@@ -37,7 +42,11 @@ public class BillsFragment extends Fragment implements BillListener {
         final int table_number = getArguments().getInt("table_number");
 
         View view = inflater.inflate(R.layout.fragment_bills, container, false);
-
+        SharedPreferences prefs = getActivity().getSharedPreferences("Pref", MODE_PRIVATE);
+        if(prefs.getString("token","")==""){
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
         billsView = view.findViewById(R.id.GVBills);
         ImageView backfragment = view.findViewById(R.id.IMGBackFragment);
         ImageView addRequest = view.findViewById(R.id.BtnToolbarAdd);

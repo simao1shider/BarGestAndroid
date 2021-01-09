@@ -1,5 +1,7 @@
 package com.example.bargest.Views.Fragments;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,8 +19,11 @@ import com.example.bargest.Listeners.ProductsListener;
 import com.example.bargest.Models.Products;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
+import com.example.bargest.Views.LoginActivity;
 
 import java.util.ArrayList;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class SearchFragment extends Fragment implements ProductsListener {
@@ -35,6 +40,11 @@ public class SearchFragment extends Fragment implements ProductsListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_search, container, false);
+        SharedPreferences prefs = getActivity().getSharedPreferences("Pref", MODE_PRIVATE);
+        if(prefs.getString("token","")==""){
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
         ImageView btnCancelSearch = view.findViewById(R.id.btnCancelSearch);
         ImageButton back = view.findViewById(R.id.IMGBackFragmentSearch);
         autoCompleteTextView=view.findViewById(R.id.AUTOCOMPLETEproducts);

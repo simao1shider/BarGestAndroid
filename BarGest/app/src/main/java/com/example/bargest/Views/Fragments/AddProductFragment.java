@@ -1,5 +1,7 @@
 package com.example.bargest.Views.Fragments;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,8 +22,12 @@ import com.example.bargest.Models.Categories;
 import com.example.bargest.Models.Products;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
+import com.example.bargest.Views.LoginActivity;
+import com.example.bargest.Views.MainActivity;
 
 import java.util.ArrayList;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class AddProductFragment extends Fragment implements ProductsListener {
@@ -39,7 +45,11 @@ public class AddProductFragment extends Fragment implements ProductsListener {
         int category_id = getArguments().getInt("category_id");
         String category_name = getArguments().getString("category_name");
         View view = inflater.inflate(R.layout.fragment_add_product, container, false);
-
+        SharedPreferences prefs = getActivity().getSharedPreferences("Pref", MODE_PRIVATE);
+        if(prefs.getString("token","")==""){
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
         GVAddProduct = view.findViewById(R.id.GVAddProduct);
         ImageButton backCategories = view.findViewById(R.id.BtnBackToCategories);
         TextView title = view.findViewById(R.id.TVTitleCategoryName);

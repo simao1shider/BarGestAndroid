@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,12 +21,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    SharedPreferences prefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        prefs = getSharedPreferences("Pref", MODE_PRIVATE);
+        if(prefs.getString("token","")==""){
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+            startActivity(intent);
+            finish();
+        }
 
         BottomNavigationView navBar = findViewById(R.id.bottom_bar);
 
@@ -50,7 +58,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setFragment(Fragment fragment,@Nullable String backStack){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(prefs.getString("token","")==""){
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    private void setFragment(Fragment fragment, @Nullable String backStack){
         getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
     }
 

@@ -1,5 +1,7 @@
 package com.example.bargest.Views.Fragments;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,8 +16,11 @@ import com.example.bargest.Listeners.CategoriesListener;
 import com.example.bargest.Models.Categories;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
+import com.example.bargest.Views.LoginActivity;
 
 import java.util.ArrayList;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ListCategoriesFragment extends Fragment implements CategoriesListener {
 
@@ -31,6 +36,11 @@ public class ListCategoriesFragment extends Fragment implements CategoriesListen
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
+        SharedPreferences prefs = getActivity().getSharedPreferences("Pref", MODE_PRIVATE);
+        if(prefs.getString("token","")==""){
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
         GVCategories = view.findViewById(R.id.containerCategory);
         SingletonBarGest.getInstance(getContext()).getAllCategories(getContext());
         SingletonBarGest.getInstance(getContext()).setCategoriesListener(this);

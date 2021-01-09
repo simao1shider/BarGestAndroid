@@ -1,5 +1,7 @@
 package com.example.bargest.Views.Fragments;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,12 +24,15 @@ import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.views.ListRequests;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
+import com.example.bargest.Views.LoginActivity;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class RequestFragment extends Fragment implements ListRequestsListener {
@@ -47,6 +52,11 @@ public class RequestFragment extends Fragment implements ListRequestsListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_request, container, false);
+        SharedPreferences prefs = getActivity().getSharedPreferences("Pref", MODE_PRIVATE);
+        if(prefs.getString("token","")==""){
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
         infoRequest = view.findViewById(R.id.TVInfoExistRequest);
 
         listRequest = view.findViewById(R.id.ListRequests);
