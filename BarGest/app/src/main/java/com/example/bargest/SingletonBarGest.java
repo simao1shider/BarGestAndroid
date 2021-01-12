@@ -246,7 +246,7 @@ public class SingletonBarGest {
 
     public void deleteRequest(final Context context, int requestId){
         if(isConnectionInternet(context)) {
-            StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url + "request/delete/" + requestId, new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url + "request/delete/" + requestId+"?"+token, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Toast.makeText(context, response, Toast.LENGTH_LONG).show();
@@ -270,7 +270,7 @@ public class SingletonBarGest {
 
     public void createRequestAccount(final Context context, int accountId, final ArrayList<Products> products, final FragmentManager fragment){
         if(isConnectionInternet(context)) {
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "request/create/account/" + accountId, new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "request/create/account/" + accountId+"?"+token, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.i("API", response);
@@ -303,7 +303,7 @@ public class SingletonBarGest {
     }
     public void createRequestTable(final Context context, int tableId,final String accountName ,final ArrayList<Products> products, final FragmentManager fragment){
         if(isConnectionInternet(context)) {
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "request/create/table/" + tableId, new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "request/create/table/" + tableId+"?"+token, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.i("API", response);
@@ -338,7 +338,7 @@ public class SingletonBarGest {
 
     public void editRequest(final Context context, int request_id,final ArrayList<Products> products){
         if(isConnectionInternet(context)) {
-            StringRequest stringRequest = new StringRequest(Request.Method.PUT, url + "request/edit/" + request_id, new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.PUT, url + "request/edit/" + request_id+"?"+token, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.i("API", response);
@@ -372,7 +372,7 @@ public class SingletonBarGest {
 
     public void getAllCategories(final Context context){
         if(isConnectionInternet(context)) {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "category/all", null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "category/all?"+token, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     Log.i("API", response.toString());
@@ -396,7 +396,7 @@ public class SingletonBarGest {
     //---------------Products---------------
     public void getAllProducs(){
         //if(isConnectionInternet(context)) {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "product/all", null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "product/all?"+token, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     Log.i("API", response.toString());
@@ -419,7 +419,7 @@ public class SingletonBarGest {
 
     public void getProductsByCategory(final Context context,int categoryId){
         if(isConnectionInternet(context)) {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "product/category/" + categoryId, null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "product/category/" + categoryId + "?"+token, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     Log.i("API", response.toString());
@@ -443,7 +443,7 @@ public class SingletonBarGest {
     //---------------ACCOUNTS---------------
     public void getAccountProducts(Context context,int accountId){
         if(isConnectionInternet(context)) {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "account/info/" + accountId, null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "account/info/" + accountId+"?"+token, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     Log.i("API", response.toString());
@@ -466,7 +466,7 @@ public class SingletonBarGest {
 
     public void pay(final Context context, int account_id, final int nif, final FragmentManager fragmentManager){
         if(isConnectionInternet(context)) {
-            StringRequest stringRequest = new StringRequest(Request.Method.PUT, url + "account/pay/" + account_id, new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.PUT, url + "account/pay/" + account_id+"?"+token, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.i("API", response);
@@ -498,7 +498,7 @@ public class SingletonBarGest {
 
     public void paywithsplit(final Context context, int account_id, final int nif, final ArrayList<Products> topay, final FragmentManager fragmentManager){
         if(isConnectionInternet(context)) {
-            StringRequest stringRequest = new StringRequest(Request.Method.PUT, url + "account/splitpay/" + account_id, new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.PUT, url + "account/splitpay/" + account_id+"?"+token, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.i("API", response);
