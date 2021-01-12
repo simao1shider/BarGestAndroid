@@ -1,15 +1,20 @@
 package com.example.bargest;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.bargest.Models.Tables;
+
 public class Database extends SQLiteOpenHelper {
 
     private static final String NAME = "bargest.db";
     private static final int VERSION= 1;
+    private final SQLiteDatabase db;
+
     //Tables
     private static final String TABLE_TABLE = "tables";
     private static final String COLUMN_TABLE_NUMBER = "number";
@@ -47,6 +52,7 @@ public class Database extends SQLiteOpenHelper {
 
     public Database(@Nullable Context context) {
         super(context, NAME, null, VERSION);
+        this.db = getWritableDatabase();
     }
 
     @Override
@@ -111,5 +117,20 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_PRODUCT);
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_CATEGORY);
         onCreate(db);
+    }
+
+
+    //Tables
+    public Tables adicionarMesaBD(Tables table){
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_TABLE_NUMBER, table.getNumber());
+        values.put(COLUMN_TABLE_STATUS, table.getStatus());
+
+        long id = this.db.insert(TABLE_TABLE, null, values);
+        if(id > -1){
+            table.setId( (int) id );
+            return table;
+        }
+        return null;
     }
 }
