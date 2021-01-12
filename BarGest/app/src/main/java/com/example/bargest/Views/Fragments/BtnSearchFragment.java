@@ -48,8 +48,16 @@ public class BtnSearchFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo: passar por parametro o id para onde colocar
-                getFragmentManager().beginTransaction().replace(R.id.toolbarNewRequest, new SearchFragment()).commit();
+                SearchFragment searchFragment = new SearchFragment();
+                Bundle bundle=new Bundle();
+                if(getArguments().containsKey("table_id")){
+                    bundle.putInt("table_id",getArguments().getInt("table_id"));
+                }
+                if(getArguments().containsKey("account_id")){
+                    bundle.putInt("account_id",getArguments().getInt("account_id"));
+                }
+                searchFragment.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.toolbarNewRequest, searchFragment).commit();
             }
         });
 
