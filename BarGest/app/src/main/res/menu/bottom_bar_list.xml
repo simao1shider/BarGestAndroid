@@ -4,7 +4,7 @@
         android:id="@+id/nav_table"
         android:checked="false"
         android:icon="@drawable/tableicon"
-        android:title="Table" />
+        android:title="Mesas" />
     <item
         android:id="@+id/nav_home"
         android:title="Home"
@@ -14,5 +14,5 @@
         android:id="@+id/nav_receipt"
         android:checked="false"
         android:icon="@drawable/listicon"
-        android:title="Receipt" />
+        android:title="Pedidos" />
 </menu>
