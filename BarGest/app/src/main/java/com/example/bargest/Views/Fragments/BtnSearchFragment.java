@@ -52,9 +52,11 @@ public class BtnSearchFragment extends Fragment {
                 Bundle bundle=new Bundle();
                 if(getArguments().containsKey("table_id")){
                     bundle.putInt("table_id",getArguments().getInt("table_id"));
+                    bundle.putInt("table_number",getArguments().getInt("table_number"));
                 }
                 if(getArguments().containsKey("account_id")){
                     bundle.putInt("account_id",getArguments().getInt("account_id"));
+                    bundle.putString("account_name",getArguments().getString("account_name"));
                 }
                 searchFragment.setArguments(bundle);
                 getFragmentManager().beginTransaction().replace(R.id.toolbarNewRequest, searchFragment).commit();
