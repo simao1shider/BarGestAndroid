@@ -175,6 +175,11 @@ public class SingletonBarGest {
                 public void onResponse(JSONArray response) {
                     Log.i("API", response.toString());
                     tableListener.onRefreshListTables(parserJsonTables.parserJsonTables(response));
+                    tables = parserJsonTables.parserJsonTables(response);
+                    addTablesDB(tables);
+                    if (tableListener != null)
+                        tableListener.onRefreshListTables(tables);
+
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -188,6 +193,9 @@ public class SingletonBarGest {
             volleyQueue.add(jsonArrayRequest);
         }
         else{
+            tables = localDatabase.getTables();
+            if (tableListener != null)
+                tableListener.onRefreshListTables(tables);
             toastNotIntenet(context);
         }
     }
@@ -212,6 +220,16 @@ public class SingletonBarGest {
         else {
             toastNotIntenet(context);
         }
+    }
+
+    public void addTablesDB(ArrayList<Tables> tablesList) {
+        localDatabase.deleteTables();
+        for (Tables table : tablesList)
+            addTableDB(table);
+    }
+
+    public void addTableDB(Tables table) {
+        localDatabase.addTable(table);
     }
     //---------------REQUESTS---------------
     public void getAPIListRequests(Context context){
