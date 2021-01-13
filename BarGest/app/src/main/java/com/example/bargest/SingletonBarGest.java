@@ -68,9 +68,10 @@ public class SingletonBarGest {
     ArrayList<Tables> tables;
     //Rever este array
     ArrayList<Products> newrequests;
-    String url ="http://10.200.20.34/BarGestWeb/api/web/v1/";
+    String url ="http://192.168.1.205/BarGestWeb/api/web/v1/";
     String token;
 
+    //region LISTENERS SECTION
     public void setTableListener(TableListener tableListener){
         this.tableListener=tableListener;
     }
@@ -92,6 +93,7 @@ public class SingletonBarGest {
     public void setLoginListener(LoginListener token){
         this.tokenListener=token;
     }
+    //endregion
 
     public static synchronized SingletonBarGest getInstance(Context context) {
         if(INSTANCE == null)
@@ -109,7 +111,6 @@ public class SingletonBarGest {
         products = new ArrayList<Products>();
         requests = new ArrayList<Requests>();
         bills = new ArrayList<Bills>();
-        localDatabase = new Database(context);
     }
 
     public void startNewRequest(){
@@ -132,7 +133,7 @@ public class SingletonBarGest {
         newRequestListner.onRefreshListProducts(newrequests);
     }
 
-
+    //region LOGIN SECTION
     public void loginUserAPI(final String username, final String password, final Context context) {
         if (!isConnectionInternet(context)) {
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
@@ -167,7 +168,9 @@ public class SingletonBarGest {
             volleyQueue.add(request);
         }
     }
-    //---------------TABLES---------------
+    //endregion
+
+    //region TABLE SECTION
     public void getAPITableList(final Context context){
         if(isConnectionInternet(context)) {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "table/tables?" + token, null, new Response.Listener<JSONArray>() {
@@ -199,6 +202,7 @@ public class SingletonBarGest {
             toastNotIntenet(context);
         }
     }
+
     public void getAPITableAccountsList(Context context,String table_id){
         if(isConnectionInternet(context)) {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "table/accounts/" + table_id + "?" + token, null, new Response.Listener<JSONArray>() {
@@ -231,7 +235,9 @@ public class SingletonBarGest {
     public void addTableDB(Tables table) {
         localDatabase.addTable(table);
     }
-    //---------------REQUESTS---------------
+    //endregion
+
+    //region REQUEST SECTION
     public void getAPIListRequests(Context context){
         if(isConnectionInternet(context)) {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "request/current?" + token, null, new Response.Listener<JSONArray>() {
@@ -335,6 +341,7 @@ public class SingletonBarGest {
             toastNotIntenet(context);
         }
     }
+
     public void createRequestTable(final Context context, int tableId,final String accountName ,final ArrayList<Products> products, final FragmentManager fragment){
         if(isConnectionInternet(context)) {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "request/create/table/" + tableId+"?"+token, new Response.Listener<String>() {
@@ -402,8 +409,9 @@ public class SingletonBarGest {
             toastNotIntenet(context);
         }
     }
-    //---------------CATEGORY---------------
+    //endregion
 
+    //region CATEGORY SECTION
     public void getAllCategories(final Context context){
         if(isConnectionInternet(context)) {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "category/all?"+token, null, new Response.Listener<JSONArray>() {
@@ -426,8 +434,9 @@ public class SingletonBarGest {
             toastNotIntenet(context);
         }
     }
+    //endregion
 
-    //---------------Products---------------
+    //region PRODUCT SECTION
     public void getAllProducs(){
         //if(isConnectionInternet(context)) {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "product/all?"+token, null, new Response.Listener<JSONArray>() {
@@ -473,8 +482,9 @@ public class SingletonBarGest {
             toastNotIntenet(context);
         }
     }
+    //endregion
 
-    //---------------ACCOUNTS---------------
+    //region ACCOUNT SECTION
     public void getAccountProducts(Context context,int accountId){
         if(isConnectionInternet(context)) {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "account/info/" + accountId+"?"+token, null, new Response.Listener<JSONArray>() {
@@ -564,7 +574,9 @@ public class SingletonBarGest {
             toastNotIntenet(context);
         }
     }
+    //endregion
 
+    //region Internet SECTION
     private static boolean isConnectionInternet(Context context){
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
@@ -579,5 +591,5 @@ public class SingletonBarGest {
         toast.setDuration(Toast.LENGTH_LONG);
         toast.show();
     }
-
+    //endregion
 }
