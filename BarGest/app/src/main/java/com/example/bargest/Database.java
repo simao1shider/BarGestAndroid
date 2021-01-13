@@ -17,6 +17,7 @@ public class Database extends SQLiteOpenHelper {
 
     //Tables
     private static final String TABLE_TABLE = "tables";
+    private static final String COLUMN_TABLE_ID = "id";
     private static final String COLUMN_TABLE_NUMBER = "number";
     private static final String COLUMN_TABLE_STATUS = "status";
 
@@ -121,8 +122,9 @@ public class Database extends SQLiteOpenHelper {
 
 
     //Tables
-    public Tables adicionarMesaBD(Tables table){
+    public Tables addMesaBD(Tables table){
         ContentValues values = new ContentValues();
+        values.put(COLUMN_TABLE_ID, table.getId());
         values.put(COLUMN_TABLE_NUMBER, table.getNumber());
         values.put(COLUMN_TABLE_STATUS, table.getStatus());
 
@@ -132,5 +134,20 @@ public class Database extends SQLiteOpenHelper {
             return table;
         }
         return null;
+    }
+
+    //UPDATE
+    public boolean editMesaBD(Tables table){
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_TABLE_ID, table.getId());
+        values.put(COLUMN_TABLE_NUMBER, table.getNumber());
+        values.put(COLUMN_TABLE_STATUS, table.getStatus());
+
+        return this.db.update(TABLE_TABLE, values, "id = ?", new String[]{table.getId()+""}) > 0;
+    }
+    //DELETE
+    public boolean deleteTableBD(int idMesa){
+        return db.delete(TABLE_TABLE, "id =?", new String[]{idMesa+""}) > 0;
     }
 }
