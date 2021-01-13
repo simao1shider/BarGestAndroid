@@ -30,7 +30,10 @@ import com.example.bargest.Listeners.NewRequestListner;
 import com.example.bargest.Listeners.ProductsListener;
 import com.example.bargest.Listeners.TableListener;
 import com.example.bargest.Models.Bills;
+import com.example.bargest.Models.Categories;
 import com.example.bargest.Models.Products;
+import com.example.bargest.Models.Requests;
+import com.example.bargest.Models.Tables;
 import com.example.bargest.Utils.parserJsonBills;
 import com.example.bargest.Utils.parserJsonCategories;
 import com.example.bargest.Utils.parserJsonProducts;
@@ -57,7 +60,13 @@ public class SingletonBarGest {
     private ProductsListener productsListener;
     private NewRequestListner newRequestListner;
     private LoginListener tokenListener;
+    private Database localDatabase = null;
     ArrayList<Bills> bills;
+    ArrayList<Categories> categories;
+    ArrayList<Products> products;
+    ArrayList<Requests> requests;
+    ArrayList<Tables> tables;
+    //Rever este array
     ArrayList<Products> newrequests;
     String url ="http://10.200.20.34/BarGestWeb/api/web/v1/";
     String token;
@@ -94,6 +103,13 @@ public class SingletonBarGest {
     }
 
     private SingletonBarGest(Context context) {
+        localDatabase = new Database(context);
+        tables = new ArrayList<Tables>();
+        categories = new ArrayList<Categories>();
+        products = new ArrayList<Products>();
+        requests = new ArrayList<Requests>();
+        bills = new ArrayList<Bills>();
+        localDatabase = new Database(context);
     }
 
     public void startNewRequest(){
