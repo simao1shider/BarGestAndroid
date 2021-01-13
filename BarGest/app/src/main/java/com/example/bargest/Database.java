@@ -2,12 +2,15 @@ package com.example.bargest;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
 import com.example.bargest.Models.Tables;
+
+import java.util.ArrayList;
 
 public class Database extends SQLiteOpenHelper {
 
@@ -20,6 +23,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_TABLE_ID = "id";
     private static final String COLUMN_TABLE_NUMBER = "number";
     private static final String COLUMN_TABLE_STATUS = "status";
+    private static final String COLUMN_TABLE_TOTAL = "total";
 
     //Accounts
     private static final String TABLE_ACCOUNT = "accounts";
@@ -122,7 +126,20 @@ public class Database extends SQLiteOpenHelper {
 
 
     //Tables
-    public Tables addMesaBD(Tables table){
+    public ArrayList<Tables> getTables(){
+        ArrayList<Tables> tables = new ArrayList<Tables>();
+        Cursor cursor = this.db.query(TABLE_TABLE, new String[]{COLUMN_TABLE_ID, COLUMN_TABLE_NUMBER, COLUMN_TABLE_STATUS, COLUMN_TABLE_TOTAL}, null, null, null,null, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Tables table = new Tables(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getDouble(3));
+                tables.add(table);
+            }while (cursor.moveToNext());
+        }
+        return tables;
+    }
+
+    public Tables addTable(Tables table){
         ContentValues values = new ContentValues();
         values.put(COLUMN_TABLE_ID, table.getId());
         values.put(COLUMN_TABLE_NUMBER, table.getNumber());
@@ -137,7 +154,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
     //UPDATE
-    public boolean editMesaBD(Tables table){
+    public boolean editTable(Tables table){
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_TABLE_ID, table.getId());
@@ -147,7 +164,11 @@ public class Database extends SQLiteOpenHelper {
         return this.db.update(TABLE_TABLE, values, "id = ?", new String[]{table.getId()+""}) > 0;
     }
     //DELETE
-    public boolean deleteTableBD(int idMesa){
+    public boolean deleteTable(int idMesa){
         return db.delete(TABLE_TABLE, "id =?", new String[]{idMesa+""}) > 0;
+    }
+
+    public boolean deleteTables() {
+        return db.delete(TABLE_TABLE, null, null) > 0;
     }
 }
