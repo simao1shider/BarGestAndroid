@@ -63,12 +63,14 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE =
-                "CREATE TABLE " + TABLE_TABLE + "( "+
-                        COLUMN_TABLE_NUMBER + " INTEGER PRIMARY KEY, "+
-                        COLUMN_TABLE_STATUS + " INTEGER NOT NULL "+
+                "CREATE TABLE IF NOT EXISTS " + TABLE_TABLE + "( "+
+                        COLUMN_TABLE_ID + " INTEGER PRIMARY KEY, "+
+                        COLUMN_TABLE_NUMBER + " INTEGER NOT NULL, "+
+                        COLUMN_TABLE_STATUS + " INTEGER NOT NULL, "+
+                        COLUMN_TABLE_TOTAL + " INTEGER NOT NULL "+
                         " )";
         String CREATE_ACCOUNT=
-                "CREATE TABLE "+ TABLE_ACCOUNT + "( "+
+                "CREATE TABLE IF NOT EXISTS "+ TABLE_ACCOUNT + "( "+
                         COLUMN_ACCOUNT_ID + " INTEGER PRIMARY KEY, "+
                         COLUMN_ACCOUNT_NAME + " TEXT NOT NULL, "+
                         COLUMN_ACCOUNT_STATUS + " INTEGER NOT NULL, "+
@@ -77,7 +79,7 @@ public class Database extends SQLiteOpenHelper {
                 " )";
 
         String CREATE_REQUEST =
-                "CREATE TABLE "+ TABLE_REQUEST + "(" +
+                "CREATE TABLE IF NOT EXISTS "+ TABLE_REQUEST + "(" +
                         COLUMN_REQUEST_ID + " INTEGER PRIMARY KEY, " +
                         COLUMN_REQUEST_DATETIME + " TEXT NOT NULL, " +
                         COLUMN_REQUEST_STATUS + " INTEGER NOT NULL, " +
@@ -86,23 +88,23 @@ public class Database extends SQLiteOpenHelper {
                         " ) ";
 
         String CREATE_PRODUCT_REQUEST =
-                "CREATE TABLE "+ TABLE_REQUESTPRODUCT + "(" +
+                "CREATE TABLE IF NOT EXISTS "+ TABLE_REQUESTPRODUCT + "(" +
                         COLUMN_REQUESTPRODUCT_REQUEST_ID + " INTEGER NOT NULL, " +
                         COLUMN_REQUESTPRODUCT_PRODUCT_ID + " INTEGER NOT NULL, " +
                         COLUMN_REQUESTPRODUCT_QUANTITY + " INTEGER NOT NULL "+
                         " ) ";
 
         String CREATE_PRODUCT =
-                "CREATE TABLE "+ TABLE_PRODUCT + " ( " +
-                        COLUMN_PRODUCT_ID + " INTEGER NOT NULL," +
+                "CREATE TABLE IF NOT EXISTS "+ TABLE_PRODUCT + " ( " +
+                        COLUMN_PRODUCT_ID + " INTEGER PRIMARY KEY," +
                         COLUMN_PRODUCT_NAME + " TEXT NOT NULL," +
                         COLUMN_PRODUCT_PRICE + " decimal(10,2) NOT NULL, " +
                         COLUMN_PRODUCT_CATEGORY_ID +" INTEGER NOT NULL" +
                 ")";
         String CREATE_CATEGORY =
-                "CREATE TABLE "+ TABLE_CATEGORY + " ( " +
-                        COLUMN_CATEGORY_NAME + " TEXT NOT NULL," +
-                        COLUMN_CATEGORY_ID + " INTEGER PRIMARY KEY " +
+                "CREATE TABLE IF NOT EXISTS "+ TABLE_CATEGORY + " ( " +
+                        COLUMN_CATEGORY_ID + " INTEGER PRIMARY KEY," +
+                        COLUMN_CATEGORY_NAME + " TEXT NOT NULL" +
                         ")";
 
         db.execSQL(CREATE_TABLE);
@@ -144,6 +146,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_TABLE_ID, table.getId());
         values.put(COLUMN_TABLE_NUMBER, table.getNumber());
         values.put(COLUMN_TABLE_STATUS, table.getStatus());
+        values.put(COLUMN_TABLE_TOTAL, table.getTotal());
 
         long id = this.db.insert(TABLE_TABLE, null, values);
         if(id > -1){
@@ -160,6 +163,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_TABLE_ID, table.getId());
         values.put(COLUMN_TABLE_NUMBER, table.getNumber());
         values.put(COLUMN_TABLE_STATUS, table.getStatus());
+        values.put(COLUMN_TABLE_TOTAL, table.getStatus());
 
         return this.db.update(TABLE_TABLE, values, "id = ?", new String[]{table.getId()+""}) > 0;
     }
