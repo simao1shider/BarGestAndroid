@@ -66,7 +66,6 @@ public class SingletonBarGest {
     ArrayList<Products> products;
     ArrayList<Requests> requests;
     ArrayList<Tables> tables;
-    //Rever este array
     ArrayList<Products> newrequests;
     String url ="http://192.168.1.205/BarGestWeb/api/web/v1/";
     String token;
@@ -106,13 +105,21 @@ public class SingletonBarGest {
 
     private SingletonBarGest(Context context) {
         localDatabase = new Database(context);
-        tables = new ArrayList<Tables>();
-        categories = new ArrayList<Categories>();
-        products = new ArrayList<Products>();
-        requests = new ArrayList<Requests>();
-        bills = new ArrayList<Bills>();
+        tables = new ArrayList<>();
+        categories = new ArrayList<>();
+        products = new ArrayList<>();
+        requests = new ArrayList<>();
+        bills = new ArrayList<>();
     }
 
+    public Tables getTable(int id) {
+        for (Tables table : tables)
+            if (table.getId() == id)
+                return table;
+        return null;
+    }
+
+    //region REQUEST SECTION
     public void startNewRequest(){
         newrequests = new ArrayList<>();
     }
@@ -132,6 +139,7 @@ public class SingletonBarGest {
         newrequests.add(product);
         newRequestListner.onRefreshListProducts(newrequests);
     }
+    //endregion
 
     //region LOGIN SECTION
     public void loginUserAPI(final String username, final String password, final Context context) {
@@ -171,70 +179,103 @@ public class SingletonBarGest {
     //endregion
 
     //region TABLE SECTION
-    public void getAPITableList(final Context context){
-        if(isConnectionInternet(context)) {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "table/tables?" + token, null, new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
-                    Log.i("API", response.toString());
-                    tableListener.onRefreshListTables(parserJsonTables.parserJsonTables(response));
-                    tables = parserJsonTables.parserJsonTables(response);
-                    addTablesDB(tables);
-                    if (tableListener != null)
-                        tableListener.onRefreshListTables(tables);
+        //region API SECTION
+        public ArrayList<Tables> getAPITableList(final Context context){
+            if(isConnectionInternet(context)) {
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "table/tables?" + token, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i("API", response.toString());
+                        //tableListener.onRefreshListTables(parserJsonTables.parserJsonTables(response));
+                        tables = parserJsonTables.parserJsonTables(response);
+                        addTablesDB(tables);
+                        if (tableListener != null)
+                            tableListener.onRefreshListTables(tables);
 
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, "Error:"+error.getMessage(), Toast.LENGTH_LONG).show();
-                    // TODO: Handle error
-                    Log.e("API", error.toString());
-                }
-            });
-            Log.i("API", "teste");
-            volleyQueue.add(jsonArrayRequest);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, "Error:"+error.getMessage(), Toast.LENGTH_LONG).show();
+                        // TODO: Handle error
+                        Log.e("API", error.toString());
+                    }
+                });
+                Log.i("API", "teste");
+                volleyQueue.add(jsonArrayRequest);
+                return null;
+            }
+            else{
+                tables = localDatabase.getTables();
+                /*for(Tables table : tables){
+                    System.out.println(table.getNumber());
+                }*/
+                toastNotIntenet(context);
+                return tables;
+            }
         }
-        else{
+
+        public void getAPITableAccountsList(Context context,String table_id){
+            if(isConnectionInternet(context)) {
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "table/accounts/" + table_id + "?" + token, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i("API", response.toString());
+                        billListener.onRefreshListTables(parserJsonBills.parserJsonBilla(response));
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("API", error.toString());
+                    }
+                });
+                Log.i("API", "teste");
+                volleyQueue.add(jsonArrayRequest);
+            }
+            else {
+                toastNotIntenet(context);
+            }
+        }
+        //endregion
+
+        //region DataBase
+        public ArrayList<Tables> getTablesDB() {
             tables = localDatabase.getTables();
-            if (tableListener != null)
-                tableListener.onRefreshListTables(tables);
-            toastNotIntenet(context);
+            return tables;
         }
-    }
 
-    public void getAPITableAccountsList(Context context,String table_id){
-        if(isConnectionInternet(context)) {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "table/accounts/" + table_id + "?" + token, null, new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
-                    Log.i("API", response.toString());
-                    billListener.onRefreshListTables(parserJsonBills.parserJsonBilla(response));
+        public void addTableDB(Tables table) {
+            localDatabase.addTable(table);
+        }
+
+        public void addTablesDB(ArrayList<Tables> tables) {
+            localDatabase.deleteTables();
+            for (Tables table : tables)
+                addTableDB(table);
+        }
+
+        public void removeTableDB(int id) {
+            Tables table = getTable(id);
+
+            if (table != null)
+                if (localDatabase.deleteTable(id))
+                    tables.remove(table);
+        }
+
+        public void updateTableDB(Tables ntable) {
+            Tables table = getTable(ntable.getId());
+
+            if (table != null) {
+                if (localDatabase.editTable(ntable)) {
+                    table.setId(ntable.getId());
+                    table.setNumber(ntable.getNumber());
+                    table.setStatus(ntable.getStatus());
+                    table.setTotal(ntable.getTotal());
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // TODO: Handle error
-                    Log.e("API", error.toString());
-                }
-            });
-            Log.i("API", "teste");
-            volleyQueue.add(jsonArrayRequest);
+            }
         }
-        else {
-            toastNotIntenet(context);
-        }
-    }
-
-    public void addTablesDB(ArrayList<Tables> tablesList) {
-        localDatabase.deleteTables();
-        for (Tables table : tablesList)
-            addTableDB(table);
-    }
-
-    public void addTableDB(Tables table) {
-        localDatabase.addTable(table);
-    }
+    //endregion
     //endregion
 
     //region REQUEST SECTION

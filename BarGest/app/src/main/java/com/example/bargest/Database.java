@@ -126,10 +126,14 @@ public class Database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    //region Tables
 
-    //Tables
+    /**
+     * SELECT
+     * @return
+     */
     public ArrayList<Tables> getTables(){
-        ArrayList<Tables> tables = new ArrayList<Tables>();
+        ArrayList<Tables> tables = new ArrayList<>();
         Cursor cursor = this.db.query(TABLE_TABLE, new String[]{COLUMN_TABLE_ID, COLUMN_TABLE_NUMBER, COLUMN_TABLE_STATUS, COLUMN_TABLE_TOTAL}, null, null, null,null, null);
 
         if(cursor.moveToFirst()){
@@ -138,25 +142,31 @@ public class Database extends SQLiteOpenHelper {
                 tables.add(table);
             }while (cursor.moveToNext());
         }
+        cursor.close();
+
         return tables;
     }
 
-    public Tables addTable(Tables table){
+    /**
+     * INSERT
+     * @param table
+     * @return
+     */
+    public void addTable(Tables table){
         ContentValues values = new ContentValues();
         values.put(COLUMN_TABLE_ID, table.getId());
         values.put(COLUMN_TABLE_NUMBER, table.getNumber());
         values.put(COLUMN_TABLE_STATUS, table.getStatus());
         values.put(COLUMN_TABLE_TOTAL, table.getTotal());
 
-        long id = this.db.insert(TABLE_TABLE, null, values);
-        if(id > -1){
-            table.setId( (int) id );
-            return table;
-        }
-        return null;
+        this.db.insert(TABLE_TABLE, null, values);
     }
 
-    //UPDATE
+    /**
+     * UPDATE
+     * @param table
+     * @return
+     */
     public boolean editTable(Tables table){
 
         ContentValues values = new ContentValues();
@@ -165,14 +175,23 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_TABLE_STATUS, table.getStatus());
         values.put(COLUMN_TABLE_TOTAL, table.getStatus());
 
-        return this.db.update(TABLE_TABLE, values, "id = ?", new String[]{table.getId()+""}) > 0;
+        int nRows = this.db.update(TABLE_TABLE, values, "id = ?", new String[]{table.getId()+""});
+
+        return (nRows>0);
     }
-    //DELETE
+
+    /**
+     * DELETE
+     * @param idMesa
+     * @return
+     */
     public boolean deleteTable(int idMesa){
-        return db.delete(TABLE_TABLE, "id =?", new String[]{idMesa+""}) > 0;
+        int nRows = this.db.delete(TABLE_TABLE,"id = ?", new String[]{idMesa+""});
+        return (nRows>0);
     }
 
     public boolean deleteTables() {
         return db.delete(TABLE_TABLE, null, null) > 0;
     }
+    //endregion
 }
