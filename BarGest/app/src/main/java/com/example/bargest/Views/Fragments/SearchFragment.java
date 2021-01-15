@@ -62,7 +62,7 @@ public class SearchFragment extends Fragment implements ProductsListener {
                 if(getArguments().containsKey("account_id")){
                     bundle.putInt("account_id",getArguments().getInt("account_id"));
                 }
-                BtnSearchFragment btnSearchFragment = new BtnSearchFragment()
+                BtnSearchFragment btnSearchFragment = new BtnSearchFragment();
                 btnSearchFragment.setArguments(bundle);
                 getFragmentManager().beginTransaction().replace(R.id.toolbarNewRequest, btnSearchFragment).commit();
             }
