@@ -30,7 +30,10 @@ import com.example.bargest.Listeners.NewRequestListner;
 import com.example.bargest.Listeners.ProductsListener;
 import com.example.bargest.Listeners.TableListener;
 import com.example.bargest.Models.Bills;
+import com.example.bargest.Models.Categories;
 import com.example.bargest.Models.Products;
+import com.example.bargest.Models.Requests;
+import com.example.bargest.Models.Tables;
 import com.example.bargest.Utils.parserJsonBills;
 import com.example.bargest.Utils.parserJsonCategories;
 import com.example.bargest.Utils.parserJsonProducts;
@@ -57,11 +60,17 @@ public class SingletonBarGest {
     private ProductsListener productsListener;
     private NewRequestListner newRequestListner;
     private LoginListener tokenListener;
+    private Database localDatabase = null;
     ArrayList<Bills> bills;
+    ArrayList<Categories> categories;
+    ArrayList<Products> products;
+    ArrayList<Requests> requests;
+    ArrayList<Tables> tables;
     ArrayList<Products> newrequests;
-    String url ="http://192.168.42.127/BarGestWeb/api/web/v1/";
+    String url ="http://192.168.1.205/BarGestWeb/api/web/v1/";
     String token;
 
+    //region LISTENERS SECTION
     public void setTableListener(TableListener tableListener){
         this.tableListener=tableListener;
     }
@@ -83,6 +92,7 @@ public class SingletonBarGest {
     public void setLoginListener(LoginListener token){
         this.tokenListener=token;
     }
+    //endregion
 
     public static synchronized SingletonBarGest getInstance(Context context) {
         if(INSTANCE == null)
@@ -94,8 +104,22 @@ public class SingletonBarGest {
     }
 
     private SingletonBarGest(Context context) {
+        localDatabase = new Database(context);
+        tables = new ArrayList<>();
+        categories = new ArrayList<>();
+        products = new ArrayList<>();
+        requests = new ArrayList<>();
+        bills = new ArrayList<>();
     }
 
+    public Tables getTable(int id) {
+        for (Tables table : tables)
+            if (table.getId() == id)
+                return table;
+        return null;
+    }
+
+    //region REQUEST SECTION
     public void startNewRequest(){
         newrequests = new ArrayList<>();
     }
@@ -115,8 +139,9 @@ public class SingletonBarGest {
         newrequests.add(product);
         newRequestListner.onRefreshListProducts(newrequests);
     }
+    //endregion
 
-
+    //region LOGIN SECTION
     public void loginUserAPI(final String username, final String password, final Context context) {
         if (!isConnectionInternet(context)) {
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
@@ -151,53 +176,109 @@ public class SingletonBarGest {
             volleyQueue.add(request);
         }
     }
-    //---------------TABLES---------------
-    public void getAPITableList(final Context context){
-        if(isConnectionInternet(context)) {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "table/tables?" + token, null, new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
-                    Log.i("API", response.toString());
-                    tableListener.onRefreshListTables(parserJsonTables.parserJsonTables(response));
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, "Error:"+error.getMessage(), Toast.LENGTH_LONG).show();
-                    // TODO: Handle error
-                    Log.e("API", error.toString());
-                }
-            });
-            Log.i("API", "teste");
-            volleyQueue.add(jsonArrayRequest);
+    //endregion
+
+    //region TABLE SECTION
+        //region API SECTION
+        public ArrayList<Tables> getAPITableList(final Context context){
+            if(isConnectionInternet(context)) {
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "table/tables?" + token, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i("API", response.toString());
+                        //tableListener.onRefreshListTables(parserJsonTables.parserJsonTables(response));
+                        tables = parserJsonTables.parserJsonTables(response);
+                        addTablesDB(tables);
+                        if (tableListener != null)
+                            tableListener.onRefreshListTables(tables);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, "Error:"+error.getMessage(), Toast.LENGTH_LONG).show();
+                        // TODO: Handle error
+                        Log.e("API", error.toString());
+                    }
+                });
+                Log.i("API", "teste");
+                volleyQueue.add(jsonArrayRequest);
+                return null;
+            }
+            else{
+                tables = localDatabase.getTables();
+                /*for(Tables table : tables){
+                    System.out.println(table.getNumber());
+                }*/
+                toastNotIntenet(context);
+                return tables;
+            }
         }
-        else{
-            toastNotIntenet(context);
+
+        public void getAPITableAccountsList(Context context,String table_id){
+            if(isConnectionInternet(context)) {
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "table/accounts/" + table_id + "?" + token, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i("API", response.toString());
+                        billListener.onRefreshListTables(parserJsonBills.parserJsonBilla(response));
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("API", error.toString());
+                    }
+                });
+                Log.i("API", "teste");
+                volleyQueue.add(jsonArrayRequest);
+            }
+            else {
+                toastNotIntenet(context);
+            }
         }
-    }
-    public void getAPITableAccountsList(Context context,String table_id){
-        if(isConnectionInternet(context)) {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "table/accounts/" + table_id + "?" + token, null, new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
-                    Log.i("API", response.toString());
-                    billListener.onRefreshListTables(parserJsonBills.parserJsonBilla(response));
+        //endregion
+
+        //region DataBase
+        public ArrayList<Tables> getTablesDB() {
+            tables = localDatabase.getTables();
+            return tables;
+        }
+
+        public void addTableDB(Tables table) {
+            localDatabase.addTable(table);
+        }
+
+        public void addTablesDB(ArrayList<Tables> tables) {
+            localDatabase.deleteTables();
+            for (Tables table : tables)
+                addTableDB(table);
+        }
+
+        public void removeTableDB(int id) {
+            Tables table = getTable(id);
+
+            if (table != null)
+                if (localDatabase.deleteTable(id))
+                    tables.remove(table);
+        }
+
+        public void updateTableDB(Tables ntable) {
+            Tables table = getTable(ntable.getId());
+
+            if (table != null) {
+                if (localDatabase.editTable(ntable)) {
+                    table.setId(ntable.getId());
+                    table.setNumber(ntable.getNumber());
+                    table.setStatus(ntable.getStatus());
+                    table.setTotal(ntable.getTotal());
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // TODO: Handle error
-                    Log.e("API", error.toString());
-                }
-            });
-            Log.i("API", "teste");
-            volleyQueue.add(jsonArrayRequest);
+            }
         }
-        else {
-            toastNotIntenet(context);
-        }
-    }
-    //---------------REQUESTS---------------
+    //endregion
+    //endregion
+
+    //region REQUEST SECTION
     public void getAPIListRequests(Context context){
         if(isConnectionInternet(context)) {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "request/current?" + token, null, new Response.Listener<JSONArray>() {
@@ -301,6 +382,7 @@ public class SingletonBarGest {
             toastNotIntenet(context);
         }
     }
+
     public void createRequestTable(final Context context, int tableId,final String accountName ,final ArrayList<Products> products, final FragmentManager fragment){
         if(isConnectionInternet(context)) {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "request/create/table/" + tableId+"?"+token, new Response.Listener<String>() {
@@ -368,8 +450,9 @@ public class SingletonBarGest {
             toastNotIntenet(context);
         }
     }
-    //---------------CATEGORY---------------
+    //endregion
 
+    //region CATEGORY SECTION
     public void getAllCategories(final Context context){
         if(isConnectionInternet(context)) {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "category/all?"+token, null, new Response.Listener<JSONArray>() {
@@ -392,8 +475,9 @@ public class SingletonBarGest {
             toastNotIntenet(context);
         }
     }
+    //endregion
 
-    //---------------Products---------------
+    //region PRODUCT SECTION
     public void getAllProducs(){
         //if(isConnectionInternet(context)) {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "product/all?"+token, null, new Response.Listener<JSONArray>() {
@@ -439,8 +523,9 @@ public class SingletonBarGest {
             toastNotIntenet(context);
         }
     }
+    //endregion
 
-    //---------------ACCOUNTS---------------
+    //region ACCOUNT SECTION
     public void getAccountProducts(Context context,int accountId){
         if(isConnectionInternet(context)) {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "account/info/" + accountId+"?"+token, null, new Response.Listener<JSONArray>() {
@@ -530,7 +615,9 @@ public class SingletonBarGest {
             toastNotIntenet(context);
         }
     }
+    //endregion
 
+    //region Internet SECTION
     private static boolean isConnectionInternet(Context context){
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
@@ -545,5 +632,5 @@ public class SingletonBarGest {
         toast.setDuration(Toast.LENGTH_LONG);
         toast.show();
     }
-
+    //endregion
 }

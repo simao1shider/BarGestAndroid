@@ -1,5 +1,6 @@
 package com.example.bargest.Views.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -60,7 +61,26 @@ public class TablesFragment extends Fragment implements TableListener {
         listTables = view.findViewById(R.id.list_tables);
         tableNumber = view.findViewById(R.id.tableNumber);
         tableNumber.setFocusable(false);
-        SingletonBarGest.getInstance(getContext()).getAPITableList(getContext());
+
+        if(SingletonBarGest.getInstance(getContext()).getAPITableList(getContext()) != null){
+            this.tables = SingletonBarGest.getInstance(getContext()).getAPITableList(getContext());
+            adapters = new TablesAdapters(getContext(), R.layout.item_list_tables, this.tables);
+            listTables.setAdapter(adapters);
+
+            listTables.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Bundle bundle=new Bundle();
+                    bundle.putString("table_id",String.valueOf(tables.get(position).getId()));
+                    bundle.putInt("table_number",tables.get(position).getNumber());
+                    BillsFragment billsFragment = new BillsFragment();
+                    billsFragment.setArguments(bundle);
+
+                    getFragmentManager().beginTransaction().replace(R.id.container,billsFragment).addToBackStack("Tables").commit();
+                }
+            });
+        }
+
         SingletonBarGest.getInstance(getContext()).setTableListener(this);
 
         tableNumber.setOnEditorActionListener(editorListner);
@@ -97,12 +117,15 @@ public class TablesFragment extends Fragment implements TableListener {
 
     @Override
     public void onRefreshListTables(final ArrayList<Tables> tables) {
-        this.tables=tables;
+        this.tables = tables;
         if(tables.size() != 0 ){
             tableNumber.setFocusableInTouchMode(true);
         }
-        adapters = new TablesAdapters(getContext(),R.layout.item_list_tables,tables);
-        listTables.setAdapter(adapters);
+
+        if (getContext() != null){
+            adapters = new TablesAdapters(getContext(), R.layout.item_list_tables, this.tables);
+            listTables.setAdapter(adapters);
+        }
 
         listTables.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
