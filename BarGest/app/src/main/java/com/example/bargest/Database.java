@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.bargest.Models.Categories;
 import com.example.bargest.Models.Tables;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_PRODUCT_PRICE = "price";
     private static final String COLUMN_PRODUCT_CATEGORY_ID = "category_id";
     //Categories
-    private static final String TABLE_CATEGORY = "products";
+    private static final String TABLE_CATEGORY = "categories";
     private static final String COLUMN_CATEGORY_ID = "id";
     private static final String COLUMN_CATEGORY_NAME = "name";
 
@@ -194,4 +195,71 @@ public class Database extends SQLiteOpenHelper {
         return db.delete(TABLE_TABLE, null, null) > 0;
     }
     //endregion
+
+
+    //region Category
+
+    /**
+     * SELECT
+     * @return
+     */
+    public ArrayList<Categories> getCategories(){
+        ArrayList<Categories> categories = new ArrayList<>();
+        Cursor cursor = this.db.query(TABLE_CATEGORY, new String[]{COLUMN_CATEGORY_ID, COLUMN_CATEGORY_NAME}, null, null, null,null, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Categories category = new Categories(cursor.getInt(0), cursor.getString(1));
+                categories.add(category);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return categories;
+    }
+
+    /**
+     * INSERT
+     * @param category
+     * @return
+     */
+    public void addCategory(Categories category){
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CATEGORY_ID, category.getId());
+        values.put(COLUMN_CATEGORY_NAME, category.getName());
+
+        this.db.insert(TABLE_CATEGORY, null, values);
+    }
+
+    /**
+     * UPDATE
+     * @param category
+     * @return
+     */
+    public boolean editCategory(Categories category){
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CATEGORY_ID, category.getId());
+        values.put(COLUMN_CATEGORY_NAME, category.getName());
+
+        int nRows = this.db.update(TABLE_CATEGORY, values, "id = ?", new String[]{category.getId()+""});
+
+        return (nRows>0);
+    }
+
+    /**
+     * DELETE
+     * @param idCategoria
+     * @return
+     */
+    public boolean deleteCategory(int idCategoria){
+        int nRows = this.db.delete(TABLE_CATEGORY,"id = ?", new String[]{idCategoria+""});
+        return (nRows>0);
+    }
+
+    public boolean deleteCategories() {
+        return db.delete(TABLE_CATEGORY, null, null) > 0;
+    }
+    //endregion
+
 }

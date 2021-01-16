@@ -118,9 +118,6 @@ public class TablesFragment extends Fragment implements TableListener {
     @Override
     public void onRefreshListTables(final ArrayList<Tables> tables) {
         this.tables = tables;
-        if(tables.size() != 0 ){
-            tableNumber.setFocusableInTouchMode(true);
-        }
 
         if (getContext() != null){
             adapters = new TablesAdapters(getContext(), R.layout.item_list_tables, this.tables);
