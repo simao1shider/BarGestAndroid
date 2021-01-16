@@ -9,11 +9,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.example.bargest.Adaptars.CategoriesAdaptar;
+import com.example.bargest.Adaptars.TablesAdapters;
 import com.example.bargest.Listeners.CategoriesListener;
 import com.example.bargest.Models.Categories;
+import com.example.bargest.Models.Tables;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 import com.example.bargest.Views.LoginActivity;
@@ -26,6 +29,7 @@ public class CategoriesFragment extends Fragment implements CategoriesListener {
 
     GridView GVCategories;
     private CategoriesAdaptar adaptarCategories;
+    ArrayList<Categories> categories;
 
     public CategoriesFragment() {
         // Required empty public constructor
@@ -37,19 +41,24 @@ public class CategoriesFragment extends Fragment implements CategoriesListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
         SharedPreferences prefs = getActivity().getSharedPreferences("Pref", MODE_PRIVATE);
-        if(prefs.getString("token","")==""){
+        if(prefs.getString("token","") == ""){
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         }
         GVCategories = view.findViewById(R.id.containerCategory);
-        SingletonBarGest.getInstance(getContext()).getAllCategories(getContext());
+        /*if(SingletonBarGest.getInstance(getContext()).getAllCategories(getContext()) != null){
+            adaptarCategories = new CategoriesAdaptar(getContext(), categories,getFragmentManager().beginTransaction(), R.id.conteinerAddProduct);
+            GVCategories.setAdapter(adaptarCategories);
+        }*/
         SingletonBarGest.getInstance(getContext()).setCategoriesListener(this);
         return view;
     }
 
     @Override
     public void onRefreshCategories(ArrayList<Categories> categories) {
-        adaptarCategories = new CategoriesAdaptar(getContext(),categories,getFragmentManager().beginTransaction(), R.id.conteinerAddProduct);
+        this.categories = categories;
+
+        adaptarCategories = new CategoriesAdaptar(getContext(), categories, getFragmentManager().beginTransaction(), R.id.conteinerAddProduct);
         GVCategories.setAdapter(adaptarCategories);
     }
 }

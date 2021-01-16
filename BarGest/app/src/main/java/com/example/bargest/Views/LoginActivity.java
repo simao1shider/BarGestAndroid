@@ -24,6 +24,9 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
         setContentView(R.layout.activity_login);
         username = findViewById(R.id.ETUsername);
         password = findViewById(R.id.ETPassword);
+
+        username.setText("simao");
+        password.setText("12345678");
     }
 
     public void ValidateLogin(View view) {

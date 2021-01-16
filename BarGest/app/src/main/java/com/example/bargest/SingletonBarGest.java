@@ -112,13 +112,6 @@ public class SingletonBarGest {
         bills = new ArrayList<>();
     }
 
-    public Tables getTable(int id) {
-        for (Tables table : tables)
-            if (table.getId() == id)
-                return table;
-        return null;
-    }
-
     //region REQUEST SECTION
     public void startNewRequest(){
         newrequests = new ArrayList<>();
@@ -182,7 +175,7 @@ public class SingletonBarGest {
         //region API SECTION
         public ArrayList<Tables> getAPITableList(final Context context){
             if(isConnectionInternet(context)) {
-                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "table/tables?" + token, null, new Response.Listener<JSONArray>() {
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "table/all?" + token, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.i("API", response.toString());
@@ -207,9 +200,6 @@ public class SingletonBarGest {
             }
             else{
                 tables = localDatabase.getTables();
-                /*for(Tables table : tables){
-                    System.out.println(table.getNumber());
-                }*/
                 toastNotIntenet(context);
                 return tables;
             }
@@ -217,7 +207,7 @@ public class SingletonBarGest {
 
         public void getAPITableAccountsList(Context context,String table_id){
             if(isConnectionInternet(context)) {
-                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "table/accounts/" + table_id + "?" + token, null, new Response.Listener<JSONArray>() {
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "table/" + table_id + "?" + token, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.i("API", response.toString());
@@ -239,7 +229,14 @@ public class SingletonBarGest {
         }
         //endregion
 
-        //region DataBase
+        //region DataBase SECTION
+        public Tables getTable(int id) {
+            for (Tables table : tables)
+                if (table.getId() == id)
+                    return table;
+            return null;
+        }
+
         public ArrayList<Tables> getTablesDB() {
             tables = localDatabase.getTables();
             return tables;
@@ -275,13 +272,13 @@ public class SingletonBarGest {
                 }
             }
         }
-    //endregion
+    //endregion S
     //endregion
 
     //region REQUEST SECTION
     public void getAPIListRequests(Context context){
         if(isConnectionInternet(context)) {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "request/current?" + token, null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "request/currentactive?" + token, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     Log.i("API", response.toString());
@@ -453,28 +450,81 @@ public class SingletonBarGest {
     //endregion
 
     //region CATEGORY SECTION
-    public void getAllCategories(final Context context){
-        if(isConnectionInternet(context)) {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "category/all?"+token, null, new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
-                    Log.i("API", response.toString());
-                    categoriesListener.onRefreshCategories(parserJsonCategories.parserJsonCategories(response));
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // TODO: Handle error
-                    Log.e("API", error.toString());
-                }
-            });
-            Log.i("API", "teste");
-            volleyQueue.add(jsonArrayRequest);
+        //region API SECTION
+        public ArrayList<Categories> getAllCategories(final Context context){
+            if(isConnectionInternet(context)) {
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "category/all?"+token, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i("API", response.toString());
+                        categories = parserJsonCategories.parserJsonCategories(response);
+
+                        addCategoriesDB(categories);
+                        if (categoriesListener != null)
+                            categoriesListener.onRefreshCategories(categories);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("API", error.toString());
+                    }
+                });
+                Log.i("API", "teste");
+                volleyQueue.add(jsonArrayRequest);
+                return null;
+            }
+            else{
+                categories = localDatabase.getCategories();
+                toastNotIntenet(context);
+                return categories;
+            }
         }
-        else{
-            toastNotIntenet(context);
+        //endregion
+
+        //region Database SECTION
+        public Categories getCategory(int id) {
+            for (Categories category : categories)
+                if (category.getId() == id)
+                    return category;
+            return null;
         }
-    }
+
+        public ArrayList<Categories> getCategoriesDB() {
+            categories = localDatabase.getCategories();
+            return categories;
+        }
+
+        public void addCategoryDB(Categories category) {
+            localDatabase.addCategory(category);
+        }
+
+        public void addCategoriesDB(ArrayList<Categories> categories) {
+            localDatabase.deleteCategories();
+            for (Categories category : categories)
+                addCategoryDB(category);
+        }
+
+        public void removeCategoryDB(int id) {
+            Categories category = getCategory(id);
+
+            if (category != null)
+                if (localDatabase.deleteCategory(id))
+                    categories.remove(category);
+        }
+
+        public void updateCategoryDB(Categories ncategory) {
+            Categories category = getCategory(ncategory.getId());
+
+            if (category != null) {
+                if (localDatabase.editCategory(ncategory)) {
+                    category.setId(ncategory.getId());
+                    category.setName(ncategory.getName());
+                }
+            }
+        }
+        //endregion
     //endregion
 
     //region PRODUCT SECTION
