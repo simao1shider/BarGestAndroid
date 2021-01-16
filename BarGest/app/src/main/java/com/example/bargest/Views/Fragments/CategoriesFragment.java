@@ -50,6 +50,7 @@ public class CategoriesFragment extends Fragment implements CategoriesListener {
             adaptarCategories = new CategoriesAdaptar(getContext(), categories,getFragmentManager().beginTransaction(), R.id.conteinerAddProduct);
             GVCategories.setAdapter(adaptarCategories);
         }*/
+        SingletonBarGest.getInstance(getContext()).getAllCategories(getContext());
         SingletonBarGest.getInstance(getContext()).setCategoriesListener(this);
         return view;
     }
