@@ -2,6 +2,7 @@ package com.example.bargest.Adaptars;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.views.ListRequests;
 import com.example.bargest.R;
+import com.example.bargest.Views.Fragments.EditRequestFragment;
 
 import java.util.ArrayList;
 
@@ -22,10 +25,12 @@ public class RequestsAdaptars extends RecyclerView.Adapter<RequestsAdaptars.MyVi
 
     private static Context context;
     private static ArrayList<ListRequests> data;
+    private FragmentManager fragment;
 
-    public RequestsAdaptars(Context rcontext, ArrayList<ListRequests> objetcs){
+    public RequestsAdaptars(Context rcontext, ArrayList<ListRequests> objetcs, FragmentManager fragment){
         context=rcontext;
         data=objetcs;
+        this.fragment=fragment;
     }
 
 
@@ -39,7 +44,7 @@ public class RequestsAdaptars extends RecyclerView.Adapter<RequestsAdaptars.MyVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder,final int position) {
         holder.Tablenumber.setText("Mesa "+ String.valueOf(data.get(position).getTable_number()));
         holder.RequestNumber.setText("#"+String.valueOf(data.get(position).getId()));
         switch (data.get(position).getStatus()){
@@ -47,6 +52,16 @@ public class RequestsAdaptars extends RecyclerView.Adapter<RequestsAdaptars.MyVi
             case 0:
                 //Requested
                 holder.card.setBackgroundColor(Color.parseColor("#F5C6CB"));
+                holder.card.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("request_id", data.get(position).getId());
+                        EditRequestFragment editRequestFragment = new EditRequestFragment();
+                        editRequestFragment.setArguments(bundle);
+                        fragment.beginTransaction().replace(R.id.container, editRequestFragment).addToBackStack("Requests").commit();
+                    }
+                });
                 break;
             case 1:
                 //Cooking

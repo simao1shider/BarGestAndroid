@@ -79,28 +79,41 @@ public class RequestFragment extends Fragment implements ListRequestsListener {
         }
 
         @Override
+        public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+            final int position = viewHolder.getAdapterPosition();
+            int swipFlags=0;
+            switch (requests.get(position).getStatus()) {
+                case 0:
+                    swipFlags= ItemTouchHelper.LEFT;
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    swipFlags = ItemTouchHelper.RIGHT;
+            }
+            return makeMovementFlags(0,swipFlags);
+        }
+
+        @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             final int position = viewHolder.getAdapterPosition();
-            switch (direction){
-                case ItemTouchHelper.RIGHT:
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("request_id",requests.get(position).getId());
-                    EditRequestFragment editRequestFragment = new EditRequestFragment();
-                    editRequestFragment.setArguments(bundle);
-                    getFragmentManager().beginTransaction().replace(R.id.container,editRequestFragment).addToBackStack("Requests").commit();
-                    break;
-                case ItemTouchHelper.LEFT:
-                    Snackbar.make(listRequest,"Pedido: " +  requests.get(position).getId(), Snackbar.LENGTH_LONG).setAction("Confirmar", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            SingletonBarGest.getInstance(getContext()).deleteRequest(getContext(),requests.get(position).getId());
-                            requests.remove(position);
-                            adapters.notifyDataSetChanged();
-                        }
-                    }).show();
-                    adapters.notifyDataSetChanged();
-                    break;
-            }
+                switch (direction) {
+                    case ItemTouchHelper.RIGHT:
+
+                        break;
+                    case ItemTouchHelper.LEFT:
+                        Snackbar.make(listRequest, "Pedido: " + requests.get(position).getId(), Snackbar.LENGTH_LONG).setAction("Confirmar", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                SingletonBarGest.getInstance(getContext()).deleteRequest(getContext(), requests.get(position).getId());
+                                requests.remove(position);
+                                adapters.notifyDataSetChanged();
+                            }
+                        }).show();
+                        adapters.notifyDataSetChanged();
+                        break;
+                }
+
         }
 
         @Override
@@ -144,7 +157,7 @@ public class RequestFragment extends Fragment implements ListRequestsListener {
     @Override
     public void onRefreshListTables(ArrayList<ListRequests> requests) {
         if(requests.size()!=0){
-            adapters = new RequestsAdaptars(getContext(),requests);
+            adapters = new RequestsAdaptars(getContext(),requests,getFragmentManager());
             listRequest.setAdapter(adapters);
             this.requests=requests;
         }
