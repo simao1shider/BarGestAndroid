@@ -14,6 +14,7 @@ import com.example.bargest.Models.Products;
 import com.example.bargest.Models.ProductsToBePaid;
 import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.Tables;
+import com.example.bargest.Models.views.ListRequests;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,6 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_REQUEST_ID = "id";
     private static final String COLUMN_REQUEST_DATETIME = "dateTime";
     private static final String COLUMN_REQUEST_STATUS = "status";
-    private static final String COLUMN_REQUEST_ACCOUNT_ID = "account_id";
     private static final String COLUMN_REQUEST_TABLE_ID = "table_id";
     //Requests_Products
     private static final String TABLE_REQUESTPRODUCT = "requests_product";
@@ -95,7 +95,6 @@ public class Database extends SQLiteOpenHelper {
                         COLUMN_REQUEST_ID + " INTEGER PRIMARY KEY, " +
                         COLUMN_REQUEST_DATETIME + " TEXT NOT NULL, " +
                         COLUMN_REQUEST_STATUS + " INTEGER NOT NULL, " +
-                        COLUMN_REQUEST_ACCOUNT_ID + " INTEGER NOT NULL, " +
                         COLUMN_REQUEST_TABLE_ID + " INTEGER NOT NULL " +
                         " ) ";
 
@@ -274,6 +273,75 @@ public class Database extends SQLiteOpenHelper {
 
     public boolean deleteBills() {
         return db.delete(TABLE_ACCOUNT, null, null) > 0;
+    }
+    //endregion
+
+    //region Requests
+
+    /**
+     * SELECT
+     * @return
+     */
+    public ArrayList<ListRequests> getRequests(){
+        ArrayList<ListRequests> requests = new ArrayList<>();
+        Cursor cursor = this.db.query(TABLE_REQUEST, new String[]{COLUMN_REQUEST_ID, COLUMN_REQUEST_STATUS, COLUMN_REQUEST_TABLE_ID, COLUMN_REQUEST_DATETIME}, null, null, null,null, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                ListRequests request = new ListRequests(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),  cursor.getString(3));
+                requests.add(request);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return requests;
+    }
+
+    /**
+     * INSERT
+     * @param request
+     * @return
+     */
+    public void addRequests(ListRequests request){
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ACCOUNT_ID, request.getId());
+        values.put(COLUMN_REQUEST_STATUS, request.getStatus());
+        values.put(COLUMN_REQUEST_TABLE_ID, request.getTable_number());
+        values.put(COLUMN_REQUEST_DATETIME, request.getDateTime());
+
+        this.db.insert(TABLE_REQUEST, null, values);
+    }
+
+    /**
+     * UPDATE
+     * @param request
+     * @return
+     */
+    public boolean editRequest(ListRequests request){
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ACCOUNT_ID, request.getId());
+        values.put(COLUMN_REQUEST_STATUS, request.getStatus());
+        values.put(COLUMN_REQUEST_TABLE_ID, request.getTable_number());
+        values.put(COLUMN_REQUEST_DATETIME, request.getDateTime());
+
+        int nRows = this.db.update(TABLE_REQUEST, values, "id = ?", new String[]{request.getId()+""});
+
+        return (nRows>0);
+    }
+
+    /**
+     * DELETE
+     * @param idRequest
+     * @return
+     */
+    public boolean deleteRequest(int idRequest){
+        int nRows = this.db.delete(TABLE_REQUEST,"id = ?", new String[]{idRequest+""});
+        return (nRows>0);
+    }
+
+    public boolean deleteRequests() {
+        return db.delete(TABLE_REQUEST, null, null) > 0;
     }
     //endregion
 

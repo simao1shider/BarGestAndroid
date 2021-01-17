@@ -36,6 +36,7 @@ import com.example.bargest.Models.Products;
 import com.example.bargest.Models.ProductsToBePaid;
 import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.Tables;
+import com.example.bargest.Models.views.ListRequests;
 import com.example.bargest.Utils.parserJsonBills;
 import com.example.bargest.Utils.parserJsonCategories;
 import com.example.bargest.Utils.parserJsonProducts;
@@ -48,6 +49,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SingletonBarGest {
@@ -70,6 +72,7 @@ public class SingletonBarGest {
     ArrayList<Products> productsbycategory;
     ArrayList<ProductsToBePaid> productsToBePaid;
     ArrayList<Requests> requests;
+    ArrayList<ListRequests> listrequests;
     ArrayList<Tables> tables;
     ArrayList<Products> newrequests;
     String url ="http://192.168.1.102/BarGestWeb/api/web/v1/";
@@ -320,189 +323,194 @@ public class SingletonBarGest {
                 }
             }
             //endregion
-
         //endregion
     //endregion
 
     //region REQUEST SECTION
-    public void getAPIListRequests(Context context){
-        if(isConnectionInternet(context)) {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "request/currentactive?" + token, null, new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
-                    Log.i("API", response.toString());
-                    listRequestsListener.onRefreshListTables(parserJsonRequest.parserJsonListRequest(response));
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // TODO: Handle error
-                    Log.e("API", error.toString());
-                }
-            });
-            Log.i("API", "teste");
-            volleyQueue.add(jsonArrayRequest);
+        //region API SECTION
+        public ArrayList<ListRequests> getAPIListRequests(Context context){
+            if(isConnectionInternet(context)) {
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "request/currentactive?" + token, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i("API", response.toString());
+                        listrequests = parserJsonRequest.parserJsonListRequest(response);
+                        addRequestsDB(listrequests);
+                        if(listRequestsListener != null)
+                            listRequestsListener.onRefreshListTables(listrequests);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("API", error.toString());
+                    }
+                });
+                Log.i("API", "teste");
+                volleyQueue.add(jsonArrayRequest);
+                return null;
+            }
+            else{
+                listrequests = getRequestsDB();
+                toastNotIntenet(context);
+                return listrequests;
+            }
         }
-        else{
-            toastNotIntenet(context);
-        }
-    }
 
-    public ArrayList<Products> getRequestInfo(Context context, int request_id){
-        if(isConnectionInternet(context)) {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "request/info/" + request_id + "?" + token, null, new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
-                    Log.i("API", response.toString());
-                    products = parserJsonProducts.parserAccountProducts(response);
-                    //TODO addTablesDB(tables);
-                    if (productsListener != null)
-                        productsListener.onRefreshListProducts(products);
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // TODO: Handle error
-                    Log.e("API", error.toString());
-                }
-            });
-            Log.i("API", "teste");
-            volleyQueue.add(jsonArrayRequest);
-            return null;
+        public ArrayList<Products> getRequestInfo(Context context, int request_id){
+            if(isConnectionInternet(context)) {
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "request/info/" + request_id + "?" + token, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i("API", response.toString());
+                        products = parserJsonProducts.parserAccountProducts(response);
+                        if (productsListener != null)
+                            productsListener.onRefreshListProducts(products);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("API", error.toString());
+                    }
+                });
+                Log.i("API", "teste");
+                volleyQueue.add(jsonArrayRequest);
+                return null;
+            }
+            else{
+                toastNotIntenet(context);
+                return products; //TODO retornar produtos com o id do request
+            }
         }
-        else{
-            toastNotIntenet(context);
-            return products; //TODO retornar produtos com o id do request
-        }
-    }
 
-    public void deleteRequest(final Context context, int requestId){
-        if(isConnectionInternet(context)) {
-            StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url + "request/delete/" + requestId+"?"+token, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Toast.makeText(context, response, Toast.LENGTH_LONG).show();
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // TODO: Handle error
-                    Log.e("API", error.toString());
-                    Toast.makeText(context, "Erro ao eliminar", Toast.LENGTH_LONG).show();
-                    getAPIListRequests(context);
-                }
-            });
-            Log.i("API", "teste");
-            volleyQueue.add(stringRequest);
+        public void deleteRequest(final Context context, int requestId){
+            if(isConnectionInternet(context)) {
+                StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url + "request/delete/" + requestId+"?"+token, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("API", error.toString());
+                        Toast.makeText(context, "Erro ao eliminar", Toast.LENGTH_LONG).show();
+                        getAPIListRequests(context);
+                    }
+                });
+                Log.i("API", "teste");
+                volleyQueue.add(stringRequest);
+            }
+            else{
+                toastNotIntenet(context);
+            }
         }
-        else{
-            toastNotIntenet(context);
-        }
-    }
 
-    public void createRequestAccount(final Context context, int accountId, final ArrayList<Products> products, final FragmentManager fragment){
-        if(isConnectionInternet(context)) {
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "request/create/account/" + accountId+"?"+token, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Log.i("API", response);
-                    Toast.makeText(context, "Pedido criado com successo", Toast.LENGTH_LONG).show();
-                    fragment.popBackStack();
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // TODO: Handle error
-                    Log.e("API", error.toString());
-                    Toast.makeText(context, "Erro ao inserir dados", Toast.LENGTH_LONG).show();
-                    getAPIListRequests(context);
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    String sproducts = new Gson().toJson(products);
-                    params.put("products", sproducts);
-                    return params;
-                }
-            };
-            Log.i("API", "teste");
-            volleyQueue.add(stringRequest);
+        public void createRequestAccount(final Context context, int accountId, final ArrayList<Products> products, final FragmentManager fragment){
+            if(isConnectionInternet(context)) {
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "request/create/account/" + accountId+"?"+token, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("API", response);
+                        Toast.makeText(context, "Pedido criado com successo", Toast.LENGTH_LONG).show();
+                        fragment.popBackStack();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("API", error.toString());
+                        Toast.makeText(context, "Erro ao inserir dados", Toast.LENGTH_LONG).show();
+                        getAPIListRequests(context);
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        String sproducts = new Gson().toJson(products);
+                        params.put("products", sproducts);
+                        return params;
+                    }
+                };
+                Log.i("API", "teste");
+                volleyQueue.add(stringRequest);
+            }
+            else{
+                toastNotIntenet(context);
+            }
         }
-        else{
-            toastNotIntenet(context);
-        }
-    }
 
-    public void createRequestTable(final Context context, int tableId,final String accountName ,final ArrayList<Products> products, final FragmentManager fragment){
-        if(isConnectionInternet(context)) {
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "request/create/table/" + tableId+"?"+token, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Log.i("API", response);
-                    Toast.makeText(context, "Pedido criado com successo", Toast.LENGTH_LONG).show();
-                    fragment.popBackStack();
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // TODO: Handle error
-                    Log.e("API", error.toString());
-                    Toast.makeText(context, "Erro ao inserir dados", Toast.LENGTH_LONG).show();
-                    getAPIListRequests(context);
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    String sproducts = new Gson().toJson(products);
-                    params.put("products", sproducts);
-                    params.put("account_name", accountName);
-                    return params;
-                }
-            };
-            Log.i("API", "teste");
-            volleyQueue.add(stringRequest);
+        public void createRequestTable(final Context context, int tableId,final String accountName ,final ArrayList<Products> products, final FragmentManager fragment){
+            if(isConnectionInternet(context)) {
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "request/create/table/" + tableId+"?"+token, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("API", response);
+                        Toast.makeText(context, "Pedido criado com successo", Toast.LENGTH_LONG).show();
+                        fragment.popBackStack();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("API", error.toString());
+                        Toast.makeText(context, "Erro ao inserir dados", Toast.LENGTH_LONG).show();
+                        getAPIListRequests(context);
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        String sproducts = new Gson().toJson(products);
+                        params.put("products", sproducts);
+                        params.put("account_name", accountName);
+                        return params;
+                    }
+                };
+                Log.i("API", "teste");
+                volleyQueue.add(stringRequest);
+            }
+            else{
+                toastNotIntenet(context);
+            }
         }
-        else{
-            toastNotIntenet(context);
-        }
-    }
 
-    public void editRequest(final Context context, int request_id,final ArrayList<Products> products){
-        if(isConnectionInternet(context)) {
-            StringRequest stringRequest = new StringRequest(Request.Method.PUT, url + "request/edit/" + request_id+"?"+token, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Log.i("API", response);
-                    Toast.makeText(context, "Editado com sucesso", Toast.LENGTH_LONG).show();
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // TODO: Handle error
-                    Log.e("API", error.toString());
-                    Toast.makeText(context, "Erro ao inserir dados", Toast.LENGTH_LONG).show();
-                    getAPIListRequests(context);
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    String sproducts = new Gson().toJson(products);
-                    params.put("products", sproducts);
-                    return params;
-                }
-            };
-            Log.i("API", "teste");
-            volleyQueue.add(stringRequest);
+        public void editRequest(final Context context, int request_id,final ArrayList<Products> products){
+            if(isConnectionInternet(context)) {
+                StringRequest stringRequest = new StringRequest(Request.Method.PUT, url + "request/edit/" + request_id+"?"+token, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("API", response);
+                        Toast.makeText(context, "Editado com sucesso", Toast.LENGTH_LONG).show();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("API", error.toString());
+                        Toast.makeText(context, "Erro ao inserir dados", Toast.LENGTH_LONG).show();
+                        getAPIListRequests(context);
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        String sproducts = new Gson().toJson(products);
+                        params.put("products", sproducts);
+                        return params;
+                    }
+                };
+                Log.i("API", "teste");
+                volleyQueue.add(stringRequest);
+            }
+            else{
+                toastNotIntenet(context);
+            }
         }
-        else{
-            toastNotIntenet(context);
-        }
-    }
 
-    public void updatestatusRequest(final Context context, int request_id){
+        public void updatestatusRequest(final Context context, int request_id){
         if(isConnectionInternet(context)) {
             StringRequest stringRequest = new StringRequest(Request.Method.PUT, url + "request/"+request_id+"/updatestatus?"+token, new Response.Listener<String>() {
                 @Override
@@ -525,6 +533,52 @@ public class SingletonBarGest {
             toastNotIntenet(context);
         }
     }
+        //endregion
+
+        //region Database SECTION
+        public ListRequests getRequest(int id) {
+            for (ListRequests request : listrequests)
+                if (request.getId() == id)
+                    return request;
+            return null;
+        }
+
+        public ArrayList<ListRequests> getRequestsDB() {
+            listrequests = localDatabase.getRequests();
+            return listrequests;
+        }
+
+        public void addRequestDB(ListRequests request) {
+            localDatabase.addRequests(request);
+        }
+
+        public void addRequestsDB(ArrayList<ListRequests> requests) {
+            localDatabase.deleteRequests();
+            for (ListRequests request : listrequests)
+                addRequestDB(request);
+        }
+
+        public void removeRequestDB(int id) {
+            ListRequests request = getRequest(id);
+
+            if (request != null)
+                if (localDatabase.deleteRequest(id))
+                    listrequests.remove(request);
+        }
+
+        public void updateRequestDB(ListRequests nrequest) {
+            ListRequests request = getRequest(nrequest.getId());
+
+            if (request != null) {
+                if (localDatabase.editRequest(nrequest)) {
+                    request.setId(nrequest.getId());
+                    request.setDateTime(nrequest.getDateTime());
+                    request.setStatus(nrequest.getStatus());
+                    request.setTable_number(nrequest.getTable_number());
+                }
+            }
+        }
+        //endregion
     //endregion
 
     //region CATEGORY SECTION

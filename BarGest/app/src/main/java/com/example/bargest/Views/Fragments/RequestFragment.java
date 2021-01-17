@@ -63,7 +63,11 @@ public class RequestFragment extends Fragment implements ListRequestsListener {
         listRequest.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-        SingletonBarGest.getInstance(getContext()).getAPIListRequests(getContext());
+        requests = SingletonBarGest.getInstance(getContext()).getAPIListRequests(getContext());
+        if(requests != null){
+            adapters = new RequestsAdaptars(getContext(), requests,getFragmentManager());
+            listRequest.setAdapter(adapters);
+        }
         SingletonBarGest.getInstance(getContext()).setListRequestListener(this);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
@@ -159,7 +163,7 @@ public class RequestFragment extends Fragment implements ListRequestsListener {
         if(requests.size()!=0){
             adapters = new RequestsAdaptars(getContext(),requests,getFragmentManager());
             listRequest.setAdapter(adapters);
-            this.requests=requests;
+            this.requests = requests;
         }
         else{
             infoRequest.setVisibility(View.VISIBLE);

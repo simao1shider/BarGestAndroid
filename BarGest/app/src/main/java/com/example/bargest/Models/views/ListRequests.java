@@ -19,15 +19,31 @@ public class ListRequests {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getStatus() {
         return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getTable_number() {
         return table_number;
     }
 
+    public void setTable_number(int table_number) {
+        this.table_number = table_number;
+    }
+
     public String getDateTime() {
         return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 }
