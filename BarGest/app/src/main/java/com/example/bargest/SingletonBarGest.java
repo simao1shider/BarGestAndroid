@@ -451,7 +451,7 @@ public class SingletonBarGest {
 
     public void updatestatusRequest(final Context context, int request_id){
         if(isConnectionInternet(context)) {
-            StringRequest stringRequest = new StringRequest(Request.Method.PUT, url + "request/updatestatus"+request_id+"/?"+token, new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.PUT, url + "request/"+request_id+"/updatestatus?"+token, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.i("API", response);
