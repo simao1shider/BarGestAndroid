@@ -52,6 +52,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_PRODUCT_ID = "id";
     private static final String COLUMN_PRODUCT_NAME = "name";
     private static final String COLUMN_PRODUCT_PRICE = "price";
+    private static final String COLUMN_PRODUCT_QUANTITY = "quantity";
     private static final String COLUMN_PRODUCT_CATEGORY_ID = "category_id";
     //Categories
     private static final String TABLE_CATEGORY = "categories";
@@ -102,6 +103,7 @@ public class Database extends SQLiteOpenHelper {
                         COLUMN_PRODUCT_ID + " INTEGER PRIMARY KEY," +
                         COLUMN_PRODUCT_NAME + " TEXT NOT NULL," +
                         COLUMN_PRODUCT_PRICE + " decimal(10,2) NOT NULL, " +
+                        COLUMN_PRODUCT_QUANTITY + " INTEGER NOT NULL, " +
                         COLUMN_PRODUCT_CATEGORY_ID +" INTEGER NOT NULL" +
                 ")";
         String CREATE_CATEGORY =
@@ -272,7 +274,7 @@ public class Database extends SQLiteOpenHelper {
      */
     public ArrayList<Products> getProducts(){
         ArrayList<Products> products = new ArrayList<>();
-        Cursor cursor = this.db.query(TABLE_PRODUCT, new String[]{COLUMN_PRODUCT_ID, COLUMN_PRODUCT_NAME, COLUMN_PRODUCT_PRICE, COLUMN_PRODUCT_CATEGORY_ID}, null, null, null,null, null);
+        Cursor cursor = this.db.query(TABLE_PRODUCT, new String[]{COLUMN_PRODUCT_ID, COLUMN_PRODUCT_NAME, COLUMN_PRODUCT_PRICE, COLUMN_PRODUCT_QUANTITY, COLUMN_PRODUCT_CATEGORY_ID}, null, null, null,null, null);
 
         if(cursor.moveToFirst()){
             do{
@@ -295,6 +297,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_PRODUCT_ID, product.getId());
         values.put(COLUMN_PRODUCT_NAME, product.getName());
         values.put(COLUMN_PRODUCT_PRICE, product.getPrice());
+        values.put(COLUMN_PRODUCT_QUANTITY, product.getQuantity());
         values.put(COLUMN_PRODUCT_CATEGORY_ID, product.getCategory_id());
 
         this.db.insert(TABLE_PRODUCT, null, values);
@@ -311,6 +314,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_PRODUCT_ID, product.getId());
         values.put(COLUMN_PRODUCT_NAME, product.getName());
         values.put(COLUMN_PRODUCT_PRICE, product.getPrice());
+        values.put(COLUMN_PRODUCT_QUANTITY, product.getQuantity());
         values.put(COLUMN_PRODUCT_CATEGORY_ID, product.getCategory_id());
 
         int nRows = this.db.update(TABLE_PRODUCT, values, "id = ?", new String[]{product.getId()+""});
