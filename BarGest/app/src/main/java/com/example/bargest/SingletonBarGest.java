@@ -592,7 +592,7 @@ public class SingletonBarGest {
                         Log.i("API", response.toString());
                         productsbycategory = parserJsonProducts.parserProducts(response);
                         if (productsListener != null)
-                            productsListener.onRefreshArrayProducts(productsbycategory);
+                            productsListener.onRefreshListProducts(productsbycategory);
                     }
                 }, new Response.ErrorListener() {
                     @Override
