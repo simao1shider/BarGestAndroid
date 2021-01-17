@@ -66,7 +66,7 @@ public class EditRequestFragment extends Fragment implements ProductsListener {
 
         listProductsEditRequest.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        SingletonBarGest.getInstance(getContext()).getRequestInfo(getContext(),getArguments().getInt("request_id"));
+        products = SingletonBarGest.getInstance(getContext()).getRequestInfo(getContext(),getArguments().getInt("request_id"));
         SingletonBarGest.getInstance(getContext()).setProductListener(this);
 
         backfragment.setOnClickListener(new View.OnClickListener() {

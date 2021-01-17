@@ -300,13 +300,16 @@ public class SingletonBarGest {
         }
     }
 
-    public void getRequestInfo(Context context, int request_id){
+    public ArrayList<Products> getRequestInfo(Context context, int request_id){
         if(isConnectionInternet(context)) {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "request/info/" + request_id + "?" + token, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     Log.i("API", response.toString());
-                    productsListener.onRefreshListProducts(parserJsonProducts.parserAccountProducts(response));
+                    products = parserJsonProducts.parserAccountProducts(response);
+                    //TODO addTablesDB(tables);
+                    if (productsListener != null)
+                        productsListener.onRefreshListProducts(products);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -317,9 +320,11 @@ public class SingletonBarGest {
             });
             Log.i("API", "teste");
             volleyQueue.add(jsonArrayRequest);
+            return null;
         }
         else{
             toastNotIntenet(context);
+            return products; //TODO retornar produtos com o id do request
         }
     }
 
@@ -540,7 +545,6 @@ public class SingletonBarGest {
                         addProductsDB(products);;
                         if (productsListener != null)
                             productsListener.onRefreshArrayProducts(products);
-
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -568,7 +572,7 @@ public class SingletonBarGest {
                         Log.i("API", response.toString());
                         productsbycategory = parserJsonProducts.parserProducts(response);
                         if (productsListener != null)
-                            productsListener.onRefreshArrayProducts(productsbycategory);
+                            productsListener.onRefreshListProducts(productsbycategory);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -582,7 +586,6 @@ public class SingletonBarGest {
                 return null;
             }
             else{
-                products = localDatabase.getProducts();
                 productsbycategory = getProductsbycategory(categoryId);
                 toastNotIntenet(context);
                 return productsbycategory;

@@ -34,7 +34,7 @@ public class Products  {
     }
 
     public float getPrice() {
-        return price;
+        return this.price;
     }
 
     public void setPrice(float price) {
@@ -42,7 +42,7 @@ public class Products  {
     }
 
     public int getQuantity() {
-        return quantity;
+        return this.quantity;
     }
 
     public void setQuantity(int quantity) {
@@ -50,7 +50,7 @@ public class Products  {
     }
 
     public int getCategory_id() {
-        return category_id;
+        return this.category_id;
     }
 
     public void setCategory_id(int category_id) {
