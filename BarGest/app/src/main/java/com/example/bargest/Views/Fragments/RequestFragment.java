@@ -99,7 +99,7 @@ public class RequestFragment extends Fragment implements ListRequestsListener {
             final int position = viewHolder.getAdapterPosition();
                 switch (direction) {
                     case ItemTouchHelper.RIGHT:
-
+                        SingletonBarGest.getInstance(getContext()).updatestatusRequest(getContext(), requests.get(position).getId());
                         break;
                     case ItemTouchHelper.LEFT:
                         Snackbar.make(listRequest, "Pedido: " + requests.get(position).getId(), Snackbar.LENGTH_LONG).setAction("Confirmar", new View.OnClickListener() {

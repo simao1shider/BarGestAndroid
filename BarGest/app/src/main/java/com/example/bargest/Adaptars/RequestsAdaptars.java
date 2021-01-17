@@ -18,6 +18,7 @@ import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.views.ListRequests;
 import com.example.bargest.R;
 import com.example.bargest.Views.Fragments.EditRequestFragment;
+import com.example.bargest.Views.Fragments.ListRequestProductFragment;
 
 import java.util.ArrayList;
 
@@ -66,10 +67,30 @@ public class RequestsAdaptars extends RecyclerView.Adapter<RequestsAdaptars.MyVi
             case 1:
                 //Cooking
                 holder.card.setBackgroundColor(Color.parseColor("#FFEEBA"));
+                holder.card.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("request_id", data.get(position).getId());
+                        ListRequestProductFragment listRequestProductFragment = new ListRequestProductFragment();
+                        listRequestProductFragment.setArguments(bundle);
+                        fragment.beginTransaction().replace(R.id.container, listRequestProductFragment).addToBackStack("Requests").commit();
+                    }
+                });
                 break;
             case 2:
                 //Ready
                 holder.card.setBackgroundColor(Color.parseColor("#C3E6CB"));
+                holder.card.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("request_id", data.get(position).getId());
+                        ListRequestProductFragment listRequestProductFragment = new ListRequestProductFragment();
+                        listRequestProductFragment.setArguments(bundle);
+                        fragment.beginTransaction().replace(R.id.container, listRequestProductFragment).addToBackStack("Requests").commit();
+                    }
+                });
                 break;
         }
 
