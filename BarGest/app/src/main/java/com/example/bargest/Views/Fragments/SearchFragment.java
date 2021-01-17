@@ -48,7 +48,7 @@ public class SearchFragment extends Fragment implements ProductsListener {
         ImageView btnCancelSearch = view.findViewById(R.id.btnCancelSearch);
         ImageButton back = view.findViewById(R.id.IMGBackFragmentSearch);
         autoCompleteTextView=view.findViewById(R.id.AUTOCOMPLETEproducts);
-        SingletonBarGest.getInstance(getContext()).getAllProducs();
+        SingletonBarGest.getInstance(getContext()).getAllProducts(getContext());
         SingletonBarGest.getInstance(getContext()).setProductListener(this);
 
         btnCancelSearch.setOnClickListener(new View.OnClickListener() {

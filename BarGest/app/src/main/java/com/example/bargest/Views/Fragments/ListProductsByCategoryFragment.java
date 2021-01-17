@@ -26,6 +26,7 @@ public class ListProductsByCategoryFragment extends Fragment implements Products
 
     GridView GVProducts;
     private AddProductAdaptar productAdapter;
+    ArrayList<Products> products;
 
     public ListProductsByCategoryFragment() {
         // Required empty public constructor
@@ -43,7 +44,14 @@ public class ListProductsByCategoryFragment extends Fragment implements Products
         }
         GVProducts = view.findViewById(R.id.GVAddProduct);
 
-        SingletonBarGest.getInstance(getContext()).getProductsByCategory(getContext(), getArguments().getInt("category_id"));
+        if(SingletonBarGest.getInstance(getContext()).getProductsByCategory(getContext(), getArguments().getInt("category_id")) != null){
+            SingletonBarGest.getInstance(getContext()).getAllProducts(getContext());
+
+            products = SingletonBarGest.getInstance(getContext()).getProductsByCategory(getContext(), getArguments().getInt("category_id"));
+            productAdapter = new AddProductAdaptar(getContext(), products);
+            GVProducts.setAdapter(productAdapter);
+        }
+
         SingletonBarGest.getInstance(getContext()).setProductListener(this);
 
         return view;
@@ -51,6 +59,7 @@ public class ListProductsByCategoryFragment extends Fragment implements Products
 
     @Override
     public void onRefreshListProducts(ArrayList<Products> products) {
+        products = SingletonBarGest.getInstance(getContext()).getProductsByCategory(getContext(), getArguments().getInt("category_id"));
         productAdapter = new AddProductAdaptar(getContext(), products);
         GVProducts.setAdapter(productAdapter);
     }

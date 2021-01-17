@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.example.bargest.Models.Categories;
+import com.example.bargest.Models.Products;
+import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.Tables;
 
 import java.util.ArrayList;
@@ -259,6 +261,75 @@ public class Database extends SQLiteOpenHelper {
 
     public boolean deleteCategories() {
         return db.delete(TABLE_CATEGORY, null, null) > 0;
+    }
+    //endregion
+
+    //region Products
+
+    /**
+     * SELECT
+     * @return
+     */
+    public ArrayList<Products> getProducts(){
+        ArrayList<Products> products = new ArrayList<>();
+        Cursor cursor = this.db.query(TABLE_PRODUCT, new String[]{COLUMN_PRODUCT_ID, COLUMN_PRODUCT_NAME, COLUMN_PRODUCT_PRICE, COLUMN_PRODUCT_CATEGORY_ID}, null, null, null,null, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Products product = new Products(cursor.getInt(0), cursor.getString(1), cursor.getFloat(2), cursor.getInt(3), cursor.getInt(4));
+                products.add(product);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return products;
+    }
+
+    /**
+     * INSERT
+     * @param product
+     * @return
+     */
+    public void addProduct(Products product){
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PRODUCT_ID, product.getId());
+        values.put(COLUMN_PRODUCT_NAME, product.getName());
+        values.put(COLUMN_PRODUCT_PRICE, product.getPrice());
+        values.put(COLUMN_PRODUCT_CATEGORY_ID, product.getCategory_id());
+
+        this.db.insert(TABLE_PRODUCT, null, values);
+    }
+
+    /**
+     * UPDATE
+     * @param product
+     * @return
+     */
+    public boolean editProduct(Products product){
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PRODUCT_ID, product.getId());
+        values.put(COLUMN_PRODUCT_NAME, product.getName());
+        values.put(COLUMN_PRODUCT_PRICE, product.getPrice());
+        values.put(COLUMN_PRODUCT_CATEGORY_ID, product.getCategory_id());
+
+        int nRows = this.db.update(TABLE_PRODUCT, values, "id = ?", new String[]{product.getId()+""});
+
+        return (nRows>0);
+    }
+
+    /**
+     * DELETE
+     * @param idProduct
+     * @return
+     */
+    public boolean deleteProduct(int idProduct){
+        int nRows = this.db.delete(TABLE_PRODUCT,"id = ?", new String[]{idProduct+""});
+        return (nRows>0);
+    }
+
+    public boolean deleteProducts() {
+        return db.delete(TABLE_PRODUCT, null, null) > 0;
     }
     //endregion
 

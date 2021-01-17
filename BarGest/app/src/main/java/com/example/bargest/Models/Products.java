@@ -4,15 +4,17 @@ import androidx.annotation.Nullable;
 
 public class Products  {
     int id;
-    String Name;
+    String name;
     float price;
     int quantity;
+    int category_id;
 
-    public Products(int id,String name, float price, @Nullable int quantity) {
+    public Products(int id,String name, float price, @Nullable int quantity, int category_id) {
         this.id=id;
-        Name = name;
+        this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.category_id = category_id;
     }
 
     public int getId() {
@@ -24,11 +26,11 @@ public class Products  {
     }
 
     public String getName() {
-        return Name;
+        return this.name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public float getPrice() {
@@ -45,5 +47,13 @@ public class Products  {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
     }
 }

@@ -17,7 +17,8 @@ public class parserJsonProducts {
                 int id = product.getInt("id");
                 float price =(float) product.getDouble("price");
                 String name = product.getString("name");
-                requests.add(new Products(id,name,price,0));
+                int category_id = product.getInt("category_id");
+                requests.add(new Products(id,name,price,0,category_id));
             }
         }catch(JSONException e){
             e.printStackTrace();
@@ -34,7 +35,8 @@ public class parserJsonProducts {
                 float price =(float) product.getDouble("price");
                 String name = product.getString("name");
                 int quantity = product.getInt("quantity");
-                requests.add(new Products(id,name,price,quantity));
+                int category_id = product.getInt("category_id");
+                requests.add(new Products(id,name,price,quantity, category_id));
             }
         }catch(JSONException e){
             e.printStackTrace();

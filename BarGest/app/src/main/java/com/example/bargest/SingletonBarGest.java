@@ -64,6 +64,7 @@ public class SingletonBarGest {
     ArrayList<Bills> bills;
     ArrayList<Categories> categories;
     ArrayList<Products> products;
+    ArrayList<Products> productsbycategory;
     ArrayList<Requests> requests;
     ArrayList<Tables> tables;
     ArrayList<Products> newrequests;
@@ -528,52 +529,119 @@ public class SingletonBarGest {
     //endregion
 
     //region PRODUCT SECTION
-    public void getAllProducs(){
-        //if(isConnectionInternet(context)) {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "product/all?"+token, null, new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
-                    Log.i("API", response.toString());
-                    productsListener.onRefreshArrayProducts(parserJsonProducts.parserProducts(response));
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // TODO: Handle error
-                    Log.e("API", error.toString());
-                }
-            });
-            Log.i("API", "teste");
-            volleyQueue.add(jsonArrayRequest);
-        //}
-        //else{
-        //    toastNotIntenet(context);
-        //}
-    }
+        //region API SECTION
+        public ArrayList<Products> getAllProducts(final Context context){
+            if(isConnectionInternet(context)) {
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "product/all?"+token, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i("API", response.toString());
+                        products = parserJsonProducts.parserProducts(response);
+                        addProductsDB(products);;
+                        if (productsListener != null)
+                            productsListener.onRefreshArrayProducts(products);
 
-    public void getProductsByCategory(final Context context,int categoryId){
-        if(isConnectionInternet(context)) {
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "product/category/" + categoryId + "?"+token, null, new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
-                    Log.i("API", response.toString());
-                    productsListener.onRefreshListProducts(parserJsonProducts.parserProducts(response));
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // TODO: Handle error
-                    Log.e("API", error.toString());
-                }
-            });
-            Log.i("API", "teste");
-            volleyQueue.add(jsonArrayRequest);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("API", error.toString());
+                    }
+                });
+                Log.i("API", "teste");
+                volleyQueue.add(jsonArrayRequest);
+                return null;
+            }
+            else{
+                products = localDatabase.getProducts();
+                toastNotIntenet(context);
+                return products;
+            }
         }
-        else{
-            toastNotIntenet(context);
+
+        public ArrayList<Products> getProductsByCategory(final Context context, int categoryId){
+            if(isConnectionInternet(context)) {
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "product/category/" + categoryId + "?"+token, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i("API", response.toString());
+                        productsbycategory = parserJsonProducts.parserProducts(response);
+                        if (productsListener != null)
+                            productsListener.onRefreshArrayProducts(productsbycategory);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("API", error.toString());
+                    }
+                });
+                Log.i("API", "teste");
+                volleyQueue.add(jsonArrayRequest);
+                return null;
+            }
+            else{
+                products = localDatabase.getProducts();
+                productsbycategory = getProductsbycategory(categoryId);
+                toastNotIntenet(context);
+                return productsbycategory;
+            }
         }
-    }
-    //endregion
+        //endregion
+
+        //region Database SECTION
+        public Products getProduct(int id) {
+            for (Products product : products)
+                if (product.getId() == id)
+                    return product;
+            return null;
+        }
+
+        public ArrayList<Products> getProductsbycategory(int id) {
+            products = localDatabase.getProducts();
+            ArrayList<Products> productsbycat = new ArrayList<>();
+
+            for(Products productcat : products){
+                if(productcat.getCategory_id() == id){
+                    productsbycat.add(productcat);
+                }
+            }
+            return productsbycat;
+        }
+
+        public void addProductDB(Products product) {
+            localDatabase.addProduct(product);
+        }
+
+        public void addProductsDB(ArrayList<Products> products) {
+            localDatabase.deleteProducts();
+            for (Products product : products)
+                addProductDB(product);
+        }
+
+        public void removeProductDB(int id) {
+            Products product = getProduct(id);
+
+            if (product != null)
+                if (localDatabase.deleteProduct(id))
+                    products.remove(product);
+        }
+
+        public void updateProductDB(Products nproduct) {
+            Products product = getProduct(nproduct.getId());
+
+            if (product != null) {
+                if (localDatabase.editProduct(nproduct)) {
+                    product.setId(nproduct.getId());
+                    product.setName(nproduct.getName());
+                    product.setPrice(nproduct.getPrice());
+                    product.setQuantity(nproduct.getQuantity());
+                }
+            }
+        }
+        //endregion
+    // endregion
 
     //region ACCOUNT SECTION
     public void getAccountProducts(Context context,int accountId){

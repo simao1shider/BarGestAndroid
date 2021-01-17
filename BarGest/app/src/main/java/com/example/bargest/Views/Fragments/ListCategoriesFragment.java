@@ -14,6 +14,7 @@ import android.widget.GridView;
 import com.example.bargest.Adaptars.CategoriesAdaptar;
 import com.example.bargest.Listeners.CategoriesListener;
 import com.example.bargest.Models.Categories;
+import com.example.bargest.Models.Tables;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 import com.example.bargest.Views.LoginActivity;
@@ -26,6 +27,7 @@ public class ListCategoriesFragment extends Fragment implements CategoriesListen
 
     GridView GVCategories;
     private CategoriesAdaptar adaptarCategories;
+    ArrayList<Categories> categories;
 
     public ListCategoriesFragment() {
         // Required empty public constructor
@@ -42,7 +44,13 @@ public class ListCategoriesFragment extends Fragment implements CategoriesListen
             startActivity(intent);
         }
         GVCategories = view.findViewById(R.id.containerCategory);
-        SingletonBarGest.getInstance(getContext()).getAllCategories(getContext());
+
+        if(SingletonBarGest.getInstance(getContext()).getAllCategories(getContext()) != null){
+            categories = SingletonBarGest.getInstance(getContext()).getAllCategories(getContext());
+            adaptarCategories = new CategoriesAdaptar(getContext(), categories, getFragmentManager().beginTransaction(), R.id.container);
+            GVCategories.setAdapter(adaptarCategories);
+        }
+
         SingletonBarGest.getInstance(getContext()).setCategoriesListener(this);
 
         return view;
@@ -50,6 +58,7 @@ public class ListCategoriesFragment extends Fragment implements CategoriesListen
 
     @Override
     public void onRefreshCategories(ArrayList<Categories> categories) {
+        this.categories = categories;
         adaptarCategories = new CategoriesAdaptar(getContext(), categories, getFragmentManager().beginTransaction(), R.id.container);
         GVCategories.setAdapter(adaptarCategories);
     }

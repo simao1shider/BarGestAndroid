@@ -188,7 +188,7 @@ public class DivideBillFragment extends Fragment implements ProductsListener {
                             if(prod.getId() == originProduct.getId()){
 
                                 originProduct.setQuantity(originProduct.getQuantity() - quantity);
-                                Products pro = new Products(originProduct.getId(), originProduct.getName(), originProduct.getPrice(), quantity);
+                                Products pro = new Products(originProduct.getId(), originProduct.getName(), originProduct.getPrice(), quantity, originProduct.getCategory_id());
                                 prod.setQuantity(prod.getQuantity()+quantity);
                                 total();
                                 TVTotal.setText(""+Total+"€");
@@ -197,7 +197,7 @@ public class DivideBillFragment extends Fragment implements ProductsListener {
                             }
                         }
                         originProduct.setQuantity(originProduct.getQuantity() - quantity);
-                        Products pro = new Products(originProduct.getId(), originProduct.getName(), originProduct.getPrice(), quantity);
+                        Products pro = new Products(originProduct.getId(), originProduct.getName(), originProduct.getPrice(), quantity, originProduct.getCategory_id());
                         NewProducts.add(pro);
                         total();
                         dismissdialog();
@@ -241,7 +241,7 @@ public class DivideBillFragment extends Fragment implements ProductsListener {
                             }
                         }
                         newProduct.setQuantity(newProduct.getQuantity() - quantity);
-                        Products pro = new Products(newProduct.getId(), newProduct.getName(), newProduct.getPrice(), quantity);
+                        Products pro = new Products(newProduct.getId(), newProduct.getName(), newProduct.getPrice(), quantity, newProduct.getCategory_id());
                         Originproducts.add(pro);
                         total();
                         dismissdialog();
