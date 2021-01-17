@@ -68,7 +68,7 @@ public class SingletonBarGest {
     ArrayList<Requests> requests;
     ArrayList<Tables> tables;
     ArrayList<Products> newrequests;
-    String url ="http://192.168.1.205/BarGestWeb/api/web/v1/";
+    String url ="http://192.168.43.22/BarGestWeb/api/web/v1/";
     String token;
 
     //region LISTENERS SECTION
@@ -441,6 +441,30 @@ public class SingletonBarGest {
                     return params;
                 }
             };
+            Log.i("API", "teste");
+            volleyQueue.add(stringRequest);
+        }
+        else{
+            toastNotIntenet(context);
+        }
+    }
+
+    public void updatestatusRequest(final Context context, int request_id){
+        if(isConnectionInternet(context)) {
+            StringRequest stringRequest = new StringRequest(Request.Method.PUT, url + "request/updatestatus"+request_id+"/?"+token, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.i("API", response);
+                    getAPIListRequests(context);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Erro ao atualizar o estado do pedido", Toast.LENGTH_LONG).show();
+                    getAPIListRequests(context);
+                }
+            });
+
             Log.i("API", "teste");
             volleyQueue.add(stringRequest);
         }
