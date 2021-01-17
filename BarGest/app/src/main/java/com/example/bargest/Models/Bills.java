@@ -6,16 +6,18 @@ public class Bills {
     String productName;
     int id;
     float total;
+    int idMesa;
 
-    public Bills(String productName, float total, int id) {
+    public Bills(String productName, float total, int id, int idMesa) {
         this.productName = productName;
         this.id = id;
         this.total = total;
+        this.idMesa = idMesa;
     }
 
 
     public String getProductName() {
-        return productName;
+        return this.productName;
     }
 
     public void setProductName(String productName) {
@@ -23,7 +25,7 @@ public class Bills {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -31,10 +33,18 @@ public class Bills {
     }
 
     public float getTotal() {
-        return total;
+        return this.total;
     }
 
     public void setTotal(float total) {
         this.total = total;
+    }
+
+    public int getIdMesa() {
+        return this.idMesa;
+    }
+
+    public void setIdMesa(int idMesa) {
+        this.idMesa = idMesa;
     }
 }

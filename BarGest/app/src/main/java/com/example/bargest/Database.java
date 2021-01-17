@@ -8,8 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Categories;
 import com.example.bargest.Models.Products;
+import com.example.bargest.Models.ProductsToBePaid;
 import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.Tables;
 
@@ -32,7 +34,6 @@ public class Database extends SQLiteOpenHelper {
     private static final String TABLE_ACCOUNT = "accounts";
     private static final String COLUMN_ACCOUNT_ID = "id";
     private static final String COLUMN_ACCOUNT_NAME = "name";
-    private static final String COLUMN_ACCOUNT_STATUS = "status";
     private static final String COLUMN_ACCOUNT_TOTAL = "total";
     private static final String COLUMN_ACCOUNT_TABLE_ID = "table_id";
     //Requests
@@ -54,6 +55,14 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_PRODUCT_PRICE = "price";
     private static final String COLUMN_PRODUCT_QUANTITY = "quantity";
     private static final String COLUMN_PRODUCT_CATEGORY_ID = "category_id";
+    //Products
+    private static final String TABLE_PRODUCTTOBEPAID = "productstobepaid";
+    private static final String COLUMN_PRODUCTTOBEPAID_ID = "id";
+    private static final String COLUMN_PRODUCTTOBEPAID_NAME = "name";
+    private static final String COLUMN_PRODUCTTOBEPAID_PRICE = "price";
+    private static final String COLUMN_PRODUCTTOBEPAID_QUANTITY = "quantity";
+    private static final String COLUMN_PRODUCTTOBEPAID_ACCOUNT_ID = "account_id";
+    private static final String COLUMN_PRODUCTTOBEPAID_REQUEST_ID = "request_id";
     //Categories
     private static final String TABLE_CATEGORY = "categories";
     private static final String COLUMN_CATEGORY_ID = "id";
@@ -77,7 +86,6 @@ public class Database extends SQLiteOpenHelper {
                 "CREATE TABLE IF NOT EXISTS "+ TABLE_ACCOUNT + "( "+
                         COLUMN_ACCOUNT_ID + " INTEGER PRIMARY KEY, "+
                         COLUMN_ACCOUNT_NAME + " TEXT NOT NULL, "+
-                        COLUMN_ACCOUNT_STATUS + " INTEGER NOT NULL, "+
                         COLUMN_ACCOUNT_TOTAL + " DECIMAL(10, 2) NOT NULL, "+
                         COLUMN_ACCOUNT_TABLE_ID + " INTEGER NOT NULL "+
                 " )";
@@ -200,6 +208,74 @@ public class Database extends SQLiteOpenHelper {
     }
     //endregion
 
+    //region Bills
+
+    /**
+     * SELECT
+     * @return
+     */
+    public ArrayList<Bills> getBills(){
+        ArrayList<Bills> bills = new ArrayList<>();
+        Cursor cursor = this.db.query(TABLE_ACCOUNT, new String[]{COLUMN_ACCOUNT_ID, COLUMN_ACCOUNT_NAME, COLUMN_ACCOUNT_TOTAL, COLUMN_ACCOUNT_TABLE_ID}, null, null, null,null, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Bills bill = new Bills(cursor.getString(1), cursor.getFloat(2), cursor.getInt(0), cursor.getInt(3));
+                bills.add(bill);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return bills;
+    }
+
+    /**
+     * INSERT
+     * @param bill
+     * @return
+     */
+    public void addBill(Bills bill){
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ACCOUNT_ID, bill.getId());
+        values.put(COLUMN_ACCOUNT_NAME, bill.getProductName());
+        values.put(COLUMN_ACCOUNT_TOTAL, bill.getTotal());
+        values.put(COLUMN_ACCOUNT_TABLE_ID, bill.getIdMesa());
+
+        this.db.insert(TABLE_ACCOUNT, null, values);
+    }
+
+    /**
+     * UPDATE
+     * @param bill
+     * @return
+     */
+    public boolean editBill(Bills bill){
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ACCOUNT_ID, bill.getId());
+        values.put(COLUMN_ACCOUNT_NAME, bill.getProductName());
+        values.put(COLUMN_ACCOUNT_TOTAL, bill.getTotal());
+        values.put(COLUMN_ACCOUNT_TABLE_ID, bill.getIdMesa());
+
+        int nRows = this.db.update(TABLE_ACCOUNT, values, "id = ?", new String[]{bill.getId()+""});
+
+        return (nRows>0);
+    }
+
+    /**
+     * DELETE
+     * @param idBill
+     * @return
+     */
+    public boolean deleteBill(int idBill){
+        int nRows = this.db.delete(TABLE_ACCOUNT,"id = ?", new String[]{idBill+""});
+        return (nRows>0);
+    }
+
+    public boolean deleteBills() {
+        return db.delete(TABLE_ACCOUNT, null, null) > 0;
+    }
+    //endregion
 
     //region Category
 
@@ -334,6 +410,79 @@ public class Database extends SQLiteOpenHelper {
 
     public boolean deleteProducts() {
         return db.delete(TABLE_PRODUCT, null, null) > 0;
+    }
+    //endregion
+
+    //region ProductsToBePaid
+
+    /**
+     * SELECT
+     * @return
+     */
+    public ArrayList<ProductsToBePaid> getProductsToBePaid(){
+        ArrayList<ProductsToBePaid> productstobepaid = new ArrayList<>();
+        Cursor cursor = this.db.query(TABLE_PRODUCTTOBEPAID, new String[]{COLUMN_PRODUCTTOBEPAID_ID, COLUMN_PRODUCTTOBEPAID_NAME, COLUMN_PRODUCTTOBEPAID_PRICE, COLUMN_PRODUCTTOBEPAID_QUANTITY, COLUMN_PRODUCTTOBEPAID_ACCOUNT_ID, COLUMN_PRODUCTTOBEPAID_REQUEST_ID}, null, null, null,null, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                ProductsToBePaid producttobepaid = new ProductsToBePaid(cursor.getInt(0), cursor.getString(1), cursor.getFloat(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5));
+                productstobepaid.add(producttobepaid);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return productstobepaid;
+    }
+
+    /**
+     * INSERT
+     * @param producttobepaid
+     * @return
+     */
+    public void addProductToBePaid(ProductsToBePaid producttobepaid){
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PRODUCTTOBEPAID_ID, producttobepaid.getId());
+        values.put(COLUMN_PRODUCTTOBEPAID_NAME, producttobepaid.getName());
+        values.put(COLUMN_PRODUCTTOBEPAID_PRICE, producttobepaid.getPrice());
+        values.put(COLUMN_PRODUCTTOBEPAID_QUANTITY, producttobepaid.getQuantity());
+        values.put(COLUMN_PRODUCTTOBEPAID_ACCOUNT_ID, producttobepaid.getAccount_id());
+        values.put(COLUMN_PRODUCTTOBEPAID_REQUEST_ID, producttobepaid.getRequest_id());
+
+        this.db.insert(TABLE_PRODUCTTOBEPAID, null, values);
+    }
+
+    /**
+     * UPDATE
+     * @param producttobepaid
+     * @return
+     */
+    public boolean editProductToBePaid(ProductsToBePaid producttobepaid){
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PRODUCTTOBEPAID_ID, producttobepaid.getId());
+        values.put(COLUMN_PRODUCTTOBEPAID_NAME, producttobepaid.getName());
+        values.put(COLUMN_PRODUCTTOBEPAID_PRICE, producttobepaid.getPrice());
+        values.put(COLUMN_PRODUCTTOBEPAID_QUANTITY, producttobepaid.getQuantity());
+        values.put(COLUMN_PRODUCTTOBEPAID_ACCOUNT_ID, producttobepaid.getAccount_id());
+        values.put(COLUMN_PRODUCTTOBEPAID_REQUEST_ID, producttobepaid.getRequest_id());
+
+        int nRows = this.db.update(TABLE_PRODUCTTOBEPAID, values, "id = ?", new String[]{producttobepaid.getId()+""});
+
+        return (nRows>0);
+    }
+
+    /**
+     * DELETE
+     * @param idProducttobepaid
+     * @return
+     */
+    public boolean deleteProductToBePaid(int idProducttobepaid){
+        int nRows = this.db.delete(TABLE_PRODUCTTOBEPAID,"id = ?", new String[]{idProducttobepaid+""});
+        return (nRows>0);
+    }
+
+    public boolean deleteProductsToBePaid() {
+        return db.delete(TABLE_PRODUCTTOBEPAID, null, null) > 0;
     }
     //endregion
 

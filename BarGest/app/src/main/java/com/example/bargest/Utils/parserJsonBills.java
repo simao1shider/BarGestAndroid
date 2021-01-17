@@ -18,7 +18,8 @@ public class parserJsonBills {
                 int id = bill.getInt("id");
                 String  name = bill.getString("name");
                 double total = bill.getDouble("total");
-                listbills.add(new Bills(name,(float)total,id));
+                int idMesa = bill.getInt("table_id");
+                listbills.add(new Bills(name, (float)total, id, idMesa));
             }
         }catch(JSONException e){
             e.printStackTrace();

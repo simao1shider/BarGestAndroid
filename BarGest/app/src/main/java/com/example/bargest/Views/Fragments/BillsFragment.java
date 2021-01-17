@@ -30,6 +30,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class BillsFragment extends Fragment implements BillListener {
 
     GridView billsView;
+    ArrayList<Bills> bills;
     public BillsFragment() {
         // Required empty public constructor
     }
@@ -54,7 +55,11 @@ public class BillsFragment extends Fragment implements BillListener {
 
         tollbarTitle.setText("Mesa "+table_number);
 
-        SingletonBarGest.getInstance(getContext()).getAPITableAccountsList(getContext(),table_id);
+        bills = SingletonBarGest.getInstance(getContext()).getAPITableAccountsList(getContext(),table_id);
+        if(bills != null){
+            BillsAdaptar adaptar = new BillsAdaptar(getContext(),bills,getFragmentManager().beginTransaction());
+            billsView.setAdapter(adaptar);
+        }
         SingletonBarGest.getInstance(getContext()).setBillsListener(this);
 
         backfragment.setOnClickListener(new View.OnClickListener() {

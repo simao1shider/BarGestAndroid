@@ -28,10 +28,12 @@ import com.example.bargest.Listeners.ListRequestsListener;
 import com.example.bargest.Listeners.LoginListener;
 import com.example.bargest.Listeners.NewRequestListner;
 import com.example.bargest.Listeners.ProductsListener;
+import com.example.bargest.Listeners.ProductsToBePaidListener;
 import com.example.bargest.Listeners.TableListener;
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Categories;
 import com.example.bargest.Models.Products;
+import com.example.bargest.Models.ProductsToBePaid;
 import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.Tables;
 import com.example.bargest.Utils.parserJsonBills;
@@ -58,6 +60,7 @@ public class SingletonBarGest {
     private ListRequestsListener listRequestsListener;
     private CategoriesListener categoriesListener;
     private ProductsListener productsListener;
+    private ProductsToBePaidListener productstobepaidListener;
     private NewRequestListner newRequestListner;
     private LoginListener tokenListener;
     private Database localDatabase = null;
@@ -65,10 +68,11 @@ public class SingletonBarGest {
     ArrayList<Categories> categories;
     ArrayList<Products> products;
     ArrayList<Products> productsbycategory;
+    ArrayList<ProductsToBePaid> productsToBePaid;
     ArrayList<Requests> requests;
     ArrayList<Tables> tables;
     ArrayList<Products> newrequests;
-    String url ="http://192.168.43.22/BarGestWeb/api/web/v1/";
+    String url ="http://192.168.1.102/BarGestWeb/api/web/v1/";
     String token;
 
     //region LISTENERS SECTION
@@ -111,6 +115,41 @@ public class SingletonBarGest {
         products = new ArrayList<>();
         requests = new ArrayList<>();
         bills = new ArrayList<>();
+        getAllArrayList();
+    }
+
+    public void getAllArrayList(){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "productstobepaid/all?"+token, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.i("API", response.toString());
+                productsToBePaid = parserJsonProducts.parserProductsToBePaid(response);
+                addProductToBePaidDB(productsToBePaid);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API", error.toString());
+            }
+        });
+        volleyQueue.add(jsonArrayRequest);
+
+        JsonArrayRequest jsonArrayRequest1 = new JsonArrayRequest(Request.Method.GET, url + "product/all?"+token, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.i("API", response.toString());
+                products = parserJsonProducts.parserProducts(response);
+                addProductsDB(products);;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API", error.toString());
+            }
+        });
+        volleyQueue.add(jsonArrayRequest1);
     }
 
     //region REQUEST SECTION
@@ -206,13 +245,16 @@ public class SingletonBarGest {
             }
         }
 
-        public void getAPITableAccountsList(Context context,String table_id){
+        public ArrayList<Bills> getAPITableAccountsList(Context context,String table_id){
             if(isConnectionInternet(context)) {
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "table/" + table_id + "?" + token, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.i("API", response.toString());
-                        billListener.onRefreshListTables(parserJsonBills.parserJsonBilla(response));
+                        bills = parserJsonBills.parserJsonBilla(response);
+                        addBillsDB(bills);
+                        if (billListener != null)
+                            billListener.onRefreshListTables(bills);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -223,57 +265,63 @@ public class SingletonBarGest {
                 });
                 Log.i("API", "teste");
                 volleyQueue.add(jsonArrayRequest);
+                return null;
             }
             else {
+                bills = getBillsDB();
                 toastNotIntenet(context);
+                return bills;
             }
         }
         //endregion
 
         //region DataBase SECTION
-        public Tables getTable(int id) {
-            for (Tables table : tables)
-                if (table.getId() == id)
-                    return table;
-            return null;
-        }
+            //region Tables
+            public Tables getTable(int id) {
+                for (Tables table : tables)
+                    if (table.getId() == id)
+                        return table;
+                return null;
+            }
 
-        public ArrayList<Tables> getTablesDB() {
-            tables = localDatabase.getTables();
-            return tables;
-        }
+            public ArrayList<Tables> getTablesDB() {
+                tables = localDatabase.getTables();
+                return tables;
+            }
 
-        public void addTableDB(Tables table) {
-            localDatabase.addTable(table);
-        }
+            public void addTableDB(Tables table) {
+                localDatabase.addTable(table);
+            }
 
-        public void addTablesDB(ArrayList<Tables> tables) {
-            localDatabase.deleteTables();
-            for (Tables table : tables)
-                addTableDB(table);
-        }
+            public void addTablesDB(ArrayList<Tables> tables) {
+                localDatabase.deleteTables();
+                for (Tables table : tables)
+                    addTableDB(table);
+            }
 
-        public void removeTableDB(int id) {
-            Tables table = getTable(id);
+            public void removeTableDB(int id) {
+                Tables table = getTable(id);
 
-            if (table != null)
-                if (localDatabase.deleteTable(id))
-                    tables.remove(table);
-        }
+                if (table != null)
+                    if (localDatabase.deleteTable(id))
+                        tables.remove(table);
+            }
 
-        public void updateTableDB(Tables ntable) {
-            Tables table = getTable(ntable.getId());
+            public void updateTableDB(Tables ntable) {
+                Tables table = getTable(ntable.getId());
 
-            if (table != null) {
-                if (localDatabase.editTable(ntable)) {
-                    table.setId(ntable.getId());
-                    table.setNumber(ntable.getNumber());
-                    table.setStatus(ntable.getStatus());
-                    table.setTotal(ntable.getTotal());
+                if (table != null) {
+                    if (localDatabase.editTable(ntable)) {
+                        table.setId(ntable.getId());
+                        table.setNumber(ntable.getNumber());
+                        table.setStatus(ntable.getStatus());
+                        table.setTotal(ntable.getTotal());
+                    }
                 }
             }
-        }
-    //endregion S
+            //endregion
+
+        //endregion
     //endregion
 
     //region REQUEST SECTION
@@ -670,6 +718,80 @@ public class SingletonBarGest {
         //endregion
     // endregion
 
+    //region PRODUCTOBEPAID SECTION
+        //region API SECTION
+        public ArrayList<ProductsToBePaid> getAllProductsToBePaid(final Context context){
+            if(isConnectionInternet(context)) {
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "productstobepaid/all?"+token, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i("API", response.toString());
+                        productsToBePaid = parserJsonProducts.parserProductsToBePaid(response);
+                        addProductToBePaidDB(productsToBePaid);
+                        if (productstobepaidListener != null)
+                            productstobepaidListener.onRefreshArrayProducts(productsToBePaid);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("API", error.toString());
+                    }
+                });
+                Log.i("API", "teste");
+                volleyQueue.add(jsonArrayRequest);
+                return null;
+            }
+            else{
+                productsToBePaid = localDatabase.getProductsToBePaid();
+                toastNotIntenet(context);
+                return productsToBePaid;
+            }
+        }
+
+        //endregion
+
+        //region Database SECTION
+        public ProductsToBePaid getProductToBePaid(int id) {
+            for (ProductsToBePaid producttobepaid : productsToBePaid)
+                if (producttobepaid.getId() == id)
+                    return producttobepaid;
+            return null;
+        }
+
+        public void addProductToBePaidDB(ProductsToBePaid producttobepaid) {
+            localDatabase.addProductToBePaid(producttobepaid);
+        }
+
+        public void addProductToBePaidDB(ArrayList<ProductsToBePaid> productstobepaid) {
+            localDatabase.deleteProductsToBePaid();
+            for (ProductsToBePaid producttobepaid : productstobepaid)
+                addProductToBePaidDB(producttobepaid);
+        }
+
+        public void removeProductToBePaidDB(int id) {
+            ProductsToBePaid producttobepaid = getProductToBePaid(id);
+
+            if (producttobepaid != null)
+                if (localDatabase.deleteProductToBePaid(id))
+                    productsToBePaid.remove(producttobepaid);
+        }
+
+        public void updateProductToBePaidDB(ProductsToBePaid nproducttobepaid) {
+            ProductsToBePaid producttobepaid = getProductToBePaid(nproducttobepaid.getId());
+
+            if (producttobepaid != null) {
+                if (localDatabase.editProductToBePaid(nproducttobepaid)) {
+                    producttobepaid.setId(nproducttobepaid.getId());
+                    producttobepaid.setName(nproducttobepaid.getName());
+                    producttobepaid.setPrice(nproducttobepaid.getPrice());
+                    producttobepaid.setQuantity(nproducttobepaid.getQuantity());
+                }
+            }
+        }
+        //endregion
+    // endregion
+
     //region ACCOUNT SECTION
     public void getAccountProducts(Context context,int accountId){
         if(isConnectionInternet(context)) {
@@ -760,6 +882,51 @@ public class SingletonBarGest {
             toastNotIntenet(context);
         }
     }
+
+        //region Bills
+        public Bills getBill(int id) {
+            for (Bills bill : bills)
+                if (bill.getId() == id)
+                    return bill;
+            return null;
+        }
+
+        public ArrayList<Bills> getBillsDB() {
+            bills = localDatabase.getBills();
+            return bills;
+        }
+
+        public void addBillDB(Bills bill) {
+            localDatabase.addBill(bill);
+        }
+
+        public void addBillsDB(ArrayList<Bills> bills) {
+            localDatabase.deleteTables();
+            for (Bills bill : bills)
+                addBillDB(bill);
+        }
+
+        public void removeBillDB(int id) {
+            Bills bill = getBill(id);
+
+            if (bill != null)
+                if (localDatabase.deleteBill(id))
+                    tables.remove(bill);
+        }
+
+        public void updateBillDB(Bills nbill) {
+            Bills bill = getBill(nbill.getId());
+
+            if (bill != null) {
+                if (localDatabase.editBill(nbill)) {
+                    bill.setId(nbill.getId());
+                    bill.setProductName(nbill.getProductName());
+                    bill.setIdMesa(nbill.getIdMesa());
+                    bill.setTotal(nbill.getTotal());
+                }
+            }
+        }
+        //endregion
     //endregion
 
     //region Internet SECTION

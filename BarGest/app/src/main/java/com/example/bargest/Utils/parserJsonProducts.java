@@ -1,6 +1,7 @@
 package com.example.bargest.Utils;
 
 import com.example.bargest.Models.Products;
+import com.example.bargest.Models.ProductsToBePaid;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 
 public class parserJsonProducts {
     public static ArrayList<Products> parserProducts(JSONArray json){
-        ArrayList<Products> requests = new ArrayList<>();
+        ArrayList<Products> products = new ArrayList<>();
         try {
             for(int i=0; i < json.length(); i++){
                 JSONObject product = (JSONObject) json.get(i);
@@ -18,16 +19,16 @@ public class parserJsonProducts {
                 float price =(float) product.getDouble("price");
                 String name = product.getString("name");
                 int category_id = product.getInt("category_id");
-                requests.add(new Products(id,name,price,0,category_id));
+                products.add(new Products(id,name,price,0,category_id));
             }
         }catch(JSONException e){
             e.printStackTrace();
         }
 
-        return requests;
+        return products;
     }
     public static ArrayList<Products> parserAccountProducts(JSONArray json){
-        ArrayList<Products> requests = new ArrayList<>();
+        ArrayList<Products> products = new ArrayList<>();
         try {
             for(int i=0; i < json.length(); i++){
                 JSONObject product = (JSONObject) json.get(i);
@@ -36,13 +37,33 @@ public class parserJsonProducts {
                 String name = product.getString("name");
                 int quantity = product.getInt("quantity");
                 int category_id = product.getInt("category_id");
-                requests.add(new Products(id,name,price,quantity, category_id));
+                products.add(new Products(id,name,price,quantity, category_id));
             }
         }catch(JSONException e){
             e.printStackTrace();
         }
 
-        return requests;
+        return products;
+    }
+
+    public static ArrayList<ProductsToBePaid> parserProductsToBePaid(JSONArray json){
+        ArrayList<ProductsToBePaid> productstobepaid = new ArrayList<>();
+        try {
+            for(int i=0; i < json.length(); i++){
+                JSONObject product = (JSONObject) json.get(i);
+                int id = product.getInt("product_id");
+                float price =(float) product.getDouble("product_price");
+                String name = product.getString("product_name");
+                int quantity = product.getInt("quantity");
+                int request_id = product.getInt("request_id");
+                int account_id = product.getInt("account_id");
+                productstobepaid.add(new ProductsToBePaid(id,name,price,quantity, account_id, request_id));
+            }
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        return productstobepaid;
     }
 
 
