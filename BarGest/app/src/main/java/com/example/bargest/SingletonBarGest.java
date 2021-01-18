@@ -70,6 +70,7 @@ public class SingletonBarGest {
     ArrayList<Categories> categories;
     ArrayList<Products> products;
     ArrayList<Products> productsbycategory;
+    ArrayList<ProductsToBePaid> productsaccountaux;
     ArrayList<ProductsToBePaid> productsToBePaid;
     ArrayList<Requests> requests;
     ArrayList<ListRequests> listrequests;
@@ -90,6 +91,9 @@ public class SingletonBarGest {
     }
     public void setProductListener(ProductsListener productListener){
         this.productsListener = productListener;
+    }
+    public void setProductsToBePaidListener(ProductsToBePaidListener productsToBePaidListener){
+        this.productstobepaidListener = productsToBePaidListener;
     }
     public void setNewrequestsListener(NewRequestListner newRequestListner){
         this.newRequestListner = newRequestListner;
@@ -357,15 +361,15 @@ public class SingletonBarGest {
             }
         }
 
-        public ArrayList<Products> getRequestInfo(Context context, int request_id){
+        public ArrayList<ProductsToBePaid> getRequestInfo(Context context, int request_id){
             if(isConnectionInternet(context)) {
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "request/info/" + request_id + "?" + token, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.i("API", response.toString());
-                        products = parserJsonProducts.parserAccountProducts(response);
-                        if (productsListener != null)
-                            productsListener.onRefreshListProducts(products);
+                        productsaccountaux = parserJsonProducts.parserProductsToBePaidAccount(response);
+                        if (productstobepaidListener != null)
+                            productstobepaidListener.onRefreshListProducts(productsaccountaux);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -380,7 +384,7 @@ public class SingletonBarGest {
             }
             else{
                 toastNotIntenet(context);
-                return products; //TODO retornar produtos com o id do request
+                return getProductsByRequestId(request_id);
             }
         }
 
@@ -477,7 +481,7 @@ public class SingletonBarGest {
             }
         }
 
-        public void editRequest(final Context context, int request_id,final ArrayList<Products> products){
+        public void editRequest(final Context context, int request_id,final ArrayList<ProductsToBePaid> products){
             if(isConnectionInternet(context)) {
                 StringRequest stringRequest = new StringRequest(Request.Method.PUT, url + "request/edit/" + request_id+"?"+token, new Response.Listener<String>() {
                     @Override
@@ -811,6 +815,30 @@ public class SingletonBarGest {
                 if (producttobepaid.getId() == id)
                     return producttobepaid;
             return null;
+        }
+
+        public ArrayList<ProductsToBePaid> getProductsByRequestId(int idRequest) {
+            productsToBePaid = localDatabase.getProductsToBePaid();
+            ArrayList<ProductsToBePaid> productsToBePaidRequest = new ArrayList<>();
+
+            for(ProductsToBePaid producttobepaid : productsToBePaid){
+                if(producttobepaid.getRequest_id() == idRequest){
+                    productsToBePaidRequest.add(producttobepaid);
+                }
+            }
+            return productsToBePaidRequest;
+        }
+
+        public ArrayList<ProductsToBePaid> getProductsByAccountId(int idAccount) {
+            productsToBePaid = localDatabase.getProductsToBePaid();
+            ArrayList<ProductsToBePaid> productsToBePaidAccount = new ArrayList<>();
+
+            for(ProductsToBePaid producttobepaid : productsToBePaid){
+                if(producttobepaid.getAccount_id() == idAccount){
+                    productsToBePaidAccount.add(producttobepaid);
+                }
+            }
+            return productsToBePaidAccount;
         }
 
         public void addProductToBePaidDB(ProductsToBePaid producttobepaid) {

@@ -11,13 +11,14 @@ public class ProductsToBePaid {
     int account_id;
     int request_id;
 
-    public ProductsToBePaid(int id, String name, float price, @Nullable int quantity, int account_id, int request_id) {
+    public ProductsToBePaid(int id, String name, float price, @Nullable int quantity,@Nullable int account_id,@Nullable int request_id ,@Nullable int category_id) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.account_id = account_id;
         this.request_id = request_id;
+        this.category_id = category_id;
     }
 
     public int getId() {
@@ -44,6 +45,8 @@ public class ProductsToBePaid {
         this.name = name;
     }
 
+
+
     public float getPrice() {
         return this.price;
     }
@@ -66,5 +69,13 @@ public class ProductsToBePaid {
 
     public void setAccount_id(int account_id) {
         this.account_id = account_id;
+    }
+
+    public int getCategory_id() {
+        return this.category_id;
+    }
+
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
     }
 }

@@ -493,7 +493,7 @@ public class Database extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             do{
-                ProductsToBePaid producttobepaid = new ProductsToBePaid(cursor.getInt(0), cursor.getString(1), cursor.getFloat(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5));
+                ProductsToBePaid producttobepaid = new ProductsToBePaid(cursor.getInt(0), cursor.getString(1), cursor.getFloat(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), 0);
                 productstobepaid.add(producttobepaid);
             }while (cursor.moveToNext());
         }

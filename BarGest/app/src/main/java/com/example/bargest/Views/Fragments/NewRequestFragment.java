@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bargest.Adaptars.NewRequestAdaptar;
+import com.example.bargest.Adaptars.ProductAdaptar;
 import com.example.bargest.Listeners.NewRequestListner;
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Products;
@@ -47,7 +48,7 @@ public class NewRequestFragment extends Fragment implements NewRequestListner {
         // Required empty public constructor
     }
     RecyclerView listProductsNewRequest;
-    private NewRequestAdaptar adapters;
+    private ProductAdaptar adapters;
     public ArrayList<Products> products;
     Dialog dialog;
 
@@ -141,7 +142,7 @@ public class NewRequestFragment extends Fragment implements NewRequestListner {
 
     @Override
     public void onRefreshListProducts(ArrayList<Products> products) {
-        adapters = new NewRequestAdaptar(getContext(),products);
+        adapters = new ProductAdaptar(getContext(),products);
         listProductsNewRequest.setAdapter(adapters);
         this.products=products;
     }

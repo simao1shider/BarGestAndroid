@@ -21,8 +21,10 @@ import android.widget.TextView;
 
 import com.example.bargest.Adaptars.NewRequestAdaptar;
 import com.example.bargest.Listeners.ProductsListener;
+import com.example.bargest.Listeners.ProductsToBePaidListener;
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Products;
+import com.example.bargest.Models.ProductsToBePaid;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 import com.example.bargest.Views.LoginActivity;
@@ -36,7 +38,7 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class EditRequestFragment extends Fragment implements ProductsListener {
+public class EditRequestFragment extends Fragment implements ProductsToBePaidListener {
 
 
     public EditRequestFragment() {
@@ -45,7 +47,7 @@ public class EditRequestFragment extends Fragment implements ProductsListener {
 
     RecyclerView listProductsEditRequest;
     private NewRequestAdaptar adapters;
-    private ArrayList<Products> products;
+    private ArrayList<ProductsToBePaid> products;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,7 +69,7 @@ public class EditRequestFragment extends Fragment implements ProductsListener {
         listProductsEditRequest.setLayoutManager(new LinearLayoutManager(getContext()));
 
         products = SingletonBarGest.getInstance(getContext()).getRequestInfo(getContext(),getArguments().getInt("request_id"));
-        SingletonBarGest.getInstance(getContext()).setProductListener(this);
+        SingletonBarGest.getInstance(getContext()).setProductsToBePaidListener(this);
 
         backfragment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +81,7 @@ public class EditRequestFragment extends Fragment implements ProductsListener {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingletonBarGest.getInstance(getContext()).editRequest(getContext(),getArguments().getInt("request_id"),products);
+                SingletonBarGest.getInstance(getContext()).editRequest(getContext(),getArguments().getInt("request_id"), products);
             }
         });
 
@@ -91,7 +93,7 @@ public class EditRequestFragment extends Fragment implements ProductsListener {
     }
 
 
-    Products deletedResqust;
+    ProductsToBePaid deletedResqust;
 
     ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
         @Override
@@ -125,14 +127,14 @@ public class EditRequestFragment extends Fragment implements ProductsListener {
 
 
     @Override
-    public void onRefreshListProducts(ArrayList<Products> products) {
+    public void onRefreshListProducts(ArrayList<ProductsToBePaid> products) {
         adapters = new NewRequestAdaptar(getContext(),products);
         listProductsEditRequest.setAdapter(adapters);
-        this.products=products;
+        this.products = products;
     }
 
     @Override
-    public void onRefreshArrayProducts(ArrayList<Products> products) {
+    public void onRefreshArrayProducts(ArrayList<ProductsToBePaid> products) {
 
     }
 

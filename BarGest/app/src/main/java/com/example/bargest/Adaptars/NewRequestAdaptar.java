@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Products;
+import com.example.bargest.Models.ProductsToBePaid;
 import com.example.bargest.R;
 
 import java.util.ArrayList;
@@ -19,8 +20,8 @@ import java.util.ArrayList;
 public class NewRequestAdaptar  extends RecyclerView.Adapter<NewRequestAdaptar.MyViewHolder>{
 
     private Context context;
-    private ArrayList<Products> data;
-    public NewRequestAdaptar(Context context, ArrayList<Products> objetcs) {
+    private ArrayList<ProductsToBePaid> data;
+    public NewRequestAdaptar(Context context, ArrayList<ProductsToBePaid> objetcs) {
         //TODO:Create class Product and change de last parameter
         this.context=context;
         this.data=objetcs;
