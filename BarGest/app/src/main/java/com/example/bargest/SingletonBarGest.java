@@ -197,7 +197,6 @@ public class SingletonBarGest {
                 Log.i("API", response.toString());
                 categories = parserJsonCategories.parserJsonCategories(response);
                 addCategoriesDB(categories);
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -248,7 +247,7 @@ public class SingletonBarGest {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, "O username ou password não estão certas", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "O username ou password incorretos", Toast.LENGTH_SHORT).show();
                 }
             }) {
                 @Override
@@ -413,8 +412,7 @@ public class SingletonBarGest {
                     public void onResponse(JSONArray response) {
                         Log.i("API", response.toString());
                         productsaccountaux = parserJsonProducts.parserProductsToBePaidAccount(response);
-                        if (productstobepaidListener != null)
-                            productstobepaidListener.onRefreshListProducts(productsaccountaux);
+                        productstobepaidListener.onRefreshListProducts(productsaccountaux);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -645,7 +643,7 @@ public class SingletonBarGest {
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
                         Log.e("API", error.toString());
-                        Toast.makeText(context,"Não foi possivel")
+                        Toast.makeText(context,"Erro ao obter categorias",Toast.LENGTH_LONG).show();
                     }
                 });
                 Log.i("API", "teste");
@@ -714,14 +712,14 @@ public class SingletonBarGest {
                         Log.i("API", response.toString());
                         products = parserJsonProducts.parserProducts(response);
                         addProductsDB(products);;
-                        if (productsListener != null)
-                            productsListener.onRefreshArrayProducts(products);
+                        productsListener.onRefreshArrayProducts(products);
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
                         Log.e("API", error.toString());
+                        Toast.makeText(context,"Erro ao obter produtos",Toast.LENGTH_LONG).show();
                     }
                 });
                 Log.i("API", "teste");
@@ -742,14 +740,14 @@ public class SingletonBarGest {
                     public void onResponse(JSONArray response) {
                         Log.i("API", response.toString());
                         productsbycategory = parserJsonProducts.parserProducts(response);
-                        if (productsListener != null)
-                            productsListener.onRefreshListProducts(productsbycategory);
+                        productsListener.onRefreshListProducts(productsbycategory);
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
                         Log.e("API", error.toString());
+                        Toast.makeText(context,"Erro ao obter produtos",Toast.LENGTH_LONG).show();
                     }
                 });
                 Log.i("API", "teste");
@@ -827,14 +825,14 @@ public class SingletonBarGest {
                         Log.i("API", response.toString());
                         productsToBePaid = parserJsonProducts.parserProductsToBePaid(response);
                         addProductsToBePaidDB(productsToBePaid);
-                        if (productstobepaidListener != null)
-                            productstobepaidListener.onRefreshArrayProducts(productsToBePaid);
+                        productstobepaidListener.onRefreshArrayProducts(productsToBePaid);
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
                         Log.e("API", error.toString());
+                        Toast.makeText(context,"Erro ao obter produtos",Toast.LENGTH_LONG).show();
                     }
                 });
                 Log.i("API", "teste");
@@ -916,7 +914,7 @@ public class SingletonBarGest {
     // endregion
 
     //region ACCOUNT SECTION
-    public ArrayList<ProductsToBePaid> getAccountProducts(Context context, int accountId){
+    public ArrayList<ProductsToBePaid> getAccountProducts(final Context context, int accountId){
         if(isConnectionInternet(context)) {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "account/info/" + accountId+"?"+token, null, new Response.Listener<JSONArray>() {
                 @Override
@@ -929,6 +927,7 @@ public class SingletonBarGest {
                 public void onErrorResponse(VolleyError error) {
                     // TODO: Handle error
                     Log.e("API", error.toString());
+                    Toast.makeText(context,"Erro ao obter produtos",Toast.LENGTH_LONG).show();
                 }
             });
             Log.i("API", "teste");
@@ -941,7 +940,7 @@ public class SingletonBarGest {
         }
     }
 
-    public void getAccountProductsDivBill(Context context, int accountId){
+    public void getAccountProductsDivBill(final Context context, int accountId){
         if(isConnectionInternet(context)) {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "account/info/" + accountId+"?"+token, null, new Response.Listener<JSONArray>() {
                 @Override
@@ -954,6 +953,7 @@ public class SingletonBarGest {
                 public void onErrorResponse(VolleyError error) {
                     // TODO: Handle error
                     Log.e("API", error.toString());
+                    Toast.makeText(context,"Erro ao obter produtos",Toast.LENGTH_LONG).show();
                 }
             });
             Log.i("API", "teste");
@@ -1002,8 +1002,8 @@ public class SingletonBarGest {
                 @Override
                 public void onResponse(String response) {
                     Log.i("API", response);
-                    //Toast.makeText(context,"Pagamento efetuado com sucesso!",Toast.LENGTH_LONG).show();
-                    Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,"Pagamento efetuado com sucesso!",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, response, Toast.LENGTH_LONG).show();
                     fragmentManager.beginTransaction().replace(R.id.container, new TablesFragment()).commit();
                 }
             }, new Response.ErrorListener() {

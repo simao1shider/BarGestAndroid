@@ -24,9 +24,6 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
         setContentView(R.layout.activity_login);
         username = findViewById(R.id.ETUsername);
         password = findViewById(R.id.ETPassword);
-
-        username.setText("simao");
-        password.setText("12345678");
     }
 
     public void ValidateLogin(View view) {
@@ -37,7 +34,6 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
         else
             Toast.makeText(getApplicationContext(),"Username ou password incorretos",Toast.LENGTH_LONG).show();
     }
-
 
     private boolean IsValidUsername(String username){
         if(username.length() == 0)
