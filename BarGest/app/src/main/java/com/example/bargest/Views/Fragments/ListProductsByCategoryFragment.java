@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.bargest.Adaptars.AddProductAdaptar;
+import com.example.bargest.Adaptars.ListProductsByCategoryAdaptar;
 import com.example.bargest.Listeners.ProductsListener;
 import com.example.bargest.Models.Categories;
 import com.example.bargest.Models.Products;
@@ -28,7 +29,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class ListProductsByCategoryFragment extends Fragment implements ProductsListener{
 
     GridView GVProducts;
-    private AddProductAdaptar productAdapter;
+    private ListProductsByCategoryAdaptar productAdapter;
     ArrayList<Products> products;
     ArrayList<Products> allproducts;
     TextView TVTitleCategoryName;
@@ -62,10 +63,10 @@ public class ListProductsByCategoryFragment extends Fragment implements Products
             }
         });
 
-        allproducts = SingletonBarGest.getInstance(getContext()).getAllProducts(getContext());
-        if(allproducts != null){
-            products = SingletonBarGest.getInstance(getContext()).getProductsByCategory(getContext(), getArguments().getInt("category_id"));
-            productAdapter = new AddProductAdaptar(getContext(), products);
+        //allproducts = SingletonBarGest.getInstance(getContext()).getAllProducts(getContext());
+        products = SingletonBarGest.getInstance(getContext()).getProductsByCategory(getContext(), getArguments().getInt("category_id"));
+        if(products != null){
+            productAdapter = new ListProductsByCategoryAdaptar(products);
             GVProducts.setAdapter(productAdapter);
         }
         else{
@@ -79,8 +80,10 @@ public class ListProductsByCategoryFragment extends Fragment implements Products
 
     @Override
     public void onRefreshListProducts(ArrayList<Products> products) {
-        productAdapter = new AddProductAdaptar(getContext(), products);
-        GVProducts.setAdapter(productAdapter);
+        if(products.size() != 0){
+            productAdapter = new ListProductsByCategoryAdaptar(products);
+            GVProducts.setAdapter(productAdapter);
+        }
     }
 
     @Override

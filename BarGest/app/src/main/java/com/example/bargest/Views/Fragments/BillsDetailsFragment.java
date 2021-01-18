@@ -28,6 +28,9 @@ import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 import com.example.bargest.Views.LoginActivity;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -39,6 +42,7 @@ public class BillsDetailsFragment extends Fragment implements ProductsToBePaidLi
     TextView totalView;
     ArrayList<ProductsToBePaid> products;
     ArrayList<ProductsToBePaid> productsaux;
+    DecimalFormat twoDForm;
     public BillsDetailsFragment() {
         // Required empty public constructor
     }
@@ -102,7 +106,7 @@ public class BillsDetailsFragment extends Fragment implements ProductsToBePaidLi
         if(products != null){
             float totalBills= 0;
             productsaux = new ArrayList<>();
-
+            //Fazer o total com base ,
             for (ProductsToBePaid product: products) {
                 totalBills+=product.getQuantity()*product.getPrice();
                 if(containArray(productsaux, product.getName())){
@@ -116,8 +120,9 @@ public class BillsDetailsFragment extends Fragment implements ProductsToBePaidLi
                     productsaux.add(product);
                 }
             }
-
-            totalView.setText(String.valueOf(totalBills) + " €");
+            BigDecimal bigDecimal = new BigDecimal(Float.toString(totalBills));
+            bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
+            totalView.setText(bigDecimal.floatValue() + " €");
             final BillsDetailsAdaptar adapters = new BillsDetailsAdaptar(getContext(),R.layout.item_list_bill_details,productsaux);
             listbillDetailsView.setAdapter(adapters);
         }
@@ -160,7 +165,14 @@ public class BillsDetailsFragment extends Fragment implements ProductsToBePaidLi
         for (ProductsToBePaid product: products) {
             totalBills+=product.getQuantity()*product.getPrice();
         }
-        totalView.setText(String.valueOf(totalBills) + " €");
+        BigDecimal bigDecimal = new BigDecimal(Float.toString(totalBills));
+        bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
+        totalView.setText(bigDecimal.floatValue() + " €");
+    }
+
+
+    private void total(){
+
     }
 
     @Override

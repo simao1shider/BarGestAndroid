@@ -31,6 +31,8 @@ import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 import com.example.bargest.Views.LoginActivity;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -305,7 +307,9 @@ public class DivideBillFragment extends Fragment implements ProductsListener {
         for (int i = 0; i < NewProducts.size(); i++){
             Total += NewProducts.get(i).getPrice()*NewProducts.get(i).getQuantity();
         }
-        TVTotal.setText(""+Total+"€");
+        BigDecimal bigDecimal = new BigDecimal(Float.toString(Total));
+        bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
+        TVTotal.setText(bigDecimal.floatValue()+"€");
     }
 
     public void dismissdialog(){

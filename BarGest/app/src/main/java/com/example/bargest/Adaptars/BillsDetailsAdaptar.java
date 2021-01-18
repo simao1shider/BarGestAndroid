@@ -50,7 +50,7 @@ public class BillsDetailsAdaptar extends ArrayAdapter<ProductsToBePaid> {
 
 
         nameProductView.setText(getItem(position).getName());
-        productPriceView.setText(getItem(position).getPrice()+"€");
+        productPriceView.setText(String.format("%.2f", getItem(position).getPrice()) +"€");
         productQuatityView.setText(String.valueOf(getItem(position).getQuantity()));
 
         return convertView;

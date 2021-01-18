@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-
+        SingletonBarGest.getInstance(getApplicationContext()).getAllArrayList();
         BottomNavigationView navBar = findViewById(R.id.bottom_bar);
 
         setFragment(new HomeFragment(),null);

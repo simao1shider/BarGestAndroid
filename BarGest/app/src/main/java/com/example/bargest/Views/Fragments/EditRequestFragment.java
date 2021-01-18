@@ -86,7 +86,7 @@ public class EditRequestFragment extends Fragment implements ProductsToBePaidLis
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingletonBarGest.getInstance(getContext()).editRequest(getContext(),getArguments().getInt("request_id"), products);
+                SingletonBarGest.getInstance(getContext()).editRequest(getContext(),getArguments().getInt("request_id"), products, getFragmentManager());
             }
         });
 
