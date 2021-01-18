@@ -69,6 +69,11 @@ public class EditRequestFragment extends Fragment implements ProductsToBePaidLis
         listProductsEditRequest.setLayoutManager(new LinearLayoutManager(getContext()));
 
         products = SingletonBarGest.getInstance(getContext()).getRequestInfo(getContext(),getArguments().getInt("request_id"));
+        if(products != null){
+            adapters = new NewRequestAdaptar(getContext(), products);
+            listProductsEditRequest.setAdapter(adapters);
+        }
+
         SingletonBarGest.getInstance(getContext()).setProductsToBePaidListener(this);
 
         backfragment.setOnClickListener(new View.OnClickListener() {

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.bargest.R;
+import com.example.bargest.SingletonBarGest;
 import com.example.bargest.Views.LoginActivity;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -61,6 +62,7 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        SingletonBarGest.getInstance(getContext()).getAllArrayList();
     }
 
     @Override

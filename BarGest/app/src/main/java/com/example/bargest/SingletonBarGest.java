@@ -122,7 +122,6 @@ public class SingletonBarGest {
         products = new ArrayList<>();
         requests = new ArrayList<>();
         bills = new ArrayList<>();
-        getAllArrayList();
     }
 
     public void getAllArrayList(){
@@ -131,7 +130,7 @@ public class SingletonBarGest {
             public void onResponse(JSONArray response) {
                 Log.i("API", response.toString());
                 productsToBePaid = parserJsonProducts.parserProductsToBePaid(response);
-                addProductToBePaidDB(productsToBePaid);
+                addProductsToBePaidDB(productsToBePaid);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -157,6 +156,26 @@ public class SingletonBarGest {
             }
         });
         volleyQueue.add(jsonArrayRequest1);
+
+        JsonArrayRequest jsonArrayRequest2 = new JsonArrayRequest(Request.Method.GET, url + "table/all?" + token, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.i("API", response.toString());
+
+                tables = parserJsonTables.parserJsonTables(response);
+                addTablesDB(tables);
+                if (tableListener != null)
+                    tableListener.onRefreshListTables(tables);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API", error.toString());
+            }
+        });
+        volleyQueue.add(jsonArrayRequest2);
     }
 
     //region REQUEST SECTION
@@ -785,7 +804,7 @@ public class SingletonBarGest {
                     public void onResponse(JSONArray response) {
                         Log.i("API", response.toString());
                         productsToBePaid = parserJsonProducts.parserProductsToBePaid(response);
-                        addProductToBePaidDB(productsToBePaid);
+                        addProductsToBePaidDB(productsToBePaid);
                         if (productstobepaidListener != null)
                             productstobepaidListener.onRefreshArrayProducts(productsToBePaid);
                     }
@@ -845,7 +864,7 @@ public class SingletonBarGest {
             localDatabase.addProductToBePaid(producttobepaid);
         }
 
-        public void addProductToBePaidDB(ArrayList<ProductsToBePaid> productstobepaid) {
+        public void addProductsToBePaidDB(ArrayList<ProductsToBePaid> productstobepaid) {
             localDatabase.deleteProductsToBePaid();
             for (ProductsToBePaid producttobepaid : productstobepaid)
                 addProductToBePaidDB(producttobepaid);

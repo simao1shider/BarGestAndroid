@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 
 import com.example.bargest.Adaptars.ListRequestProductAdapter;
 import com.example.bargest.Listeners.ProductsListener;
+import com.example.bargest.Listeners.ProductsToBePaidListener;
 import com.example.bargest.Models.Products;
+import com.example.bargest.Models.ProductsToBePaid;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 import com.example.bargest.Views.Fragments.dummy.DummyContent;
@@ -24,9 +26,10 @@ import java.util.ArrayList;
 /**
  * A fragment representing a list of Items.
  */
-public class ListRequestProductFragment extends Fragment implements ProductsListener {
+public class ListRequestProductFragment extends Fragment implements ProductsToBePaidListener {
 
     RecyclerView recyclerView;
+    ArrayList<ProductsToBePaid> products;
     public ListRequestProductFragment() {
     }
 
@@ -37,18 +40,22 @@ public class ListRequestProductFragment extends Fragment implements ProductsList
         recyclerView = (RecyclerView) view.findViewById(R.id.list_requestproduct);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        SingletonBarGest.getInstance(getContext()).getRequestInfo(getContext(),getArguments().getInt("request_id"));
-        SingletonBarGest.getInstance(getContext()).setProductListener(this);
+        products = SingletonBarGest.getInstance(getContext()).getRequestInfo(getContext(),getArguments().getInt("request_id"));
+        if(products != null){
+            recyclerView.setAdapter(new ListRequestProductAdapter(products));
+        }
+
+        SingletonBarGest.getInstance(getContext()).setProductsToBePaidListener(this);
         return view;
     }
 
     @Override
-    public void onRefreshListProducts(ArrayList<Products> products) {
+    public void onRefreshListProducts(ArrayList<ProductsToBePaid> products) {
         recyclerView.setAdapter(new ListRequestProductAdapter(products));
     }
 
     @Override
-    public void onRefreshArrayProducts(ArrayList<Products> products) {
+    public void onRefreshArrayProducts(ArrayList<ProductsToBePaid> products) {
 
     }
 }

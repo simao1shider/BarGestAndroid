@@ -55,7 +55,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_PRODUCT_PRICE = "price";
     private static final String COLUMN_PRODUCT_QUANTITY = "quantity";
     private static final String COLUMN_PRODUCT_CATEGORY_ID = "category_id";
-    //Products
+    //ProductsToBePaid
     private static final String TABLE_PRODUCTTOBEPAID = "productstobepaid";
     private static final String COLUMN_PRODUCTTOBEPAID_ID = "id";
     private static final String COLUMN_PRODUCTTOBEPAID_NAME = "name";
@@ -105,6 +105,16 @@ public class Database extends SQLiteOpenHelper {
                         COLUMN_REQUESTPRODUCT_QUANTITY + " INTEGER NOT NULL "+
                         " ) ";
 
+        String CREATE_PRODUCTTOBEPAID =
+                "CREATE TABLE IF NOT EXISTS "+ TABLE_PRODUCTTOBEPAID + "(" +
+                        COLUMN_PRODUCTTOBEPAID_ID + " INTEGER NOT NULL, " +
+                        COLUMN_PRODUCTTOBEPAID_NAME + " INTEGER NOT NULL, " +
+                        COLUMN_PRODUCTTOBEPAID_PRICE + " INTEGER NOT NULL, "+
+                        COLUMN_PRODUCTTOBEPAID_QUANTITY + " INTEGER NOT NULL, "+
+                        COLUMN_PRODUCTTOBEPAID_ACCOUNT_ID + " INTEGER NOT NULL, "+
+                        COLUMN_PRODUCTTOBEPAID_REQUEST_ID + " INTEGER NOT NULL "+
+                        " ) ";
+
         String CREATE_PRODUCT =
                 "CREATE TABLE IF NOT EXISTS "+ TABLE_PRODUCT + " ( " +
                         COLUMN_PRODUCT_ID + " INTEGER PRIMARY KEY," +
@@ -123,6 +133,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(CREATE_ACCOUNT);
         db.execSQL(CREATE_REQUEST);
         db.execSQL(CREATE_PRODUCT_REQUEST);
+        db.execSQL(CREATE_PRODUCTTOBEPAID);
         db.execSQL(CREATE_PRODUCT);
         db.execSQL(CREATE_CATEGORY);
     }
@@ -133,6 +144,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_ACCOUNT);
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_REQUEST);
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_REQUESTPRODUCT);
+        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_PRODUCTTOBEPAID);
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_PRODUCT);
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_CATEGORY);
         onCreate(db);

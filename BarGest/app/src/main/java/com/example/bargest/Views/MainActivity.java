@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.bargest.R;
+import com.example.bargest.SingletonBarGest;
 import com.example.bargest.Views.Fragments.HomeFragment;
 import com.example.bargest.Views.Fragments.RequestFragment;
 import com.example.bargest.Views.Fragments.TablesFragment;

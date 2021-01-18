@@ -61,7 +61,7 @@ public class TablesFragment extends Fragment implements TableListener {
         listTables = view.findViewById(R.id.list_tables);
         tableNumber = view.findViewById(R.id.tableNumber);
         tableNumber.setFocusable(false);
-        tables=SingletonBarGest.getInstance(getContext()).getAPITableList(getContext());
+        tables = SingletonBarGest.getInstance(getContext()).getAPITableList(getContext());
         if(tables != null){
             tableNumber.setFocusableInTouchMode(true);
             adapters = new TablesAdapters(getContext(), R.layout.item_list_tables, tables);

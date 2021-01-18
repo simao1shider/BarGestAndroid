@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.bargest.Models.Products;
+import com.example.bargest.Models.ProductsToBePaid;
 import com.example.bargest.R;
 import com.example.bargest.Views.Fragments.dummy.DummyContent.DummyItem;
 
@@ -15,9 +16,9 @@ import java.util.List;
 
 public class ListRequestProductAdapter extends RecyclerView.Adapter<ListRequestProductAdapter.ViewHolder> {
 
-    private final List<Products> products;
+    private final List<ProductsToBePaid> products;
 
-    public ListRequestProductAdapter(List<Products> items) {
+    public ListRequestProductAdapter(List<ProductsToBePaid> items) {
         products = items;
     }
 
