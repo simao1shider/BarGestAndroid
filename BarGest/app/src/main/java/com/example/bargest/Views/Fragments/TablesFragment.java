@@ -61,10 +61,10 @@ public class TablesFragment extends Fragment implements TableListener {
         listTables = view.findViewById(R.id.list_tables);
         tableNumber = view.findViewById(R.id.tableNumber);
         tableNumber.setFocusable(false);
-
-        if(SingletonBarGest.getInstance(getContext()).getAPITableList(getContext()) != null){
-            this.tables = SingletonBarGest.getInstance(getContext()).getAPITableList(getContext());
-            adapters = new TablesAdapters(getContext(), R.layout.item_list_tables, this.tables);
+        tables=SingletonBarGest.getInstance(getContext()).getAPITableList(getContext());
+        if(tables != null){
+            tableNumber.setFocusableInTouchMode(true);
+            adapters = new TablesAdapters(getContext(), R.layout.item_list_tables, tables);
             listTables.setAdapter(adapters);
 
             listTables.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -118,9 +118,11 @@ public class TablesFragment extends Fragment implements TableListener {
     @Override
     public void onRefreshListTables(final ArrayList<Tables> tables) {
         this.tables = tables;
-
+        if(tables.size()!=0){
+            tableNumber.setFocusableInTouchMode(true);
+        }
         if (getContext() != null){
-            adapters = new TablesAdapters(getContext(), R.layout.item_list_tables, this.tables);
+            adapters = new TablesAdapters(getContext(), R.layout.item_list_tables, tables);
             listTables.setAdapter(adapters);
         }
 
