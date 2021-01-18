@@ -7,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.bargest.Models.Products;
 import com.example.bargest.Models.ProductsToBePaid;
 import com.example.bargest.R;
-import com.example.bargest.Views.Fragments.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 

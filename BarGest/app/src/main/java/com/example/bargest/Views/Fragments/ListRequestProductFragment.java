@@ -19,7 +19,6 @@ import com.example.bargest.Models.Products;
 import com.example.bargest.Models.ProductsToBePaid;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
-import com.example.bargest.Views.Fragments.dummy.DummyContent;
 
 import java.util.ArrayList;
 

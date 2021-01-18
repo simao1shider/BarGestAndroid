@@ -36,7 +36,7 @@ import com.example.bargest.Models.Products;
 import com.example.bargest.Models.ProductsToBePaid;
 import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.Tables;
-import com.example.bargest.Models.views.ListRequests;
+import com.example.bargest.Models.ListRequests;
 import com.example.bargest.Utils.parserJsonBills;
 import com.example.bargest.Utils.parserJsonCategories;
 import com.example.bargest.Utils.parserJsonProducts;
@@ -49,7 +49,6 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class SingletonBarGest {

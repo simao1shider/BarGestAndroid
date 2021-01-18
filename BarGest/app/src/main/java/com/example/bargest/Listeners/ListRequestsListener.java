@@ -1,7 +1,6 @@
 package com.example.bargest.Listeners;
 
-import com.example.bargest.Models.Bills;
-import com.example.bargest.Models.views.ListRequests;
+import com.example.bargest.Models.ListRequests;
 
 import java.util.ArrayList;
 

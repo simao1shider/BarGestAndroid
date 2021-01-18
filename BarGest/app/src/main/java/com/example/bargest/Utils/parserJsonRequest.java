@@ -2,18 +2,15 @@ package com.example.bargest.Utils;
 
 
 
-import android.os.Build;
 //For parse string to dateTime
 
-import com.example.bargest.Models.views.ListRequests;
+import com.example.bargest.Models.ListRequests;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+        import java.util.ArrayList;
 
 public class parserJsonRequest {
     public static ArrayList<ListRequests> parserJsonListRequest(JSONArray json){

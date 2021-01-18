@@ -12,9 +12,8 @@ import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Categories;
 import com.example.bargest.Models.Products;
 import com.example.bargest.Models.ProductsToBePaid;
-import com.example.bargest.Models.Requests;
 import com.example.bargest.Models.Tables;
-import com.example.bargest.Models.views.ListRequests;
+import com.example.bargest.Models.ListRequests;
 
 import java.util.ArrayList;
 

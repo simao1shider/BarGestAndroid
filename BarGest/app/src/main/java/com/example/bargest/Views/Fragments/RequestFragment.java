@@ -3,9 +3,7 @@ package com.example.bargest.Views.Fragments;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bargest.Adaptars.RequestsAdaptars;
 import com.example.bargest.Listeners.ListRequestsListener;
-import com.example.bargest.Models.Requests;
-import com.example.bargest.Models.views.ListRequests;
+import com.example.bargest.Models.ListRequests;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 import com.example.bargest.Views.LoginActivity;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
