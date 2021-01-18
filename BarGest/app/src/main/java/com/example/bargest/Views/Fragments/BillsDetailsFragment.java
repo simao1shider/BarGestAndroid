@@ -21,7 +21,9 @@ import android.widget.TextView;
 
 import com.example.bargest.Adaptars.BillsDetailsAdaptar;
 import com.example.bargest.Listeners.ProductsListener;
+import com.example.bargest.Listeners.ProductsToBePaidListener;
 import com.example.bargest.Models.Products;
+import com.example.bargest.Models.ProductsToBePaid;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 import com.example.bargest.Views.LoginActivity;
@@ -30,11 +32,13 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class BillsDetailsFragment extends Fragment implements ProductsListener {
+public class BillsDetailsFragment extends Fragment implements ProductsToBePaidListener {
 
     Dialog dialog;
     ListView listbillDetailsView;
     TextView totalView;
+    ArrayList<ProductsToBePaid> products;
+    ArrayList<ProductsToBePaid> productsaux;
     public BillsDetailsFragment() {
         // Required empty public constructor
     }
@@ -94,8 +98,30 @@ public class BillsDetailsFragment extends Fragment implements ProductsListener {
             }
         });
 
-        SingletonBarGest.getInstance(getContext()).getAccountProducts(getContext(),getArguments().getInt("account_id"));
-        SingletonBarGest.getInstance(getContext()).setProductListener(this);
+        products = SingletonBarGest.getInstance(getContext()).getAccountProducts(getContext(),getArguments().getInt("account_id"));
+        if(products != null){
+            float totalBills= 0;
+            productsaux = new ArrayList<>();
+
+            for (ProductsToBePaid product: products) {
+                totalBills+=product.getQuantity()*product.getPrice();
+                if(containArray(productsaux, product.getName())){
+                    for(ProductsToBePaid productaux : productsaux){
+                        if(product.getName().equals(productaux.getName())){
+                            productaux.setQuantity(productaux.getQuantity() + product.getQuantity());
+                        }
+                    }
+                }
+                else{
+                    productsaux.add(product);
+                }
+            }
+
+            totalView.setText(String.valueOf(totalBills) + " €");
+            final BillsDetailsAdaptar adapters = new BillsDetailsAdaptar(getContext(),R.layout.item_list_bill_details,productsaux);
+            listbillDetailsView.setAdapter(adapters);
+        }
+        SingletonBarGest.getInstance(getContext()).setProductsToBePaidListener(this);
 
         return view;
     }
@@ -127,19 +153,27 @@ public class BillsDetailsFragment extends Fragment implements ProductsListener {
     }
 
     @Override
-    public void onRefreshListProducts(ArrayList<Products> products) {
+    public void onRefreshListProducts(ArrayList<ProductsToBePaid> products) {
         final BillsDetailsAdaptar adapters = new BillsDetailsAdaptar(getContext(),R.layout.item_list_bill_details,products);
         listbillDetailsView.setAdapter(adapters);
         float totalBills= 0;
-        for (Products product: products
-             ) {
+        for (ProductsToBePaid product: products) {
             totalBills+=product.getQuantity()*product.getPrice();
         }
         totalView.setText(String.valueOf(totalBills) + " €");
     }
 
     @Override
-    public void onRefreshArrayProducts(ArrayList<Products> products) {
+    public void onRefreshArrayProducts(ArrayList<ProductsToBePaid> products) {
 
+    }
+
+    public boolean containArray(ArrayList<ProductsToBePaid> productsaux, String name){
+        for(ProductsToBePaid product : productsaux){
+            if(product.getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
     }
 }

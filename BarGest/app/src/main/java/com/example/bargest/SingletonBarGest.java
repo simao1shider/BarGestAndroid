@@ -176,6 +176,44 @@ public class SingletonBarGest {
             }
         });
         volleyQueue.add(jsonArrayRequest2);
+
+        JsonArrayRequest jsonArrayRequest3 = new JsonArrayRequest(Request.Method.GET, url + "account/all?" + token, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.i("API", response.toString());
+                bills = parserJsonBills.parserJsonBilla(response);
+                addBillsDB(bills);
+                if (billListener != null)
+                    billListener.onRefreshListTables(bills);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API", error.toString());
+            }
+        });
+        volleyQueue.add(jsonArrayRequest3);
+
+        JsonArrayRequest jsonArrayRequest4 = new JsonArrayRequest(Request.Method.GET, url + "category/all?"+token, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.i("API", response.toString());
+                categories = parserJsonCategories.parserJsonCategories(response);
+
+                addCategoriesDB(categories);
+                if (categoriesListener != null)
+                    categoriesListener.onRefreshCategories(categories);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+                Log.e("API", error.toString());
+            }
+        });
+        volleyQueue.add(jsonArrayRequest4);
     }
 
     //region REQUEST SECTION
@@ -296,7 +334,7 @@ public class SingletonBarGest {
             else {
                 bills = getBillsDB();
                 toastNotIntenet(context);
-                return bills;
+                return getBillsFromTable(Integer.parseInt(table_id));
             }
         }
         //endregion
@@ -894,13 +932,13 @@ public class SingletonBarGest {
     // endregion
 
     //region ACCOUNT SECTION
-    public void getAccountProducts(Context context,int accountId){
+    public ArrayList<ProductsToBePaid> getAccountProducts(Context context, int accountId){
         if(isConnectionInternet(context)) {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "account/info/" + accountId+"?"+token, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     Log.i("API", response.toString());
-                    productsListener.onRefreshListProducts(parserJsonProducts.parserAccountProducts(response));
+                    productstobepaidListener.onRefreshListProducts(parserJsonProducts.parserProductsToBePaidAccount(response));
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -911,9 +949,11 @@ public class SingletonBarGest {
             });
             Log.i("API", "teste");
             volleyQueue.add(jsonArrayRequest);
+            return null;
         }
         else{
             toastNotIntenet(context);
+            return getProductsByAccountId(accountId);
         }
     }
 
@@ -995,6 +1035,17 @@ public class SingletonBarGest {
         public ArrayList<Bills> getBillsDB() {
             bills = localDatabase.getBills();
             return bills;
+        }
+
+        public ArrayList<Bills> getBillsFromTable(int idTable) {
+            bills = localDatabase.getBills();
+            ArrayList<Bills> billsfromtable = new ArrayList<>();
+
+            for(Bills bill : bills){
+                if (bill.getIdMesa() == idTable)
+                    billsfromtable.add(bill);
+            }
+            return billsfromtable;
         }
 
         public void addBillDB(Bills bill) {

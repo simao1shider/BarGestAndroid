@@ -15,18 +15,19 @@ import androidx.cardview.widget.CardView;
 
 import com.example.bargest.Models.Bills;
 import com.example.bargest.Models.Products;
+import com.example.bargest.Models.ProductsToBePaid;
 import com.example.bargest.Models.Tables;
 import com.example.bargest.R;
 
 import java.util.ArrayList;
 
-public class BillsDetailsAdaptar extends ArrayAdapter<Products> {
+public class BillsDetailsAdaptar extends ArrayAdapter<ProductsToBePaid> {
 
     private Context context;
     private int resource;
-    private ArrayList<Products> originalData;
+    private ArrayList<ProductsToBePaid> originalData;
 
-    public BillsDetailsAdaptar(@NonNull Context context, int resource, @NonNull ArrayList<Products> objects) {
+    public BillsDetailsAdaptar(@NonNull Context context, int resource, @NonNull ArrayList<ProductsToBePaid> objects) {
         super(context, resource, objects);
 
         this.context = context;
