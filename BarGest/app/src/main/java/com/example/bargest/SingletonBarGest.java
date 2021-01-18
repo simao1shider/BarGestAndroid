@@ -164,8 +164,6 @@ public class SingletonBarGest {
 
                 tables = parserJsonTables.parserJsonTables(response);
                 addTablesDB(tables);
-                if (tableListener != null)
-                    tableListener.onRefreshListTables(tables);
 
             }
         }, new Response.ErrorListener() {
@@ -183,8 +181,6 @@ public class SingletonBarGest {
                 Log.i("API", response.toString());
                 bills = parserJsonBills.parserJsonBilla(response);
                 addBillsDB(bills);
-                if (billListener != null)
-                    billListener.onRefreshListTables(bills);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -200,10 +196,7 @@ public class SingletonBarGest {
             public void onResponse(JSONArray response) {
                 Log.i("API", response.toString());
                 categories = parserJsonCategories.parserJsonCategories(response);
-
                 addCategoriesDB(categories);
-                if (categoriesListener != null)
-                    categoriesListener.onRefreshCategories(categories);
 
             }
         }, new Response.ErrorListener() {
