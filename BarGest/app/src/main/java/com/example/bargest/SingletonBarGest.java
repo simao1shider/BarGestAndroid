@@ -957,6 +957,29 @@ public class SingletonBarGest {
         }
     }
 
+    public void getAccountProductsDivBill(Context context, int accountId){
+        if(isConnectionInternet(context)) {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url + "account/info/" + accountId+"?"+token, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    Log.i("API", response.toString());
+                    productsListener.onRefreshListProducts(parserJsonProducts.parserAccountProducts(response));
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // TODO: Handle error
+                    Log.e("API", error.toString());
+                }
+            });
+            Log.i("API", "teste");
+            volleyQueue.add(jsonArrayRequest);
+        }
+        else{
+            toastNotIntenet(context);
+        }
+    }
+
     public void pay(final Context context, int account_id, final int nif, final FragmentManager fragmentManager){
         if(isConnectionInternet(context)) {
             StringRequest stringRequest = new StringRequest(Request.Method.PUT, url + "account/pay/" + account_id+"?"+token, new Response.Listener<String>() {

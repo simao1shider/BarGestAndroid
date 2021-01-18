@@ -43,6 +43,7 @@ public class DivideBillFragment extends Fragment implements ProductsListener {
     RecyclerView listNewBill;
     Dialog dialog;
     TextView TVTotal;
+    TextView TVTollbarTitleview;
     private DivideAdaptar adaptersOrigin;
     private DivideAdaptar adaptersNew;
     private ArrayList<Products> Originproducts;
@@ -68,12 +69,13 @@ public class DivideBillFragment extends Fragment implements ProductsListener {
         listOriginBill = view.findViewById(R.id.listOriginBill);
         listNewBill = view.findViewById(R.id.listNewnBill);
         TVTotal = view.findViewById(R.id.TVtotalNewPrice);
+        TVTollbarTitleview = view.findViewById(R.id.TVTollbarTitle);
         view.findViewById(R.id.BtnToolbarAdd).setVisibility(View.GONE);
         TVTotal.setText("0 €");
         listOriginBill.setLayoutManager(new LinearLayoutManager(getContext()));
         listNewBill.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        SingletonBarGest.getInstance(getContext()).getAccountProducts(getContext(), getArguments().getInt("account_id"));
+        SingletonBarGest.getInstance(getContext()).getAccountProductsDivBill(getContext(), getArguments().getInt("account_id"));
         SingletonBarGest.getInstance(getContext()).setProductListener(this);
         NewProducts = new ArrayList<>();
 
@@ -84,6 +86,18 @@ public class DivideBillFragment extends Fragment implements ProductsListener {
             @Override
             public void onClick(View v) {
                 openDialogPay(getArguments().getInt("account_id"));
+            }
+        });
+        TVTollbarTitleview.setText("Conta: " + getArguments().getString("account_name"));
+        view.findViewById(R.id.IMGBackFragment).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("account_id",getArguments().getInt("account_id"));
+                bundle.putString("account_name",getArguments().getString("account_name"));
+                BillsDetailsFragment billsDetailsFragment = new BillsDetailsFragment();
+                billsDetailsFragment.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.container, billsDetailsFragment).addToBackStack("BillsDetails").commit();
             }
         });
 

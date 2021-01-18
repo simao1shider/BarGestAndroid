@@ -10,9 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.bargest.Adaptars.AddProductAdaptar;
 import com.example.bargest.Listeners.ProductsListener;
+import com.example.bargest.Models.Categories;
 import com.example.bargest.Models.Products;
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
@@ -28,6 +31,8 @@ public class ListProductsByCategoryFragment extends Fragment implements Products
     private AddProductAdaptar productAdapter;
     ArrayList<Products> products;
     ArrayList<Products> allproducts;
+    TextView TVTitleCategoryName;
+    ImageButton BtnBackToCategories;
 
 
     public ListProductsByCategoryFragment() {
@@ -45,6 +50,18 @@ public class ListProductsByCategoryFragment extends Fragment implements Products
             startActivity(intent);
         }
         GVProducts = view.findViewById(R.id.GVAddProduct);
+        TVTitleCategoryName = view.findViewById(R.id.TVTitleCategoryName);
+        BtnBackToCategories = view.findViewById(R.id.BtnBackToCategories);
+
+        TVTitleCategoryName.setText(getArguments().getString("category_name"));
+
+        BtnBackToCategories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().replace(R.id.container, new ListCategoriesFragment()).commit();
+            }
+        });
+
         allproducts = SingletonBarGest.getInstance(getContext()).getAllProducts(getContext());
         if(allproducts != null){
             products = SingletonBarGest.getInstance(getContext()).getProductsByCategory(getContext(), getArguments().getInt("category_id"));

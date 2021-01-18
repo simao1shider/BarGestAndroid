@@ -10,10 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.bargest.R;
 import com.example.bargest.SingletonBarGest;
 import com.example.bargest.Views.LoginActivity;
+
+import java.util.Date;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -32,6 +35,7 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    TextView textView6;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -82,6 +86,11 @@ public class HomeFragment extends Fragment {
                 getFragmentManager().beginTransaction().replace(R.id.container, new ListCategoriesFragment()).commit();
             }
         });
+
+        textView6 = view.findViewById(R.id.textView6);
+        String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
+        // textView is the TextView view that should display it
+        textView6.setText(currentDateTimeString);
         return view;
     }
 }
