@@ -249,7 +249,7 @@ public class DivideBillFragment extends Fragment implements ProductsListener {
                     else if(newProduct.getQuantity() > quantity){
                         for(Products prod : Originproducts){
                             if(prod.getId() == newProduct.getId()){
-
+                                newProduct.setQuantity(newProduct.getQuantity() - quantity);
                                 prod.setQuantity(prod.getQuantity()+quantity);
                                 total();
                                 dismissdialog();
