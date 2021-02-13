@@ -75,7 +75,7 @@ public class SingletonBarGest {
     ArrayList<ListRequests> listrequests;
     ArrayList<Tables> tables;
     ArrayList<Products> newrequests;
-    String url ="http://192.168.1.179/BarGestWeb/api/web/v1/";
+    String url ="http://192.168.1.100/BarGestWeb/api/web/v1/";
     String token;
 
     //region LISTENERS SECTION
